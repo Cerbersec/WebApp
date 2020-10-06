@@ -1,6 +1,3 @@
-//heyhey
-console.log("heyheoy");
-
 const express = require('express')
 const compression = require('compression')
 
