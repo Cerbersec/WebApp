@@ -5,4 +5,4 @@
 
 
 
-module.exports = Example
+module.exports = Customer
