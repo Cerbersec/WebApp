@@ -85,8 +85,30 @@ class Customer {
     }
 }
 
+class Product {
+    constructor(product_id, name, price, size, color) {
+        this.product_id = product_id
+        this.name = name
+        this.price = price
+    }
 
+    get product_id() {
+        return this.product_id
+    }
+    set product_id(value) {
+        this.product_id = value
+    }
+
+    get name() {
+        return this.name
+    }
+    set name(value) {
+        this.name = value
+    }
+}
 
 
 c = new Customer(1)
+p = new Product(1)
+
 console.log(c.city)
