@@ -116,7 +116,8 @@ class Product {
 }
 
 class Order {
-    constructor(customer_id, total_price, shipping_cost, order_date) {
+    constructor(order_id, customer_id, total_price, shipping_cost, order_date) {
+        this.order_id = order_id
         this.customer_id = customer_id
         this.total_price = total_price
         this.shipping_cost = shipping_cost
@@ -124,9 +125,43 @@ class Order {
     }
 }
 
+class Review {
+    constructor(review_id, customer_id, product_id, rating, description, review_date) {
+        this.review_id = review_id
+        this.customer_id = customer_id
+        this.product_id = product_id
+        this.rating = rating
+        this.description = description
+        this.review_date = review_date
+    }
+}
+
+class Product_Category {
+    constructor(product_category_id, category_name, gender, category_age) {
+        this.product_category_id = product_category_id
+        this.category_name = category_name
+        this.gender = gender
+        this.category_age = category_age
+    }
+}
+
+class Orderline {
+    constructor(orderline_id, order_id, product_id, quantity, subtotal_price, discount) {
+        this.orderline_id = orderline_id
+        this.order_id = order_id
+        this.product_id = product_id
+        this.quantity = quantity
+        this.subtotal_price = subtotal_price
+        this.discount = discount
+    }
+}
+
 
 c = new Customer(1)
 p = new Product(1)
 o = new Order(1)
+r = new Review(1)
+pc = new Product_Category(1)
+ol = new Orderline(1)
 
 console.log(c.city)
