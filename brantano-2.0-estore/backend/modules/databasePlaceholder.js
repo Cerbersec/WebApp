@@ -79,9 +79,9 @@ class Database {
     customers = []
     products = []
 
-    // public static CreateProduct() {
-
-    // }
+    static CreateProduct() {
+        // create a product
+    }
 }
 
 
