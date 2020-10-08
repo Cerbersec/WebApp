@@ -1,0 +1,38 @@
+{
+    "products": [
+        {
+            "id": 0,
+            "name": "Loopschoen",
+            "price": 59.99
+        },
+        {
+            "id": 1,
+            "name": "Generieke sportschoen",
+            "price": 64.99
+        }
+    ],
+    "customers": [
+        {
+            "id": 0,
+            "name": "Bob",
+            "last name": "McPherson",
+            "address": "Lelijkestraat",
+            "number": 45,
+            "postal code": 5000,
+            "municipality": "Zevergem",
+            "email": "bobby.mcpherson@mail.com",
+            "phone": ""
+        },
+        {
+            "id": 0,
+            "name": "Neo",
+            "last name": "Anderson",
+            "address": "Gewonestraat",
+            "number": 23,
+            "postal code": 8046,
+            "municipality": "Ietegem",
+            "email": "neothe1@outlook.com",
+            "phone": "045604684"
+        }
+    ]
+}
