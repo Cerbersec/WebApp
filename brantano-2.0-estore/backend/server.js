@@ -18,7 +18,7 @@ app.use(express.static('../frontend/public'))
 
 
 // routers
-const storeRouter =  require('./routes/store.router')
+const storeRouter = require('./routes/store.router')
 const userRouter = require('./routes/user.router')
 
 // main endpoint
@@ -43,3 +43,4 @@ app.use((req, res) => {
 app.listen(port, function() {
     console.log(`Server is running on port: ${port}`)
 })
+
