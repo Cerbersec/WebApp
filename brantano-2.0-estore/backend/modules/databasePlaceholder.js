@@ -74,6 +74,16 @@ class Orderline {
     }
 }
 
+class Addresses {
+    constructor(customer_id, street_name, street_number, postal_code, municipality) {
+        this.customer_id = customer_id
+        this.street_name = street_name
+        this.street_number = street_number
+        this.postal_code = postal_code
+        this.municipality = municipality
+    }
+}
+
 
 class Database {
     customers = []
