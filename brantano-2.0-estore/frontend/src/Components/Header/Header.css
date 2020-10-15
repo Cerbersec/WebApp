@@ -6,7 +6,7 @@
 
 .right-part {
   display: flex;
-  width: 150px;
+  
   align-items: center;
   justify-content: flex-end;
 }
