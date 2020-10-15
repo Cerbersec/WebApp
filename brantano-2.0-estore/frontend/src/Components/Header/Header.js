@@ -37,6 +37,19 @@ class ConnectedHeader extends Component{
             <MenuItem key='nl' value='NL'>NL</MenuItem>
             <MenuItem key='en' value='EN'>EN</MenuItem>
           </Select>
+          <Button
+                variant="contained"
+                style={{ marginLeft:20, marginRight: 20, width:'100px' }}
+                color="default"
+              >
+                <b>Log in</b>
+              </Button>
+
+          <IconButton aria-label="Heart">
+            <Badge>
+              <FavoriteIcon style={{fontSize:"30px", color:"white"}}></FavoriteIcon>
+            </Badge>
+          </IconButton>
           <IconButton
               aria-label="Cart"
             >
@@ -45,8 +58,6 @@ class ConnectedHeader extends Component{
               </Badge>
             </IconButton>
 
-          
-          
           </div>
         </Toolbar>
       </AppBar>
