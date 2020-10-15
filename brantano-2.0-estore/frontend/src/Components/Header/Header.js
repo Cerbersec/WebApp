@@ -9,22 +9,11 @@ import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import Badge from "@material-ui/core/Badge";
 import IconButton from "@material-ui/core/IconButton";
 
-
-
-
-
-
 class ConnectedHeader extends Component{
   state = {
     SelectedLanguage: 'NL',
-
   };
-
- 
-
-  
   render(){
-    
     return(
       <AppBar position="static" style={{backgroundColor:"blue"}}>
         <Toolbar>
