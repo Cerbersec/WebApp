@@ -1,4 +1,3 @@
-
 module.exports = function(sequelize, Sequelize) {
     const Customer = sequelize.define('customer', {
         customer_id: {

@@ -1,4 +1,3 @@
-
 module.exports = function(sequelize, Sequelize) {
     const Category = sequelize.define('category', {
         category_id: {
