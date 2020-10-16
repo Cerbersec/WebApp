@@ -1,0 +1,12 @@
+.left-part {
+  display: flex;
+  flex: 1;
+  align-items: center;
+}
+
+.right-part {
+  display: flex;
+  
+  align-items: center;
+  justify-content: flex-end;
+}
