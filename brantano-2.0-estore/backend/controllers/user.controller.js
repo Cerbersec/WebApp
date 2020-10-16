@@ -4,16 +4,10 @@ const userDb = require('../db/userDb')
 const getUsers = async(req, res, next) => {
     try {
         const users = await userDb.readUsers()
+        console.log(users)
+        res.send(JSON.stringify(users, null, 2))
+
         
-        if (users.length < 1) {
-            return res.status(404).json({
-                message: 'users not found'
-            })
-        }
-        res.status(200).json({
-            users: users
-        })
-        //next()
     } catch(e) {
         console.log(e.message)
         res.sendStatus(500) && next(e)

@@ -1,7 +1,8 @@
 // CRUD: create, read, update, delete
+const models = require('../models')
 
 const readUsers = () => {
-    return 'Test User'
+    return models.customer.findAll()
 }
 
 exports.readUsers = readUsers
