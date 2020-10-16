@@ -47,7 +47,11 @@ app.use((err, req, res, next) => {
     res.status(err.status || 500).json(err);
 })
 
-app.listen(port, function() {
-    console.log(`Server is running on port: ${port}`)
+//sync models with db before app start
+const models = require('./models')
+models.sequelize.sync().then(function() {
+    app.listen(port, function() {
+        console.log(`Server is running on port: ${port}`)
+    })
 })
 
