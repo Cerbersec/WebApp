@@ -21,7 +21,9 @@ const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USERNAME, pr
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
     dialect: 'mssql',
-    operatorsAliases: false,
+    dialectOptions: {
+        encrypt: true
+    },
     pool: {
         max: 10,
         min: 0,
