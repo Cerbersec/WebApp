@@ -1,10 +1,9 @@
 const express = require('express')
 const router = express.Router()
 //const jwt = require('jsonwebtoken')
-//const config = require('../configs/jwt-config')
+//const config = require('../config/jwt-config')
 //const ensureAuthenticated = require('../modules/ensureAuthenticated')
 const { userController } = require('../controllers')
-//import models
 
 //router.post('/signin', userController.signIn)
 //router.post('/login', userController.login)

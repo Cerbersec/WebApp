@@ -1,10 +1,9 @@
 const express = require('express')
 const router = express.Router()
 //const ensureAuthenticated = require('../modules/ensureAuthenticated')
-//const paypal_config = require('../configs/paypal-config')
+//const paypal_config = require('../config/paypal-config')
 //const paypal = require('paypal-rest-sdk')
 const { storeController } = require('../controllers')
-// import models
 
 //home
 router.get('/', express.static('../frontend/public'))
