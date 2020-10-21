@@ -47,9 +47,9 @@ app.use((err, req, res, next) => {
     res.status(err.status || 500).json(err);
 })
 
-//sync models with db before app start
+//sync models with db before app start: force = true to drop tables at start up
 const models = require('./models')
-models.sequelize.sync().then(function() {
+models.sequelize.sync({ force: true }).then(function() {
     app.listen(port, function() {
         console.log(`Server is running on port: ${port}`)
     })
