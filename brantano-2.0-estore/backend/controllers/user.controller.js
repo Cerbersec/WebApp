@@ -14,4 +14,8 @@ const getUsers = async(req, res, next) => {
     }
 }
 
+function Register() {
+    
+}
+
 exports.getUsers = getUsers
