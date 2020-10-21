@@ -5,4 +5,8 @@ const readUsers = () => {
     return models.customer.findAll()
 }
 
+const registerUser = () => {
+    return models.customer.registerUser()
+}
+
 exports.readUsers = readUsers

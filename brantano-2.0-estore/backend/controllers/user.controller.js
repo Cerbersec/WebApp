@@ -14,8 +14,21 @@ const getUsers = async(req, res, next) => {
     }
 }
 
-function Register() {
-    
+
+const registerUser = async(req, res, next) => {
+    try {
+        const users = await userDb.registerUser()
+        console.log(users)
+        res.send(JSON.stringify())
+    } catch (e) {
+        console.log(e.message)
+        res.sendStatus(500) && next(e)
+    }
+}
+
+
+function Login () {
+
 }
 
 exports.getUsers = getUsers
