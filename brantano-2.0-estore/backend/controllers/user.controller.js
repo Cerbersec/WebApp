@@ -27,8 +27,13 @@ const registerUser = async(req, res, next) => {
 }
 
 
-function Login () {
-
+const Login = async(req, res, next) => {
+    try {
+        //try to log in
+    } catch (e) {
+        console.log(e.message)
+        res.sendStatus(500) && next(e)
+    }
 }
 
 exports.getUsers = getUsers
