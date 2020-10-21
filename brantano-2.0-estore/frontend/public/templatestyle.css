@@ -119,16 +119,18 @@ body{
  }
 .white{
   color: black;
-  margin-right: 25%;
+  margin-right: 30%;
   margin-left: 5%;
 }
 .picture{
+  
+  width: 300px;
+  height: auto;
+  display: block;
+}
+.piclink{
+  display: inline-block;
   margin-right: 20%;
   margin-left: 5%;
   margin-top: 50px;
-  width: 300px;
-  height: auto;
-}
-.piclink{
-  display: inline;
 }
