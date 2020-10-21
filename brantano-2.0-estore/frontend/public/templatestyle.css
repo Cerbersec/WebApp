@@ -64,15 +64,7 @@ ul {
     color: black;
     margin-top: 20px;
    }
-.list4{
-  
-    
-    
-    margin-left: 50%;
-    
-    color: black;
-    
-}
+
 a {
     text-decoration: none; 
     color: #f2f2f2;
@@ -86,7 +78,7 @@ a {
 body{
   background-size: 100% 400px;
   background-repeat: no-repeat;
-  background-position: 0% calc(100vh - 195px);
+  background-position: 0% 85vh;
   background-image: linear-gradient(rgb(51, 55, 152), rgb(51, 55, 152) 100%);
 
 }
@@ -125,3 +117,18 @@ body{
   margin-left: 35%;
   color: #f2f2f2;
  }
+.white{
+  color: black;
+  margin-right: 25%;
+  margin-left: 5%;
+}
+.picture{
+  margin-right: 20%;
+  margin-left: 5%;
+  margin-top: 50px;
+  width: 300px;
+  height: auto;
+}
+.piclink{
+  display: inline;
+}
