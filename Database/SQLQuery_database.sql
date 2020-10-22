@@ -25,18 +25,18 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Product_Database_Brantano](
-	[ID] [nvarchar](50) NULL,
-	[Brand] [nvarchar](50) NULL,
-	[Gender] [nvarchar](50) NULL,
-	[Retail_Price] [float] NULL,
-	[Product] [nvarchar](50) NULL,
-	[Name] [nvarchar](100) NULL,
-	[Year] [smallint] NULL,
+	[ID] [nvarchar](50) NOT NULL,
+	[Brand] [nvarchar](50) NOT NULL,
+	[Gender] [nvarchar](50) NOT NULL,
+	[Retail_Price] [float] NOT NULL,
+	[Product] [nvarchar](50) NOT NULL,
+	[Name] [nvarchar](100) NOT NULL,
+	[Year] [smallint] NOT NULL,
 	[ReleaseDate] [date] NULL,
-	[Product_Category] [nvarchar](50) NULL,
-	[Sales_Price] [float] NULL,
-	[Review_ID] [nvarchar](50) NULL,
-	[Stock] [tinyint] NULL,
-	[Size] [nvarchar](50) NULL
+	[Product_Category] [nvarchar](50) NOT NULL,
+	[Sales_Price] [float] NOT NULL,
+	[Review_ID] [nvarchar](50) NOT NULL,
+	[Stock] [tinyint] NOT NULL,
+	[Size] [nvarchar](50) NOT NULL
 ) ON [PRIMARY]
 GO
