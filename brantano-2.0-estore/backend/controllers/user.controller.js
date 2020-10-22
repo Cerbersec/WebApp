@@ -26,7 +26,6 @@ const getUsers = async(req, res, next) => {
 const register = async(req, res, next) => {
     try {
         const { first_name, last_name, email_address, phone, gender, username, password, verify_password} = req.body
-        console.log('got data')
 
         req.checkBody('first_name', 'First name is required').notEmpty()
         req.checkBody('last_name', 'Last name is required').notEmpty()
@@ -36,8 +35,6 @@ const register = async(req, res, next) => {
         req.checkBody('password', 'Password is required').notEmpty()
         req.checkBody('verify_password', 'Verify password is required').notEmpty()
 
-        console.log('performed checks')
-
         let missingFieldErrors = req.validationErrors()
         if(missingFieldErrors) {
             let err = new TypedError('register error', 400, 'missing_field', {
@@ -46,12 +43,8 @@ const register = async(req, res, next) => {
             return next(err)
         }
 
-        console.log('checked for missing fields')
-
         req.checkBody('email_address', 'Email is not valid').isEmail()
         req.checkBody('password', 'Passwords have to match').equals(verify_password)
-
-        console.log('performed validation')
 
         let invalidFieldErrors = req.validationErrors()
         if(invalidFieldErrors) {
@@ -61,11 +54,8 @@ const register = async(req, res, next) => {
             return next(err)
         }        
 
-        console.log("validated")
         //hash password
         const hashedpassword = await bcrypt.hash(req.body.password, 10)
-
-        console.log('hashed password')
 
         var newCustomer = new models.customer({
             first_name: first_name,
@@ -76,8 +66,6 @@ const register = async(req, res, next) => {
             username: username,
             password: hashedpassword
         })
-
-        console.log('created customer model')
 
         //create new user
         const [ user, created ] = await userDb.createUser(newCustomer)
@@ -97,7 +85,8 @@ const register = async(req, res, next) => {
         }
 
     } catch(e) {
-
+        console.log(e.message)
+        res.sendStatus(500) && next(e)
     }
 }
 
