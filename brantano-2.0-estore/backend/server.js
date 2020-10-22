@@ -2,6 +2,10 @@ const express = require('express')
 const compression = require('compression')
 const createError = require('http-errors')
 const path = require('path')
+const bodyParser = require('body-parser')
+const expressValidator = require('express-validator')
+const cookieParser = require('cookie-parser')
+const cors = require('cors')
 
 if(process.env.NODE_ENV !== 'production') {
     require('dotenv').config()
@@ -11,9 +15,33 @@ const app = express()
 const port = process.env.PORT || 3000
 
 app.use(compression())
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(cookieParser())
 app.use(express.static('../frontend/public'))
+app.use(cors())
+
+//req.checkBody()
+/*
+app.use(expressValidator({
+    errorFormatter: function(param, msg, value) {
+      var namespace = param.split('.'),
+      root          = namespace.shift(),
+      formParam     = root;
+  
+      while(namespace.lenght) {
+        formParam += '[' + namespace.shift() + ']';
+      }
+      return {
+        param : formParam,
+        msg   : msg,
+        value : value
+      };
+    }
+  }));
+  */
+
+app.use(expressValidator())
 
 // setup database connection
 const db = require('./config/database')
@@ -35,7 +63,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 //endpoints
 app.use('/', storeRouter)
-app.use('/users', userRouter)
+app.use('/account', userRouter)
 
 
 //page not found

@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const config = require('../configs/jwt-config')
+const config = require('../config/jwt-config')
 const TypedError = require('./ErrorHandler')
 function ensureAuthenticated(req, res, next) {
   let token = ''
