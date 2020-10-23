@@ -93,39 +93,39 @@ const register = async(req, res, next) => {
 }
 
 
-const login = async (req, res) => {
+const login = async (req, res, next) => {
     try {
-      const { email, password } = req.body;
+      const { email_address, password } = req.body;
    
       //TODO validate
-      if( !email || !password ) {
-        return res.status(400).render('login', {
+      if( !email_address || !password ) {
+        return res.status(400).send({
           message: 'Please provide an email and password'
         })
       }
    
       //verplaatsen naar userDb.js
       //veranderen naar Sequelize
-      db.query('SELECT * FROM users WHERE email = ?', [email], async (error, results) => {
-        console.log(results);
+        const result = await userDb.readUser(email_address) //result = Model, null
+        console.log(result)
 
-        if( !results || !(await bcrypt.compare(password, results[0].password)) ) {
-          res.status(401).render('login', {
+        if( !result || !(await bcrypt.compare(password, result.password)) ) {
+            res.status(401).send({
             message: 'Email or Password is incorrect'
-          })
+            })
         } else {
-          const id = results[0].id;
+          const id = result.id;
    
           //veranderen naar config/jwt-config.js
-          const token = jwt.sign({ id }, process.env.JWT_SECRET, {
-            expiresIn: process.env.JWT_EXPIRES_IN
+          const token = jwt.sign({ id }, config.jwt_secret, {
+            expiresIn: config.jwt_expires_in
           });
    
           console.log("The token is: " + token);
    
           const cookieOptions = {
             expires: new Date(
-              Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000
+              Date.now() + config.jwt_cookie_expires * 24 * 60 * 60 * 1000
             ),
             httpOnly: true
           }
@@ -134,13 +134,12 @@ const login = async (req, res) => {
           res.status(200).redirect("/");
         }
    
-      })
-   
     } catch (error) {
       console.log(error);
     }
   }
 
+  //TODO
   const isLoggedIn = async (req, res, next) => {
     // console.log(req.cookies);
     if( req.cookies.jwt) {

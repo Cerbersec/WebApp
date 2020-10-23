@@ -19,8 +19,8 @@ const createUser = (user) => {
     })
 }
 
-const readUser = (username) => {
-    //placeholder
+const readUser = (email_address) => {
+    return models.customer.findOne({ where: { email_address: email_address } })
 }
 
 exports.readUsers = readUsers

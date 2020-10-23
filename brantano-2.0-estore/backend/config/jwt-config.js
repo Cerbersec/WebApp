@@ -1,3 +1,5 @@
 module.exports = {
-    secret: "brantano"
+    jwt_secret: "brantano",
+    jwt_expires_in: 90, //90d
+    jwt_cookie_expires: 90
 }
