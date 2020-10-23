@@ -17,7 +17,7 @@ class Footer extends Component{
           left: 0,
           width:'100%',
           
-          backgroundColor: '#6876ab'
+          backgroundColor: '#183399'
           ,
           justifyContent: "space-around",
           display: "flex"
