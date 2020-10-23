@@ -15,7 +15,7 @@ class ConnectedHeader extends Component{
   };
   render(){
     return(
-      <AppBar position="static" style={{backgroundColor:"blue"}}>
+      <AppBar position="static" style={{backgroundColor:"#183399"}}>
         <Toolbar>
           <div className="left-part">
             <img src={Logo} alt="Logo" width="200" height="140"></img>
