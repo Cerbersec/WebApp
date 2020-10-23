@@ -8,6 +8,8 @@ import "./Header.css";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import Badge from "@material-ui/core/Badge";
 import IconButton from "@material-ui/core/IconButton";
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import Button from "@material-ui/core/Button";
 
 class ConnectedHeader extends Component{
   state = {
