@@ -1,0 +1,10 @@
+.footerItem {
+  font-size: 14px;
+  margin-bottom: 5px;
+  color: #e7e2e1;
+}
+
+.footerItem:hover {
+  text-decoration: underline;
+  color: #4282ad;
+}
