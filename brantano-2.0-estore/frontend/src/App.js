@@ -7,9 +7,10 @@ function App() {
     <div className="App">
       
         
-        <p>
-          app page
-        </p>
+        <ConnectedHeader />
+        <p>test</p>
+       
+        <Footer />
         
       
     </div>
