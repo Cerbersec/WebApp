@@ -14,7 +14,7 @@ module.exports = function(sequelize, Sequelize) {
             allowNull: false
         },
         gender: {
-            type: Sequelize.STRING(1),
+            type: Sequelize.CHAR(1),
             allowNull: false
         },
         phone: {
@@ -23,15 +23,15 @@ module.exports = function(sequelize, Sequelize) {
         },
         email_address: {
             type: Sequelize.STRING(100),
-            allowNull: false
-        },
-        username: {
-            type: Sequelize.STRING(50),
             allowNull: false,
             unique: true
         },
+        username: {
+            type: Sequelize.STRING(50),
+            allowNull: false
+        },
         password: {
-            type: Sequelize.STRING(64),
+            type: Sequelize.CHAR(64),
             allowNull: false,
             is: /^[0-9a-f]{64}$/i
         }

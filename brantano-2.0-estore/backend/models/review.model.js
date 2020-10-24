@@ -7,10 +7,11 @@ module.exports = function(sequelize, Sequelize) {
         },
         rating: {
             type: Sequelize.INTEGER,
-            allowNull: false
+            allowNull: false,
+            is: /^[0-9]{1}$/i
         },
         description: {
-            type: Sequelize.STRING(400),
+            type: Sequelize.TEXT,
             allowNull: true
         },
         review_date: {

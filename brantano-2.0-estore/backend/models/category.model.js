@@ -10,7 +10,7 @@ module.exports = function(sequelize, Sequelize) {
             allowNull: false
         },
         gender: {
-            type: Sequelize.STRING(1),
+            type: Sequelize.CHAR(1),
             allowNull: true
         },
         category_age: {
