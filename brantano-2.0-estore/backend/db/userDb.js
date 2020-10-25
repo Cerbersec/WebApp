@@ -53,6 +53,11 @@ const readUser = (email_address) => {
     return models.Customer.findOne({ where: { email_address: email_address } })
 }
 
+const readUserById = (id) => {
+    return models.Customer.findOne( { where: { customer_id: id } })
+}
+
 exports.readUsers = readUsers
 exports.readUser = readUser
 exports.createUser = createUser
+exports.readUserById = readUserById

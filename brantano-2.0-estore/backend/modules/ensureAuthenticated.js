@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken')
 const config = require('../config/jwt-config')
 const TypedError = require('./ErrorHandler')
+
 function ensureAuthenticated(req, res, next) {
   let token = ''
   if (req.headers['x-access-token'] || req.headers['authorization']) {

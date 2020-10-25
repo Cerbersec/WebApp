@@ -87,8 +87,6 @@ const register = async(req, res, next) => {
 
         //create new user
         const [ user, created ] = await userDb.createUser(newCustomer, newAddress)
-        console.log(created)
-        console.log(user)
 
         if(created) {
             res.json({
@@ -111,90 +109,95 @@ const register = async(req, res, next) => {
 
 const login = async (req, res, next) => {
     try {
-      const { email_address, password } = req.body;
+        const { email_address, password } = req.body;
+
+        req.checkBody('email_address', 'Email address is required').notEmpty()
+        req.checkBody('password', 'Password is required').notEmpty()
+
+        let missingFieldErrors = req.validationErrors()
+        if(missingFieldErrors) {
+            let err = new TypedError('login error', 400, 'missing_field', {
+                errors: missingFieldErrors,
+            })
+            return next(err)
+        }
+
+        req.checkBody('email_address', 'Email is not valid').isEmail()
+
+        let invalidFieldErrors = req.validationErrors()
+        if(invalidFieldErrors) {
+            let err = new TypedError('login error', 400, 'invalid_field', {
+                errors: invalidFieldErrors,
+            })
+            return next(err)
+        }
    
-      //TODO validate
-      if( !email_address || !password ) {
-        return res.status(400).send({
-          message: 'Please provide an email and password'
-        })
-      }
-   
-      //verplaatsen naar userDb.js
-      //veranderen naar Sequelize
         const result = await userDb.readUser(email_address) //result = Model, null
-        console.log(result)
 
         if( !result || !(await bcrypt.compare(password, result.password)) ) {
             res.status(401).send({
             message: 'Email or Password is incorrect'
             })
         } else {
-          const id = result.id;
+            const id = result.customer_id;
+
+            const token = jwt.sign({ id },
+            config.jwt_secret,
+            {
+                expiresIn: config.jwt_expires_in
+            });
    
-          //veranderen naar config/jwt-config.js
-          const token = jwt.sign({ id }, config.jwt_secret, {
-            expiresIn: config.jwt_expires_in
-          });
+            console.log("The token is: " + token);//debug
    
-          console.log("The token is: " + token);
+            const cookieOptions = {
+                expires: new Date(
+                    Date.now() + config.jwt_cookie_expires * 24 * 60 * 60 * 1000
+                ),
+                httpOnly: true
+            }
    
-          const cookieOptions = {
-            expires: new Date(
-              Date.now() + config.jwt_cookie_expires * 24 * 60 * 60 * 1000
-            ),
-            httpOnly: true
-          }
-   
-          res.cookie('jwt', token, cookieOptions );
-          res.status(200).redirect("/");
-        }
-   
+            res.cookie('jwt', token, cookieOptions );
+            res.status(200).redirect("/account");//redirect after login
+        }  
     } catch (error) {
       console.log(error);
     }
-  }
+}
 
-  //TODO
-  const isLoggedIn = async (req, res, next) => {
-    // console.log(req.cookies);
-    if( req.cookies.jwt) {
-      try {
-        //1) verify the token
-        const decoded = await promisify(jwt.verify)(req.cookies.jwt,
-        process.env.JWT_SECRET
-        );
+const isLoggedIn = async (req, res, next) => {
+    if(req.cookies.jwt) {
+        try {
+            //1) verify the token
+            const decoded = await promisify(jwt.verify)(req.cookies.jwt, config.jwt_secret);
    
-        console.log(decoded);
+            console.log(decoded);//debug
    
-        //2) Check if the user still exists
-        //verplaatsen naar userDb.js
-        db.query('SELECT * FROM users WHERE id = ?', [decoded.id], (error, result) => {
-          console.log(result);
+            //2) check if the user still exists
+            const result = await userDb.readUserById(decoded.id) //result = Model, null
    
-          if(!result) {
+            //3) if exists then next()
+            if(!result) {
+                return next();
+            }
+   
+            req.user = result.customer_id;
+            console.log("user is")
+            console.log(req.user);
             return next();
-          }
-   
-          req.user = result[0];
-          console.log("user is")
-          console.log(req.user);
-          return next();
-   
-        });
+
       } catch (error) {
-        console.log(error);
-        return next();
+          console.log(error);
+          return next();
       }
     } else {
-      next();
+        next();
     }
-  }
+}
    
 const logout = async (req, res) => {
     res.cookie('jwt', 'logout', {
-      expires: new Date(Date.now() + 2*1000),
-      httpOnly: true
+        expires: new Date(Date.now() + 2*1000),
+        httpOnly: true
     });
    
     res.status(200).redirect('/');

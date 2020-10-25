@@ -31,9 +31,8 @@ module.exports = function(sequelize, Sequelize) {
             allowNull: false
         },
         password: {
-            type: Sequelize.CHAR(64),
-            allowNull: false,
-            is: /^[0-9a-f]{64}$/i
+            type: Sequelize.CHAR(60),
+            allowNull: false
         }
     },
     {
