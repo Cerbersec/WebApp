@@ -28,6 +28,7 @@ const getUsers = async(req, res, next) => {
 const register = async(req, res, next) => {
     try {
         const { first_name, last_name, email_address, phone, gender, username, password, verify_password} = req.body
+        const { street_name, postal_code, street_nr, bus_nr, city, country } = req.body
 
         req.checkBody('first_name', 'First name is required').notEmpty()
         req.checkBody('last_name', 'Last name is required').notEmpty()
@@ -36,6 +37,12 @@ const register = async(req, res, next) => {
         req.checkBody('username', 'Username is required').notEmpty()
         req.checkBody('password', 'Password is required').notEmpty()
         req.checkBody('verify_password', 'Verify password is required').notEmpty()
+
+        req.checkBody('street_name', 'Street name is required').notEmpty()
+        req.checkBody('postal_code', 'Postal code is required').notEmpty()
+        req.checkBody('street_nr', 'Street number is required').notEmpty()
+        req.checkBody('city', 'City is required').notEmpty()
+        req.checkBody('country', 'Country is required').notEmpty()
 
         let missingFieldErrors = req.validationErrors()
         if(missingFieldErrors) {
@@ -57,7 +64,7 @@ const register = async(req, res, next) => {
         }        
 
         //hash password
-        const hashedpassword = await bcrypt.hash(req.body.password, 10)
+        const hashedpassword = await bcrypt.hash(password, 10)
 
         var newCustomer = new models.Customer({
             first_name: first_name,
@@ -69,8 +76,17 @@ const register = async(req, res, next) => {
             password: hashedpassword
         })
 
+        var newAddress = new models.Address({
+            street_name: street_name,
+            street_nr: street_nr,
+            postal_code: postal_code,
+            bus_nr: bus_nr,
+            city: city,
+            country: country
+        })
+
         //create new user
-        const [ user, created ] = await userDb.createUser(newCustomer)
+        const [ user, created ] = await userDb.createUser(newCustomer, newAddress)
         console.log(created)
         console.log(user)
 
