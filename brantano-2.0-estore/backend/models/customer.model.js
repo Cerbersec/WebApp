@@ -1,5 +1,5 @@
 module.exports = function(sequelize, Sequelize) {
-    const Customer = sequelize.define('customer', {
+    const Customer = sequelize.define('Customer', {
         customer_id: {
             autoIncrement: true,
             primaryKey: true,
@@ -35,6 +35,33 @@ module.exports = function(sequelize, Sequelize) {
             allowNull: false,
             is: /^[0-9a-f]{64}$/i
         }
+    },
+    {
+        underscored: true
     })
+
+    Customer.associate = models => {
+        Customer.hasMany(models.Address, {
+            onDelete: 'cascade',
+            foreignKey: {
+                name: 'customer_id'
+            }
+        })
+
+        Customer.hasMany(models.Review, {
+            onDelete: 'set null',
+            foreignKey: {
+                name: 'customer_id'
+            }
+        })
+
+        Customer.hasMany(models.Order, {
+            onDelete: 'set null',
+            foreignKey: {
+                name: 'customer_id'
+            }
+        })
+    }
+
     return Customer
 }

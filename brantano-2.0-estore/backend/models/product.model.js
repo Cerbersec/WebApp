@@ -1,5 +1,5 @@
 module.exports = function(sequelize, Sequelize) {
-    const Product = sequelize.define('product', {
+    const Product = sequelize.define('Product', {
         product_id: {
             autoIncrement: true,
             primaryKey: true,
@@ -37,7 +37,33 @@ module.exports = function(sequelize, Sequelize) {
             type: Sequelize.INTEGER,
             allowNull: false
         }
-        //TODO category FK
+    },
+    {
+        underscored: true
     })
+
+    Product.associate = models => {
+        Product.hasMany(models.Review, {
+            onDelete: 'cascade',
+            foreignKey: {
+                name: 'product_id'
+            }
+        })
+
+        Product.hasMany(models.Orderline, {
+            onDelete: 'set null',
+            foreignKey: {
+                name: 'product_id'
+            }
+        })
+
+        Product.belongsTo(models.Category, {
+            foreignKey: {
+                name: 'category_id',
+                allowNull: false
+            }
+        })
+    }
+
     return Product
 }

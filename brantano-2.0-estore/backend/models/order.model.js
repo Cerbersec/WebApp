@@ -1,5 +1,5 @@
 module.exports = function(sequelize, Sequelize) {
-    const Order = sequelize.define('order', {
+    const Order = sequelize.define('Order', {
         order_id: {
             autoIncrement: true,
             primaryKey: true,
@@ -17,7 +17,26 @@ module.exports = function(sequelize, Sequelize) {
             type: Sequelize.DATE,
             allowNull: false
         }
-        //TODO customer FK
+    },
+    {
+        underscored: true
     })
+
+    Order.associate = models => {
+        Order.hasMany(models.Orderline, {
+            onDelete: 'cascade',
+            foreignKey: {
+                name: 'order_id'
+            }
+        })
+
+        Order.belongsTo(models.Customer, {
+            foreignKey: {
+                name: 'customer_id',
+                allowNull: false
+            }
+        })
+    }
+
     return Order
 }

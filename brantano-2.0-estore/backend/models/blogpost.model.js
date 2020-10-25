@@ -1,5 +1,7 @@
+const models = require('../models')
+
 module.exports = function(sequelize, Sequelize) {
-    const Blogpost = sequelize.define('blogpost', {
+    const Blogpost = sequelize.define('Blogpost', {
         post_id: {
             autoIncrement: true,
             primaryKey: true,
@@ -17,7 +19,19 @@ module.exports = function(sequelize, Sequelize) {
             type: Sequelize.TEXT,
             allowNull: true
         }
-        //TODO admin FK
+    },
+    {
+        underscored: true
     })
+
+    Blogpost.associate = models => {
+        Blogpost.belongsTo(models.Administrator, {
+            foreignKey: {
+                name: 'admin_id',
+                allowNull: false
+            }
+        })
+    }
+
     return Blogpost
 }

@@ -1,5 +1,5 @@
 module.exports = function(sequelize, Sequelize) {
-    const Address = sequelize.define('address', {
+    const Address = sequelize.define('Address', {
         address_id: {
             autoIncrement: true,
             primaryKey: true,
@@ -29,7 +29,19 @@ module.exports = function(sequelize, Sequelize) {
             type: Sequelize.STRING(50),
             allowNull: false
         }
-        //TODO customer FK
+    },
+    {
+        underscored: true
     })
+
+    Address.associate = models => {
+        Address.belongsTo(models.Customer, {
+            foreignKey: {
+                name: 'customer_id',
+                allowNull: false
+            }
+        })
+    }
+
     return Address
 }

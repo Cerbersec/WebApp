@@ -1,5 +1,5 @@
 module.exports = function(sequelize, Sequelize) {
-    const Orderline = sequelize.define('orderline', {
+    const Orderline = sequelize.define('Orderline', {
         orderline_id: {
             autoIncrement: true,
             primaryKey: true,
@@ -17,7 +17,26 @@ module.exports = function(sequelize, Sequelize) {
             type: Sequelize.INTEGER,
             allowNull: false
         }
-        //TODO order FK, product FK
+    },
+    {
+        underscored: true
     })
+
+    Orderline.associate = models => {
+        Orderline.belongsTo(models.Product, {
+            foreignKey: {
+                name: 'product_id',
+                allowNull: false
+            }
+        })
+
+        Orderline.belongsTo(models.Order, {
+            foreignKey: {
+                name: 'order_id',
+                allowNull: false
+            }
+        })
+    }
+
     return Orderline
 }

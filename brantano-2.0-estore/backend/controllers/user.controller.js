@@ -59,7 +59,7 @@ const register = async(req, res, next) => {
         //hash password
         const hashedpassword = await bcrypt.hash(req.body.password, 10)
 
-        var newCustomer = new models.customer({
+        var newCustomer = new models.Customer({
             first_name: first_name,
             last_name: last_name,
             email_address: email_address,

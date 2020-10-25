@@ -1,5 +1,5 @@
 module.exports = function(sequelize, Sequelize) {
-    const Category = sequelize.define('category', {
+    const Category = sequelize.define('Category', {
         category_id: {
             autoIncrement: true,
             primaryKey: true,
@@ -17,6 +17,19 @@ module.exports = function(sequelize, Sequelize) {
             type: Sequelize.STRING(8),
             allowNull: true
         }
+    },
+    {
+        underscored: true
     })
+
+    Category.associate = models => {
+        Category.hasMany(models.Product, {
+            onDelete: 'set null',
+            foreignKey: {
+                name: 'category_id'
+            }
+        })
+    }
+
     return Category
 }

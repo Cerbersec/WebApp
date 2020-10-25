@@ -2,11 +2,11 @@
 const models = require('../models')
 
 const readUsers = () => {
-    return models.customer.findAll()
+    return models.Customer.findAll()
 }
 
 const createUser = (user) => {
-    return models.customer.findOrCreate({
+    return models.Customer.findOrCreate({
         where: { 
             first_name: user.first_name,
             last_name: user.last_name,
@@ -20,7 +20,7 @@ const createUser = (user) => {
 }
 
 const readUser = (email_address) => {
-    return models.customer.findOne({ where: { email_address: email_address } })
+    return models.Customer.findOne({ where: { email_address: email_address } })
 }
 
 exports.readUsers = readUsers

@@ -1,5 +1,5 @@
 module.exports = function(sequelize, Sequelize) {
-    const Administrator = sequelize.define('administrator', {
+    const Administrator = sequelize.define('Administrator', {
         admin_id: {
             autoIncrement: true,
             primaryKey: true,
@@ -15,6 +15,19 @@ module.exports = function(sequelize, Sequelize) {
             allowNull: false,
             is: /^[0-9a-f]{64}$/i
         }
+    },
+    {
+        underscored: true
     })
+
+    Administrator.associate = models => {
+        Administrator.hasMany(models.Blogpost, {
+            onDelete: 'cascade',
+            foreignKey: {
+                name: 'admin_id'
+            }
+        })
+    }
+
     return Administrator
 }

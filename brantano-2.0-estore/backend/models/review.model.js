@@ -1,5 +1,5 @@
 module.exports = function(sequelize, Sequelize) {
-    const Review = sequelize.define('review', {
+    const Review = sequelize.define('Review', {
         review_id: {
             autoIncrement: true,
             primaryKey: true,
@@ -18,7 +18,26 @@ module.exports = function(sequelize, Sequelize) {
             type: Sequelize.DATEONLY,
             allowNull: false
         }
-        //TODO customer FK, product FK
+    },
+    {
+        underscored: true
     })
+
+    Review.associate = models => {
+        Review.belongsTo(models.Product, {
+            foreignKey: {
+                name: 'product_id',
+                allowNull: false
+            }
+        })
+
+        Review.belongsTo(models.Customer, {
+            foreignKey: {
+                name: 'customer_id',
+                allowNull: false
+            }
+        })
+    }
+
     return Review
 }
