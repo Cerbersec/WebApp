@@ -57,6 +57,7 @@ db.authenticate().then(() => {
 // routers
 const storeRouter = require('./routes/store.router')
 const userRouter = require('./routes/user.router')
+const blogRouter = require('./routes/blog.router')
 
 // set static dir
 app.use(express.static(path.join(__dirname, 'public')))
@@ -64,6 +65,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 //endpoints
 app.use('/', storeRouter)
 app.use('/account', userRouter)
+app.use('/blog', blogRouter)
 
 
 //page not found
