@@ -7,7 +7,7 @@ const { storeController } = require('../controllers')
 
 router.get('/', express.static('../frontend/public'))
 
-router.get('/store/products', storeController.getProducts)
+router.get('/store/products/:page', storeController.getProducts)
 router.get('/store/products/:productId', storeController.getProduct)
 
 //router.get('/store/categories', storeController.getCategories)
