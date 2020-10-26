@@ -13,10 +13,13 @@ CREATE TABLE [dbo].[Customer_Database_Brantano](
 	[Phone] [nvarchar](50) NULL,
 	[Email_Adress] [nvarchar](50) NOT NULL,
 	[Postal_Code] [smallint] NOT NULL,
+	[Bus_Number] [nvarchar](50)  NULL,
 	[City] [nvarchar](50) NOT NULL,
 	[Country] [nvarchar](50) NOT NULL,
 	[Username] [nvarchar](50) NOT NULL,
-	[Password] [nvarchar](50) NOT NULL
+	[Password] [nvarchar](150) NOT NULL,
+	[Role_ID] [float] NOT NULL,
+	[Role] [nvarchar](50) NOT NULL
 ) ON [PRIMARY]
 GO
 /****** Object:  Table [dbo].[Product_Database_Brantano]    Script Date: 17/10/2020 10:46:53 ******/
@@ -32,11 +35,13 @@ CREATE TABLE [dbo].[Product_Database_Brantano](
 	[Product] [nvarchar](50) NOT NULL,
 	[Name] [nvarchar](100) NOT NULL,
 	[Year] [smallint] NOT NULL,
-	[ReleaseDate] [date] NULL,
+	[ReleaseDate] [date] NOT NULL,
 	[Product_Category] [nvarchar](50) NOT NULL,
 	[Sales_Price] [float] NOT NULL,
 	[Review_ID] [nvarchar](50) NOT NULL,
 	[Stock] [tinyint] NOT NULL,
-	[Size] [nvarchar](50) NOT NULL
+	[Size] [nvarchar](50) NOT NULL,
+	[Category_ID] [bigint] NOT NULL,
+	[Color] [nvarchar](100) NOT NULL
 ) ON [PRIMARY]
 GO
