@@ -1,0 +1,18 @@
+.footerItem {
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #e7e2e1;
+  }
+  
+.linkItem:hover {
+    text-decoration: underline;
+    color: #4282ad;
+  }
+.image{
+    display: inline-block;
+    margin-right: 40px;
+}
+.text{
+    
+    text-align: center;
+}
