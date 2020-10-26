@@ -3,19 +3,36 @@ import ConnectedHeader from './Components/Header/Header.js';
 import './App.css';
 import Footer from './Components/Footer/Footer.js';
 
+import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
+
+import Product from './Components/Product/Product.js';
+import Login from './Components/Login/Login.js';
+
 
 function App() {
   return (
-    <div className="App">
-      
-        
+    <Router>
+      <div className="App">
+
+
         <ConnectedHeader />
-        <p>test</p>
-       
+        <Switch>
+
+          <Route path="/login">
+            <Login />
+          </Route>
+
+          <Route path="/">
+            <Product />
+          </Route>
+
+        </Switch>
+
         <Footer />
-        
-      
-    </div>
+
+
+      </div>
+    </Router>
   );
 }
 

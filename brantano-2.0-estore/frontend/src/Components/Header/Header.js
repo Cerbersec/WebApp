@@ -11,6 +11,9 @@ import IconButton from "@material-ui/core/IconButton";
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import Button from "@material-ui/core/Button";
 
+import { Link as RouterLink } from 'react-router-dom';
+import Link from '@material-ui/core/Link';
+
 class ConnectedHeader extends Component{
   state = {
     SelectedLanguage: 'NL',
@@ -20,7 +23,11 @@ class ConnectedHeader extends Component{
       <AppBar position="static" style={{backgroundColor:"#183399"}}>
         <Toolbar>
           <div className="left-part">
-            <img src={Logo} alt="Logo" width="200" height="140"></img>
+
+            <Link component={RouterLink} to={"/"}>
+            <img src={Logo} alt="Logo" width="200" height="140"/> 
+            </Link>
+            
           </div>
           <div className="right-part">
           <Select
@@ -39,13 +46,17 @@ class ConnectedHeader extends Component{
             <MenuItem key='nl' value='NL'>NL</MenuItem>
             <MenuItem key='en' value='EN'>EN</MenuItem>
           </Select>
+
+
           <Button
                 variant="contained"
                 style={{ marginLeft:20, marginRight: 20, width:'100px' }}
                 color="default"
-              >
+                component={RouterLink} 
+                to={"/login"}
+          >
                 <b>Log in</b>
-              </Button>
+          </Button>
 
           <IconButton aria-label="Heart">
             <Badge>
