@@ -9,13 +9,12 @@ const readProduct = (productId) => {
     return models.Product.findOne({ where: { product_id: productId } })
 }
 
-const createOrder = async (cart,orderLines) => {
-
+const createOrder = async (cart,orderLines,userid) => {
     const OrderPlaced = await models.Order.create({
         total_price: cart.total_price,
         shipping_costs: cart.shipping_costs,
-        order_date: cart.order_date
-        //assign customerID
+        order_date: cart.order_date,
+        customer_id: userid
     })
 
     console.log(orderLines)
