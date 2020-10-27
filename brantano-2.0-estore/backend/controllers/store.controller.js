@@ -1,6 +1,11 @@
 //PGUR: Put, Get, Update, Remove
 const storeDb = require('../db/storeDb')
+const userDb = require('../db/userDb')
 const models = require('../models')
+
+const jwt = require('jsonwebtoken')
+const config = require('../config/jwt-config')
+const { promisify } = require('util');
 
 const getProducts = async(req, res, next) => {
     const pageNo = req.params.page
@@ -45,10 +50,16 @@ const getProductbyID = async(req, res, next) => {
     }
 }
 
+//TODO: checkout and future cart functionality in its own controller
 const postCheckout = async(req, res, next) => {
     try {
         req.checkBody('total_price').notEmpty()
         req.checkBody('shipping_costs').notEmpty()
+
+        const decoded = await promisify(jwt.verify)(req.cookies.jwt, config.jwt_secret);
+        const result = await userDb.readUserById(decoded.id)
+        req.user = result.customer_id;
+        //above code in helper class?
 
         const { total_price, shipping_costs} = req.body
         const orderLines = JSON.parse(req.body.order_lines)
@@ -58,8 +69,7 @@ const postCheckout = async(req, res, next) => {
             shipping_costs: shipping_costs,
             order_date: new Date(Date.now())
         })
-
-        const placedOrder = await storeDb.createOrder(newOrder,orderLines)
+        const placedOrder = await storeDb.createOrder(newOrder,orderLines,req.user)
         
         if(placedOrder != null) {
             return res.status(200).json({
@@ -80,4 +90,4 @@ const postCheckout = async(req, res, next) => {
 
 exports.getProducts = getProducts
 exports.getProductbyID = getProductbyID
-exports.postCheckout = postCheckout
+exports.postCheckout = postCheckout 
