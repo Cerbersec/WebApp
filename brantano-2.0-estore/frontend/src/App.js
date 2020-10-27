@@ -26,12 +26,14 @@ function App() {
           </Route>
 
           <Route path="/privacy" component={PrivacyPolicy} />
-          <Link to="/product">TEST PRODUCT 1</Link>
+          
 
           <Route path="/product" component={Product} />
+
             
 
         </Switch>
+        <Link to="/product">TEST PRODUCT 1</Link>
 
         <Footer />
 
