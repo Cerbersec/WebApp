@@ -4,6 +4,8 @@ import Schoenen from '../../img/schoenen.jpg';
 import Onderhoud from '../../img/onderhoud.jpg';
 import Veters from '../../img/veters.jpg';
 
+
+
 class Item extends React.Component{
 
   render() {

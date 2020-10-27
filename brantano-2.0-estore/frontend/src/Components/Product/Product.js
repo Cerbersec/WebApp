@@ -1,13 +1,28 @@
 import React, { Component } from "react";
 import "./Product.css";
 import Bruin from '../../img/bruin.jpg';
-import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, } from 'reactstrap';
 
-import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 
 
+var axios = require('axios');
 
+var config = {
+  method: 'get',
+  url: 'localhost:3000',
+  headers: { }
+};
+
+axios(config)
+.then(function (response) {
+        
+  console.log(JSON.stringify(response.data));
+})
+.catch(function (error) {
+  console.log(error);
+});
+
+console.log("test");
 
 var maat = 30;
     var kleur="bruin";
