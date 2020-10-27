@@ -19,16 +19,24 @@ const createOrder = async (cart,orderLines) => {
 
     console.log(orderLines)
     orderLines.forEach(element => {
+        const prod = models.Product.findOne({ where: { product_id: element.product_id } })
+
+        if (prod == null){
+            throw new Error('Product not found')
+            //TODO: implement proper error handling
+        }
+
+        //TODO: check price
+        console.log("prod id: " + element.product_id)
         const newOrderLine = OrderPlaced.createOrderline({
             quantity: element.quantity,
             subtotal_price: element.subtotal_price,
             discount: element.discount,
+            product_id: element.product_id
         })
-        //assign productID to orderline
     });
     
-    //assign customerID to order
-
+    //TODO: check order total
     return OrderPlaced
 }
 

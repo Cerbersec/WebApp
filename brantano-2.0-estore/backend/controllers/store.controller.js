@@ -62,8 +62,8 @@ const postCheckout = async(req, res, next) => {
         const placedOrder = await storeDb.createOrder(newOrder,orderLines)
         
         if(placedOrder != null) {
-            res.json({
-                message: "Order Success"
+            return res.status(200).json({
+                Order: placedOrder
             })
         }
         else {
