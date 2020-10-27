@@ -50,7 +50,7 @@ class Footer extends Component{
             Social Media
           </div>
           
-            <Link to="/privacy"><div className="footerItem">PrivacyPolicy</div></Link>
+            <Link to="/privacy"><div className="footerItem">Privacy Policy</div></Link>
           
         </div>
       </div>
