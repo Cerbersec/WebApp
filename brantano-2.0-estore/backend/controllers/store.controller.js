@@ -25,7 +25,7 @@ const getProducts = async(req, res, next) => {
     }
 }
 
-const getProduct = async(req, res, next) => {
+const getProductbyID = async(req, res, next) => {
     const productId = req.params.productId
     try {
         const product = await storeDb.readProduct(productId)
@@ -45,5 +45,39 @@ const getProduct = async(req, res, next) => {
     }
 }
 
+const postCheckout = async(req, res, next) => {
+    try {
+        req.checkBody('total_price').notEmpty()
+        req.checkBody('shipping_costs').notEmpty()
+
+        const { total_price, shipping_costs} = req.body
+        const orderLines = JSON.parse(req.body.order_lines)
+
+        const newOrder = new models.Order({
+            total_price: total_price,
+            shipping_costs: shipping_costs,
+            order_date: new Date(Date.now())
+        })
+
+        const placedOrder = await storeDb.createOrder(newOrder,orderLines)
+        
+        if(placedOrder != null) {
+            res.json({
+                message: "Order Success"
+            })
+        }
+        else {
+            res.json({
+                message: "Something went wrong, Order could not be placed"
+            })
+        }
+
+    } catch(e) {
+        console.log(e.message)
+        res.sendStatus(500) && next(e)
+    }
+}
+
 exports.getProducts = getProducts
-exports.getProduct = getProduct
+exports.getProductbyID = getProductbyID
+exports.postCheckout = postCheckout
