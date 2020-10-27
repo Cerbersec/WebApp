@@ -15,6 +15,7 @@ const createOrder = async (cart,orderLines) => {
         total_price: cart.total_price,
         shipping_costs: cart.shipping_costs,
         order_date: cart.order_date
+        //assign customerID
     })
 
     console.log(orderLines)
@@ -35,7 +36,7 @@ const createOrder = async (cart,orderLines) => {
             product_id: element.product_id
         })
     });
-    
+
     //TODO: check order total
     return OrderPlaced
 }
