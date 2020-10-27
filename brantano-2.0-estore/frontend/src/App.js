@@ -12,7 +12,8 @@ import Bestelling from './Components/Bestelling/Bestelling.js';
 
 
 function App() {
-  return (
+
+  return (  
     <Router>
       <div className="App">
 
@@ -27,13 +28,14 @@ function App() {
 
           <Route path="/privacy" component={PrivacyPolicy} />
           
-
+          <Route path="/bestelling" component={Bestelling}/>
           <Route path="/product" component={Product} />
+          <Link to="/product">TEST PRODUCT 1</Link>
 
             
 
         </Switch>
-        <Link to="/product">TEST PRODUCT 1</Link>
+        
 
         <Footer />
 

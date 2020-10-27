@@ -4,8 +4,8 @@ import Bruin from '../../img/bruin.jpg';
 import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, } from 'reactstrap';
 
 import Button from '@material-ui/core/Button';
-import { Link as RouterLink } from 'react-router-dom';
-import Link from '@material-ui/core/Link'
+import { Link } from 'react-router-dom';
+
 
 
 
@@ -85,11 +85,8 @@ Changekleur = (e) => {
                           <div >
                                   Morgen in huis
                   </div>
-                  <Button color="primary" component={RouterLink} to={{
-    pathname: "/bestelling"
-  }} >
-                    Naar bestelling
-                  </Button>
+                  <Link to="/bestelling">Naar bestelling</Link>
+                  
 
                   </form>
 
