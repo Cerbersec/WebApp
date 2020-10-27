@@ -5,22 +5,23 @@ import Bruin from '../../img/bruin.jpg';
 import { Link } from 'react-router-dom';
 
 
+
 var axios = require('axios');
 
 var config = {
   method: 'get',
-  url: 'localhost:3000',
+  url: 'localhost:3000/store/productinfo/1',
   headers: { }
 };
 
 axios(config)
 .then(function (response) {
-        
   console.log(JSON.stringify(response.data));
 })
 .catch(function (error) {
   console.log(error);
 });
+
 
 console.log("test");
 
