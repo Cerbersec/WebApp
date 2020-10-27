@@ -4,10 +4,11 @@ import './App.css';
 import Footer from './Components/Footer/Footer.js';
 import PrivacyPolicy from './Components/Legal/PrivacyPolicy';
 
-import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
+import { Switch, Route,Link,  BrowserRouter as Router } from 'react-router-dom';
 
 import Product from './Components/Product/Product.js';
 import Login from './Components/Login/Login.js';
+import Bestelling from './Components/Bestelling/Bestelling.js';
 
 
 function App() {
@@ -18,16 +19,17 @@ function App() {
 
         <ConnectedHeader />
         <Switch>
+          
 
           <Route path="/login">
             <Login />
           </Route>
 
           <Route path="/privacy" component={PrivacyPolicy} />
+          <Link to="/product">TEST PRODUCT 1</Link>
 
-          <Route path="/">
-            <Product />
-          </Route>
+          <Route path="/product" component={Product} />
+            
 
         </Switch>
 
