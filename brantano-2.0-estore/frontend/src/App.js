@@ -7,6 +7,7 @@ import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
 
 import Product from './Components/Product/Product.js';
 import Login from './Components/Login/Login.js';
+import Bestelling from './Components/Bestelling/Bestelling.js';
 
 
 function App() {
@@ -17,9 +18,14 @@ function App() {
 
         <ConnectedHeader />
         <Switch>
+          
 
           <Route path="/login">
             <Login />
+          </Route>
+
+          <Route path="/bestelling">
+            <Bestelling />
           </Route>
 
           <Route path="/">
