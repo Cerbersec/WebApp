@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-
+import {Link} from "react-router-dom";
 import "./Footer.css";
 
 class Footer extends Component{
@@ -49,16 +49,9 @@ class Footer extends Component{
           >
             Social Media
           </div>
-          <a
-            href="http://www.facebook.com"
-            target="blank"
-            style={{
-              textDecoration: "none",
-              color: "rgb(32, 32, 34)"
-            }}
-          >
-            <div className="footerItem">Facebook</div>
-          </a>
+          
+            <Link to="/privacy"><div className="footerItem">PrivacyPolicy</div></Link>
+          
         </div>
       </div>
         );

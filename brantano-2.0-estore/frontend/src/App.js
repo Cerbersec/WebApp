@@ -2,6 +2,7 @@ import React from 'react';
 import ConnectedHeader from './Components/Header/Header.js';
 import './App.css';
 import Footer from './Components/Footer/Footer.js';
+import PrivacyPolicy from './Components/Legal/PrivacyPolicy';
 
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
 
@@ -21,6 +22,8 @@ function App() {
           <Route path="/login">
             <Login />
           </Route>
+
+          <Route path="/privacy" component={PrivacyPolicy} />
 
           <Route path="/">
             <Product />
