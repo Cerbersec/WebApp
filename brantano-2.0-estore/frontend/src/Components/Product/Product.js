@@ -3,7 +3,6 @@ import "./Product.css";
 import Bruin from '../../img/bruin.jpg';
 import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, } from 'reactstrap';
 
-import Bestelling from 'C:/Users/bamsr/Documents/GitHub/WebApp/brantano-2.0-estore/frontend/src/Components/Bestelling/Bestelling.js';
 import Button from '@material-ui/core/Button';
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link'
