@@ -20,6 +20,7 @@ import Select from "@material-ui/core/Select";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 
+
 const mapStateToProps = state => {
   return {
     nrOfItemsInCard: state.cartItems.length,
@@ -28,6 +29,7 @@ const mapStateToProps = state => {
 };
 
 // Option items for product categories.
+//TODO: API calls
 const categoryOptions = categories.map(x => {
   return (
     <MenuItem key={x.name} value={x.name}>
@@ -49,7 +51,7 @@ class ConnectedHeader extends Component {
     return (
       <AppBar
         position="static"
-        style={{ backgroundColor: "#183399", padding: 0, marginBottom: 10 }}
+        style={{ backgroundColor: "#183399", padding: 0, marginBottom: 10 }}//header color
       >
         <Toolbar>
           <div className="left-part">
@@ -62,9 +64,11 @@ class ConnectedHeader extends Component {
             </IconButton>
 
             <Link to="/"><img src={cartImage} alt={"Logo"} style={{width: 120, height: 90, marginLeft: 10 }} /></Link>
+
             <TextField
               
               label="Search products"
+              color="primary"
               value={this.state.searchTerm}
               onChange={e => {
                 this.setState({ searchTerm: e.target.value });
@@ -73,7 +77,7 @@ class ConnectedHeader extends Component {
             />
 
             <Select
-              style={{ maxWidth: 200, marginLeft: 20, color:"lightgray" }}
+              style={{ maxWidth: 200, marginLeft: 20, color:"white" }}
               value={this.state.categoryFilterValue}
               MenuProps={{
                 style: {
@@ -90,7 +94,7 @@ class ConnectedHeader extends Component {
             <Button
               
               variant="outlined"
-              style={{marginLeft: 20,color:"lightgray"}}
+              style={{marginLeft: 20,color:"white"}}
               onClick={() => {
                 this.props.history.push(
                   "/?category=" +
@@ -108,7 +112,7 @@ class ConnectedHeader extends Component {
             {!this.props.loggedInUser ? (
               <Button
                 variant="outlined"
-                style={{ marginRight: 20 , color:"lightgray"}}
+                style={{ marginRight: 20 , color:"white"}}
                 
                 onClick={() => {
                   this.props.history.push("/login");
@@ -128,7 +132,7 @@ class ConnectedHeader extends Component {
             )}
             <IconButton
               aria-label="Cart"
-              style={{color:"lightgray"}}
+              style={{color:"white"}}
               onClick={() => {
                 this.props.dispatch(showCartDlg(true));
               }}
