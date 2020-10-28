@@ -11,7 +11,7 @@ class Footer extends Component {
           padding: 10,
           borderTop: "1px solid lightgray",
           height: 100,
-          backgroundColor: "#f1f1f1",
+          backgroundColor: "#FFFFFF",
           justifyContent: "space-around",
           display: "flex"
         }}

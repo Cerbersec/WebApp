@@ -6,7 +6,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import Badge from "@material-ui/core/Badge";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { showCartDlg, toggleMenu, logout } from "../../Redux/Actions";
 import cartImage from "../../Images/brantayes.jpg";
@@ -61,7 +61,7 @@ class ConnectedHeader extends Component {
               <MenuIcon size="medium" />
             </IconButton>
 
-            <img src={cartImage} alt={"Logo"} style={{width: 120, height: 90, marginLeft: 10 }} />
+            <Link to="/"><img src={cartImage} alt={"Logo"} style={{width: 120, height: 90, marginLeft: 10 }} /></Link>
             <TextField
               label="Search products"
               value={this.state.searchTerm}
@@ -87,9 +87,9 @@ class ConnectedHeader extends Component {
             </Select>
 
             <Button
-              style={{ marginLeft: 20 }}
+              
               variant="outlined"
-              color="primary"
+              style={{marginLeft: 20,color:"lightgray"}}
               onClick={() => {
                 this.props.history.push(
                   "/?category=" +
@@ -107,8 +107,8 @@ class ConnectedHeader extends Component {
             {!this.props.loggedInUser ? (
               <Button
                 variant="outlined"
-                style={{ marginRight: 20 }}
-                color="primary"
+                style={{ marginRight: 20 , color:"lightgray"}}
+                
                 onClick={() => {
                   this.props.history.push("/login");
                 }}
@@ -127,6 +127,7 @@ class ConnectedHeader extends Component {
             )}
             <IconButton
               aria-label="Cart"
+              style={{color:"lightgray"}}
               onClick={() => {
                 this.props.dispatch(showCartDlg(true));
               }}
