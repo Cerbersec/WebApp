@@ -25,7 +25,8 @@ class ConnectedItem extends Component {
         >
           <CardMedia
             style={{ height: 140 }}
-            image={this.props.item.imageUrls[0]}
+            //TODO: fix imageurl
+            //image={this.props.item.imageUrls[0]}
           />
           <CardContent style={{ height: 50 }}>
             <div
