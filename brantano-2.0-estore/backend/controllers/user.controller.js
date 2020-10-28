@@ -24,7 +24,6 @@ const getUsers = async(req, res, next) => {
     }
 }
 
-
 const register = async(req, res, next) => {
     try {
         const { first_name, last_name, email_address, phone, gender, username, password, verify_password} = req.body
@@ -105,7 +104,6 @@ const register = async(req, res, next) => {
         res.sendStatus(500) && next(e)
     }
 }
-
 
 const login = async (req, res, next) => {
     try {

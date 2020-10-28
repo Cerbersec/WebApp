@@ -17,7 +17,6 @@ const createOrder = async (cart,orderLines,userid) => {
         customer_id: userid
     })
 
-    console.log(orderLines)
     orderLines.forEach(element => {
         const prod = models.Product.findOne({ where: { product_id: element.product_id } })
 
@@ -40,6 +39,23 @@ const createOrder = async (cart,orderLines,userid) => {
     return OrderPlaced
 }
 
+const readOrders = (userid) => {
+    return models.Order.findAll({where: { customer_id: userid} })
+}
+
+const readOrder = (userId,orderId) => {
+    const order = models.Order.findOne({ where: { customer_id: userId, order_id: orderId } })
+    return order
+}
+
+const readOrderLines = (orderId) => {
+    const orderLines = models.Orderline.findAll({ where: { order_id: orderId } })
+    return orderLines
+}
+
 exports.readProducts = readProducts
 exports.readProduct = readProduct
 exports.createOrder = createOrder
+exports.readOrders = readOrders
+exports.readOrder = readOrder
+exports.readOrderLines = readOrderLines

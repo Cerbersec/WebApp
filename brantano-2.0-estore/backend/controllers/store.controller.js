@@ -1,11 +1,6 @@
 //PGUR: Put, Get, Update, Remove
 const storeDb = require('../db/storeDb')
-const userDb = require('../db/userDb')
 const models = require('../models')
-
-const jwt = require('jsonwebtoken')
-const config = require('../config/jwt-config')
-const { promisify } = require('util');
 
 const getProducts = async(req, res, next) => {
     const pageNo = req.params.page
@@ -56,10 +51,11 @@ const postCheckout = async(req, res, next) => {
         req.checkBody('total_price').notEmpty()
         req.checkBody('shipping_costs').notEmpty()
 
-        const decoded = await promisify(jwt.verify)(req.cookies.jwt, config.jwt_secret);
-        const result = await userDb.readUserById(decoded.id)
-        req.user = result.customer_id;
-        //above code in helper class?
+        if (req.user == null) {
+            res.json({
+                message: "Not logged in"
+            })
+        }
 
         const { total_price, shipping_costs} = req.body
         const orderLines = JSON.parse(req.body.order_lines)
@@ -81,6 +77,49 @@ const postCheckout = async(req, res, next) => {
                 message: "Something went wrong, Order could not be placed"
             })
         }
+    } catch(e) {
+        console.log(e.message)
+        res.sendStatus(500) && next(e)
+    }
+}
+
+const getOrders = async(req, res) => {
+    try {
+        const orders = await storeDb.readOrders(req.user)
+        
+        if (orders == null) {
+            return res.status(404).json({
+                message: 'no orders found'
+            })
+        }
+        res.status(200).json({
+            orders: orders
+        })
+
+    } catch(e) {
+        console.log(e.message)
+        res.sendStatus(500) && next(e)
+    }
+}
+
+const getOrderByID = async(req, res) => {
+    const orderId = req.params.orderid
+
+    try {
+        const order = await storeDb.readOrder(req.user,orderId)
+
+        if (order == null) {
+            return res.status(404).json({
+                message: 'no order found'
+            })
+        }
+
+        const orderLines = await storeDb.readOrderLines(orderId)
+
+        res.status(200).json({
+            order: order,
+            orderlines: orderLines
+        })
 
     } catch(e) {
         console.log(e.message)
@@ -90,4 +129,6 @@ const postCheckout = async(req, res, next) => {
 
 exports.getProducts = getProducts
 exports.getProductbyID = getProductbyID
-exports.postCheckout = postCheckout 
+exports.postCheckout = postCheckout
+exports.getOrders = getOrders
+exports.getOrderByID = getOrderByID
