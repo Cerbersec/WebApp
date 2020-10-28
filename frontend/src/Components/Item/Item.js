@@ -26,7 +26,7 @@ class ConnectedItem extends Component {
           <CardMedia
             style={{ height: 140 }}
             //TODO: fix imageurl
-            //image={this.props.item.imageUrls[0]}
+            image={this.props.item.image_url}
           />
           <CardContent style={{ height: 50 }}>
             <div
@@ -40,7 +40,7 @@ class ConnectedItem extends Component {
             >
               {this.props.item.name}
             </div>
-            <div style={{ margin: 5 }}>Price: {this.props.item.retail_price} $</div>
+            <div style={{ margin: 5 }}>Price: &euro; {this.props.item.retail_price} </div>
             <div style={{ color: "#1a9349", fontWeight: "bold", margin: 5 }}>
               {this.props.item.popular && "Popular"}
             </div>
@@ -51,7 +51,7 @@ class ConnectedItem extends Component {
         >
           <Button
             size="small"
-            style={{ marginRight: 60 }}
+            style={{ marginRight: 60 , marginTop: 40}}
             onClick={() => {
               this.props.history.push("/details/" + this.props.item.product_id);
             }}
@@ -62,6 +62,7 @@ class ConnectedItem extends Component {
           <Tooltip title="Add to cart">
             <IconButton
               size="small"
+              style={{ marginTop: 40 }}
               onClick={e => {
                 e.stopPropagation();
                 this.props.dispatch(

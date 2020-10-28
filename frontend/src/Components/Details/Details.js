@@ -80,7 +80,7 @@ class ConnectedDetails extends Component {
         </div>
         <div style={{ display: "flex" }}>
           <img
-            //src={this.state.item.imageUrls[0]}
+            src={this.state.item.image_url}
             alt=""
             width={250}
             height={250}

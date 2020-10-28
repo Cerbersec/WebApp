@@ -36,6 +36,18 @@ module.exports = function(sequelize, Sequelize) {
         stock_quantity: {
             type: Sequelize.INTEGER,
             allowNull: false
+        },
+        popular: {
+            type: Sequelize.BOOLEAN,
+            allowNull: false
+        },
+        description: {
+            type: Sequelize.TEXT,
+            allowNull: true
+        },
+        image_url: {
+            type: Sequelize.TEXT,
+            allowNull: true
         }
     },
     {
