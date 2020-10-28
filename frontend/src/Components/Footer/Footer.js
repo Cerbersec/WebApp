@@ -69,7 +69,21 @@ class Footer extends Component {
               textDecoration: "underline"
             }}
           >
-            <div className="footerItem">Company Info</div>
+            <div className="footerItem">Info</div>
+          </NavLink>
+          <NavLink
+            to={"/privacy"}
+            exact
+            style={{
+              textDecoration: "none",
+              color: "rgb(32, 32, 34)"
+            }}
+            activeStyle={{
+              color: "#4282ad",
+              textDecoration: "underline"
+            }}
+          >
+            <div className="footerItem">Privacy Regulation</div>
           </NavLink>
         </div>
         <div>

@@ -69,7 +69,7 @@ class ConnectedHeader extends Component {
               onChange={e => {
                 this.setState({ searchTerm: e.target.value });
               }}
-              style={{ marginLeft: 30, width: 250, marginBottom: 15 }}
+              style={{ marginLeft: 30, width: 250, marginBottom: 15, color:"white" }}
             />
 
             <Select
