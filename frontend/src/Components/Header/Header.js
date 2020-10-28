@@ -63,6 +63,7 @@ class ConnectedHeader extends Component {
 
             <Link to="/"><img src={cartImage} alt={"Logo"} style={{width: 120, height: 90, marginLeft: 10 }} /></Link>
             <TextField
+              
               label="Search products"
               value={this.state.searchTerm}
               onChange={e => {
@@ -72,7 +73,7 @@ class ConnectedHeader extends Component {
             />
 
             <Select
-              style={{ maxWidth: 200, marginLeft: 20 }}
+              style={{ maxWidth: 200, marginLeft: 20, color:"lightgray" }}
               value={this.state.categoryFilterValue}
               MenuProps={{
                 style: {
