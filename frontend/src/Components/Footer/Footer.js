@@ -20,7 +20,7 @@ class Footer extends Component {
           <div
             style={{ color: "#504F5A", fontWeight: "bold", marginBottom: 10 }}
           >
-            Buy
+            Customer Service
           </div>
           <NavLink
             to={"/payment"}
