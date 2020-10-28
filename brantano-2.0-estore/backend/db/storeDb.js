@@ -1,7 +1,7 @@
 // CRUD: create, read, update, delete
 const models = require('../models')
 
-const readProducts = (pageLimit,pageOffset) => {
+const readProducts = async (pageLimit,pageOffset) => {
     return models.Product.findAll({ offset: pageOffset, limit: pageLimit})
 }
 
