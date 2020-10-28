@@ -20,7 +20,7 @@ class ConnectedItem extends Component {
       >
         <CardActionArea
           onClick={() => {
-            this.props.history.push("/details/" + this.props.item.id);
+            this.props.history.push("/details/" + this.props.item.product_id);//id
           }}
         >
           <CardMedia
@@ -40,7 +40,7 @@ class ConnectedItem extends Component {
             >
               {this.props.item.name}
             </div>
-            <div style={{ margin: 5 }}>Price: {this.props.item.price} $</div>
+            <div style={{ margin: 5 }}>Price: {this.props.item.retail_price} $</div>
             <div style={{ color: "#1a9349", fontWeight: "bold", margin: 5 }}>
               {this.props.item.popular && "Popular"}
             </div>
@@ -53,7 +53,7 @@ class ConnectedItem extends Component {
             size="small"
             style={{ marginRight: 60 }}
             onClick={() => {
-              this.props.history.push("/details/" + this.props.item.id);
+              this.props.history.push("/details/" + this.props.item.product_id);
             }}
           >
             {" "}

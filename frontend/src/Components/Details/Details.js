@@ -28,7 +28,7 @@ class ConnectedDetails extends Component {
     let item = await Api.getItemUsingID(productId);
 
     let relatedItems = await Api.searchItems({
-      category: item.category
+      category: item.category_id
     });
 
     // Make sure this component is still mounted before we set state..
@@ -36,7 +36,7 @@ class ConnectedDetails extends Component {
       this.setState({
         item,
         quantity: 1,
-        relatedItems: relatedItems.data.filter(x => x.id !== item.id),
+        relatedItems: relatedItems.data.filter(x => x.product_id !== item.product_id),
         itemLoading: false
       });
     }
@@ -80,7 +80,7 @@ class ConnectedDetails extends Component {
         </div>
         <div style={{ display: "flex" }}>
           <img
-            src={this.state.item.imageUrls[0]}
+            //src={this.state.item.imageUrls[0]}
             alt=""
             width={250}
             height={250}
@@ -103,7 +103,7 @@ class ConnectedDetails extends Component {
                 fontSize: 16
               }}
             >
-              Price: {this.state.item.price} $
+              Price: {this.state.item.retail_price} $
             </div>
             {this.state.item.popular && (
               <div style={{ fontSize: 14, marginTop: 5, color: "#228B22" }}>
@@ -172,7 +172,7 @@ class ConnectedDetails extends Component {
           Related Items
         </div>
         {this.state.relatedItems.slice(0, 3).map(x => {
-          return <Item key={x.id} item={x} />;
+          return <Item key={x.product_id} item={x} />;
         })}
       </div>
     );

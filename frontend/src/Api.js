@@ -1,17 +1,14 @@
 import { sampleProducts } from "./Data";
 import axios from "axios"
 
-///
-//
-// Methods of this class are used to simulate calls to server.
-//
 class Api {
 
   getItemUsingID(id) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        let res = sampleProducts.filter(x => x.id === parseInt(id, 10));
-        resolve(res.length === 0 ? null : res[0]);
+        axios.get("/store/productinfo/" + parseInt(id, 10)).then((response) => { 
+          resolve(response.lenght === 0 ? null : response.data.product)
+        })
       }, 500);
     });
   }

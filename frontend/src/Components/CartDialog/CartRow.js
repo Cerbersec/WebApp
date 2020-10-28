@@ -15,7 +15,7 @@ const CartRow = props => {
   return (
     <TableRow>
       <TableCell>
-        <Link to={`/details/${item.id}`}>
+        <Link to={`/details/${item.product_id}`}>
           <div
             onClick={() => {
               props.dispatch(showCartDlg(false));
@@ -25,7 +25,7 @@ const CartRow = props => {
           </div>
         </Link>
       </TableCell>
-      <TableCell>{item.price}</TableCell>
+      <TableCell>{item.retail_price}</TableCell>
       <TableCell>
         <TextField
           type="number"
@@ -36,7 +36,7 @@ const CartRow = props => {
             if (quantity < 0) return;
             props.dispatch(
               updateCartItemQnt({
-                id: item.id,
+                id: item.product_id,
                 quantity
               })
             );
@@ -47,7 +47,7 @@ const CartRow = props => {
         <Button
           color="secondary"
           onClick={() => {
-            props.dispatch(deleteCartItem(item.id));
+            props.dispatch(deleteCartItem(item.product_id));
           }}
         >
           Delete

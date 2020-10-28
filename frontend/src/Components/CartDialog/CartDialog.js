@@ -21,7 +21,7 @@ const mapStateToProps = state => {
 class ConnectedCartDialog extends Component {
   render() {
     let totalPrice = this.props.items.reduce((accumulator, item) => {
-      return accumulator + item.price * item.quantity;
+      return accumulator + item.retail_price * item.quantity;
     }, 0);
 
     return (
@@ -60,7 +60,7 @@ class ConnectedCartDialog extends Component {
               </TableHead>
               <TableBody>
                 {this.props.items.map((item, index) => {
-                  return <CartRow item={item} key={item.id} {...this.props} />;
+                  return <CartRow item={item} key={item.product_id} {...this.props} />;
                 })}
               </TableBody>
             </Table>

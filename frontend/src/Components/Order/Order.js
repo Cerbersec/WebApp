@@ -19,7 +19,7 @@ const mapStateToProps = state => {
 class ConnectedOrder extends Component {
   render() {
     let totalPrice = this.props.checkedOutItems.reduce((accumulator, item) => {
-      return accumulator + item.price * item.quantity;
+      return accumulator + item.retail_price * item.quantity;
     }, 0);
 
     return (
@@ -36,9 +36,9 @@ class ConnectedOrder extends Component {
           <TableBody>
             {this.props.checkedOutItems.map((item, index) => {
               return (
-                <TableRow key={item.id}>
+                <TableRow key={item.product_id}>
                   <TableCell>{item.name}</TableCell>
-                  <TableCell>{item.price}</TableCell>
+                  <TableCell>{item.retail_price}</TableCell>
                   <TableCell>{item.quantity}</TableCell>
                 </TableRow>
               );
@@ -61,7 +61,7 @@ class ConnectedOrder extends Component {
           variant="outlined"
           disabled={totalPrice === 0}
           onClick={() => {
-            console.log("purchased");
+            console.log("purchased");//purchase API call
           }}
           style={{ margin: 5, marginTop: 30 }}
         >
