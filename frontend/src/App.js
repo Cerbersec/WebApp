@@ -12,9 +12,17 @@ import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
 import Footer from "./Components/Footer/Footer";
 import PrivacyPolicy from "./Components/PrivacyRegulation/PrivacyRegulation.js";
 
+/* THEME */
+import { MuiThemeProvider } from '@material-ui/core/styles'
+import CssBaseline from '@material-ui/core/CssBaseline'
+import theme from './theme'
+/* END */
+
 class App extends Component {
   render() {
     return (
+      <MuiThemeProvider theme={theme}>
+        <CssBaseline />
       <div className="app">
         <Header />
         <div className="app-body">
@@ -37,6 +45,7 @@ class App extends Component {
         </div>
         <Footer />
       </div>
+      </MuiThemeProvider>
     );
   }
 }

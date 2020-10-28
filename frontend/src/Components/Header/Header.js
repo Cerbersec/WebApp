@@ -51,11 +51,13 @@ class ConnectedHeader extends Component {
     return (
       <AppBar
         position="static"
-        style={{ backgroundColor: "#183399", padding: 0, marginBottom: 10 }}//header color
+        color="primary"
+        style={{ /*backgroundColor: "#183399",*/ padding: 0, marginBottom: 10 }}//header color
       >
         <Toolbar>
           <div className="left-part">
             <IconButton
+              color="secondary"
               onClick={() => {
                 this.props.dispatch(toggleMenu());
               }}
@@ -66,14 +68,14 @@ class ConnectedHeader extends Component {
             <Link to="/"><img src={cartImage} alt={"Logo"} style={{width: 120, height: 90, marginLeft: 10 }} /></Link>
 
             <TextField
-              
+              style={{ marginLeft: 30, width: 250, marginBottom: 15, color:"white" }}
+              inputProps = {{ style: { color: 'white' } }}
+              InputLabelProps = {{ style: { color: 'white' } }}
               label="Search products"
-              color="primary"
               value={this.state.searchTerm}
               onChange={e => {
                 this.setState({ searchTerm: e.target.value });
-              }}
-              style={{ marginLeft: 30, width: 250, marginBottom: 15, color:"white" }}
+              }}         
             />
 
             <Select
@@ -92,9 +94,9 @@ class ConnectedHeader extends Component {
             </Select>
 
             <Button
-              
+              color="secondary"
               variant="outlined"
-              style={{marginLeft: 20,color:"white"}}
+              style={{marginLeft: 20, /*color:"white"*/ }}
               onClick={() => {
                 this.props.history.push(
                   "/?category=" +
@@ -111,8 +113,9 @@ class ConnectedHeader extends Component {
           <div className="right-part">
             {!this.props.loggedInUser ? (
               <Button
+                color="secondary"
                 variant="outlined"
-                style={{ marginRight: 20 , color:"white"}}
+                style={{ marginRight: 20 , /*color:"white"*/ }}
                 
                 onClick={() => {
                   this.props.history.push("/login");
@@ -132,7 +135,8 @@ class ConnectedHeader extends Component {
             )}
             <IconButton
               aria-label="Cart"
-              style={{color:"white"}}
+              //style={{color:"white"}}
+              color="secondary"
               onClick={() => {
                 this.props.dispatch(showCartDlg(true));
               }}
