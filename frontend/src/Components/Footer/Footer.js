@@ -20,7 +20,7 @@ class Footer extends Component {
           <div
             style={{ color: "#504F5A", fontWeight: "bold", marginBottom: 10 }}
           >
-            Buy
+            Customer Service
           </div>
           <NavLink
             to={"/payment"}
@@ -69,7 +69,21 @@ class Footer extends Component {
               textDecoration: "underline"
             }}
           >
-            <div className="footerItem">Company Info</div>
+            <div className="footerItem">Info</div>
+          </NavLink>
+          <NavLink
+            to={"/privacy"}
+            exact
+            style={{
+              textDecoration: "none",
+              color: "rgb(32, 32, 34)"
+            }}
+            activeStyle={{
+              color: "#4282ad",
+              textDecoration: "underline"
+            }}
+          >
+            <div className="footerItem">Privacy Regulation</div>
           </NavLink>
         </div>
         <div>

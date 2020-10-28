@@ -9,7 +9,7 @@ import Button from "@material-ui/core/Button";
 import { withRouter, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { showCartDlg, toggleMenu, logout } from "../../Redux/Actions";
-import cartImage from "../../Images/brantayes.jpg";
+import cartImage from "../../Images/brantayes.png";
 import Auth from "../../Auth";
 import { categories } from "../../Data";
 import Person from "@material-ui/icons/PersonOutline";
@@ -69,7 +69,7 @@ class ConnectedHeader extends Component {
               onChange={e => {
                 this.setState({ searchTerm: e.target.value });
               }}
-              style={{ marginLeft: 30, width: 250, marginBottom: 15 }}
+              style={{ marginLeft: 30, width: 250, marginBottom: 15, color:"white" }}
             />
 
             <Select
