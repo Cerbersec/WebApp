@@ -1,10 +1,12 @@
 import { sampleProducts } from "./Data";
+import axios from "axios"
 
 ///
 //
 // Methods of this class are used to simulate calls to server.
 //
 class Api {
+
   getItemUsingID(id) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -29,7 +31,7 @@ class Api {
   }
 
   searchItems({
-    category = "popular",
+    category = "All categories",//popular
     term = "",
     sortValue = "lh",
     itemsPerPage = 10,
@@ -38,40 +40,46 @@ class Api {
     maxPrice = 1000,
     page = 1
   }) {
-    // Turn this into a boolean
-    usePriceFilter = usePriceFilter === "true" && true;
+      // Turn this into a boolean
+      usePriceFilter = usePriceFilter === "true" && true;
 
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        let data = sampleProducts.filter(item => {
-          if (
-            usePriceFilter &&
-            (item.price < minPrice || item.price > maxPrice)
-          ) {
-            return false;
-          }
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
 
-          if (category === "popular") {
-            return item.popular;
-          }
+          //axios API call
+          axios.get("/store/products/" + page).then((response) => { 
+          let products = response.data.products
 
-          if (category !== "All categories" && category !== item.category)
-            return false;
+          let data = products.filter(item => {
+            if (
+              usePriceFilter &&
+              (item.price < minPrice || item.price > maxPrice)
+            ) {
+              return false;
+            }
 
-          if (term && !item.name.toLowerCase().includes(term.toLowerCase()))
-            return false;
+            if (category === "popular") {
+              return item.popular;
+            }
 
-          return true;
-        });
+            if (category !== "All categories" && category !== item.category)
+              return false;
 
-        let totalLength = data.length;
+            if (term && !item.name.toLowerCase().includes(term.toLowerCase()))
+              return false;
 
-        data = this.sortByPrice(data, sortValue);
+            return true;
+          });
 
-        data = data.slice((page - 1) * itemsPerPage, page * itemsPerPage);
+          let totalLength = data.length;
 
-        resolve({ data, totalLength });
-      }, 500);
+          data = this.sortByPrice(data, sortValue);
+
+          data = data.slice((page - 1) * itemsPerPage, page * itemsPerPage);
+
+          resolve({ data, totalLength });
+        }, 500);
+      })
     });
   }
 }

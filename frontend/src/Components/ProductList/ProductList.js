@@ -6,9 +6,6 @@ import Api from "../../Api";
 import Paging from "../Paging/Paging";
 import ProductsHeader from "../ProductsHeader/ProductsHeader";
 
-//axios
-import axios from "axios";
-
 // This component is responsible for fetching products.
 // It determines from query string which products to fetch.
 // The URL is checked on initial mount and when URL changes.
@@ -30,22 +27,13 @@ class ProductList extends Component {
     // Parse the query string
     let qsAsObject = queryString.parse(this.props.location.search);
 
-    //let results = await Api.searchItems(qsAsObject);
+    let response = await Api.searchItems(qsAsObject);
 
-    /* Manual API Call */
-    
-    //TODO: figure out paging
-    //TODO: implement filters with qsAsObject
-    axios.get("/store/products/1").then((response) => {
-      console.log(response.data.products)
-      this.setState({
-        items: response.data.products,
+    this.setState({
+        items: response.data,
         loading: false,
         totalItemsCount: response.totalLength
-      });
-    })   
-
-    /* End of API Call */
+      });   
   }
 
   componentDidMount() {
