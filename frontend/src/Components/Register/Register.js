@@ -13,6 +13,9 @@ class Register extends Component{
     confirmpass: "",
     email: "",
     adress: "",
+    postal:"",
+    city: "",
+    country:"",
     redirectToReferrer: false
   };
     render(){
@@ -28,7 +31,7 @@ class Register extends Component{
       >
         <div
           style={{
-            height: 200,
+            height: 500,
             width: 200,
             padding: 30,
             display: "flex",
@@ -93,7 +96,39 @@ class Register extends Component{
             type="password"
             placeholder="Confirm password"
             onChange={e => {
-              this.setState({ confirmpass: e.target.value });
+              this.setState({ confirmpas: e.target.value });
+            }}
+          />
+          <TextField
+            style={{marginTop: 20}}
+            value={this.state.adress}
+            placeholder="Adress"
+            onChange={e => {
+              this.setState({ adress: e.target.value });
+            }}
+          />
+          <TextField
+            style={{marginTop: 10}}
+            value={this.state.city}
+            placeholder="City"
+            onChange={e => {
+              this.setState({ city: e.target.value });
+            }}
+          />
+          <TextField
+            style={{marginTop: 10}}
+            value={this.state.postal}
+            placeholder="Postal code"
+            onChange={e => {
+              this.setState({ postal: e.target.value });
+            }}
+          />
+          <TextField
+            style={{marginTop: 10}}
+            value={this.state.Country}
+            placeholder="Country"
+            onChange={e => {
+              this.setState({ country: e.target.value });
             }}
           />
             

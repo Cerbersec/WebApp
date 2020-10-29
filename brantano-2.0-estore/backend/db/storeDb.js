@@ -53,9 +53,14 @@ const readOrderLines = (orderId) => {
     return orderLines
 }
 
+const readCategories = () => {
+    return models.Category.findAll()
+}
+
 exports.readProducts = readProducts
 exports.readProduct = readProduct
 exports.createOrder = createOrder
 exports.readOrders = readOrders
 exports.readOrder = readOrder
 exports.readOrderLines = readOrderLines
+exports.readCategories = readCategories
