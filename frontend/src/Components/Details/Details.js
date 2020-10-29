@@ -28,7 +28,7 @@ class ConnectedDetails extends Component {
     let item = await Api.getItemUsingID(productId);
 
     let relatedItems = await Api.searchItems({
-      category: item.category_id
+      category: item.Category_category_name
     });
 
     // Make sure this component is still mounted before we set state..

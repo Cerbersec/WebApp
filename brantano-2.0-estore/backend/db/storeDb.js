@@ -2,7 +2,7 @@
 const models = require('../models')
 
 const readProducts = async (pageLimit,pageOffset) => {
-    return models.Product.findAll({ offset: pageOffset, limit: pageLimit})
+    return models.Product.findAll({ offset: pageOffset, limit: pageLimit, include: models.Category})
 }
 
 const readProduct = (productId) => {

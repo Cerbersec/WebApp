@@ -21,26 +21,6 @@ app.use(cookieParser())
 app.use(express.static('../frontend/public'))
 app.use(cors())
 
-//req.checkBody()
-/*
-app.use(expressValidator({
-    errorFormatter: function(param, msg, value) {
-      var namespace = param.split('.'),
-      root          = namespace.shift(),
-      formParam     = root;
-  
-      while(namespace.lenght) {
-        formParam += '[' + namespace.shift() + ']';
-      }
-      return {
-        param : formParam,
-        msg   : msg,
-        value : value
-      };
-    }
-  }));
-  */
-
 app.use(expressValidator())
 
 // setup database connection
