@@ -1,18 +1,20 @@
 import React, {Component} from "react";
 import Avatar from "@material-ui/core/Avatar";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import Auth from "../../Auth";
+import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
 
 class Register extends Component{
   state = {
+    firstName:"",
+    lastName:"",
     userName: "",
     pass: "",
+    confirmpass: "",
+    email: "",
+    adress: "",
     redirectToReferrer: false
   };
     render(){
-      
       return(
 
         <div
@@ -20,13 +22,12 @@ class Register extends Component{
           height: "100%",
           display: "flex",
           justifyContent: "center",
-
-          alignItems: "center"
+          marginTop: '100px'
         }}
       >
         <div
           style={{
-            height: 300,
+            height: 200,
             width: 200,
             padding: 30,
             display: "flex",
@@ -36,7 +37,7 @@ class Register extends Component{
           }}
         >
           <Avatar style={{ marginBottom: 10 }}>
-            <LockOutlinedIcon />
+            <GroupAddIcon />
           </Avatar>
           <div
             style={{
@@ -46,8 +47,29 @@ class Register extends Component{
             }}
           >
             {" "}
-            REGISTER{" "}
+            Register{" "}
           </div>
+
+            <div>
+          <TextField
+            value={this.state.firstName}
+            placeholder="First Name"
+            onChange={e => {
+              this.setState({ firstName: e.target.value });
+            }}
+            
+          />
+           <TextField
+            value={this.state.lastName}
+            placeholder="Last name"
+            onChange={e => {
+              this.setState({ lastName: e.target.value });
+            }}
+            style={{marginBottom: 20, marginTop: 10}}
+          />
+          </div>
+
+            <div style={{marginBottom: 20}}>
           <TextField
             value={this.state.userName}
             placeholder="User name"
@@ -55,6 +77,7 @@ class Register extends Component{
               this.setState({ userName: e.target.value });
             }}
           />
+          </div>
           <TextField
             value={this.state.pass}
             type="password"
@@ -63,19 +86,21 @@ class Register extends Component{
               this.setState({ pass: e.target.value });
             }}
           />
-          <Button
-            style={{ marginTop: 20, width: 200 }}
-            variant="outlined"
-            color="primary"
-            onClick={() => {
-              // Simulate authentication call
-              alert("Username " + this.state.userName + "\n Password: " + this.state.pass);
+          <TextField
+            style={{marginTop: 10}}
+            value={this.state.confirmpass}
+            type="password"
+            placeholder="Confirm password"
+            onChange={e => {
+              this.setState({ confirmpass: e.target.value });
             }}
-          >
-            Register
-          </Button>
+          />
+
+
           </div>
           </div>
+           
+
       )
     }
   }
