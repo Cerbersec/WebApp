@@ -11,7 +11,7 @@ import { NavLink } from "react-router-dom";
 
 class ConnectedLogin extends Component {
   state = {
-    userName: "",
+    emailAddress: "",
     pass: "",
     redirectToReferrer: false
   };
@@ -58,10 +58,10 @@ class ConnectedLogin extends Component {
             Log in{" "}
           </div>
           <TextField
-            value={this.state.userName}
-            placeholder="User name"
+            value={this.state.emailAddress}
+            placeholder="Email address"
             onChange={e => {
-              this.setState({ userName: e.target.value });
+              this.setState({ emailAddress: e.target.value });
             }}
           />
           <TextField
@@ -78,7 +78,7 @@ class ConnectedLogin extends Component {
             color="primary"
             onClick={() => {
               // Simulate authentication call
-              Auth.authenticate(this.state.userName, this.state.pass, user => {
+              Auth.authenticate(this.state.emailAddress, this.state.pass, user => {
                 if (!user) {
                   this.setState({ wrongCred: true });
                   return;
@@ -94,7 +94,7 @@ class ConnectedLogin extends Component {
             Log in
           </Button>
           {this.state.wrongCred && (
-            <div style={{ color: "red" }}>Wrong username and/or password</div>
+            <div style={{ color: "red" }}>Wrong email address and/or password</div>
           )}
           <div>
         <NavLink
