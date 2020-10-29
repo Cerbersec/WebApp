@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import Avatar from "@material-ui/core/Avatar";
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
 
 class Register extends Component{
   state = {
@@ -95,8 +96,18 @@ class Register extends Component{
               this.setState({ confirmpass: e.target.value });
             }}
           />
-
-
+            
+            <Button
+            style={{ marginTop: 20, width: 200 }}
+            variant="outlined"
+            color="primary"
+            onClick={() => {
+              // Simulate authentication call
+              alert("Username " + this.state.userName + "\n Password: " + this.state.pass);
+            }}
+          >
+            Register
+          </Button>
           </div>
           </div>
            
