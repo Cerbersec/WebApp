@@ -1,4 +1,3 @@
-import { sampleProducts } from "./Data";
 import axios from "axios"
 
 class Api {

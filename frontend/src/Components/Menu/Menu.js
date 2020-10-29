@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import queryString from "query-string";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { dataForTheMenu } from "../../Data";
+import Api from "../../Api"
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import Icon from "@material-ui/core/Icon";
@@ -28,10 +28,42 @@ class ConnectedMenu extends Component {
       expandedMenuItems: {
         1: true
       },
-      dataForTheMenu
+      dataForTheMenu: []
     };
 
     this.renderMenu = this.renderMenu.bind(this);
+  }
+
+  componentDidMount() {
+    this.fetchCategories();
+  }
+
+  async fetchCategories() {
+    const categories = await Api.getCategories()
+    categories.unshift({
+      category_name: "All categories",
+      icon: "list"
+    })
+
+    const dataForTheMenu = [
+      { name: "Home", url: "/", icon: "home", id: 0 },
+      {
+        name: "Product categories",
+        id: 1,
+        children: categories.map((x, i) => {
+          return {
+            name: x.category_name,
+            id: i,
+            url: "/category=" + x.category_name,
+            icon: x.icon || "group"
+          }
+        }),     
+      }
+    ]
+
+    this.setState({
+      dataForTheMenu: dataForTheMenu
+    })
   }
 
   // This method determines from URL whether to highlight a menu item or not

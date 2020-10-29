@@ -11,7 +11,6 @@ import { connect } from "react-redux";
 import { showCartDlg, toggleMenu, logout } from "../../Redux/Actions";
 import cartImage from "../../Images/brantayes.png";
 import Auth from "../../Auth";
-//import { categories } from "../../Data";
 import Api from "../../Api";
 import Person from "@material-ui/icons/PersonOutline";
 import Avatar from "@material-ui/core/Avatar";
@@ -29,16 +28,6 @@ const mapStateToProps = state => {
   };
 };
 
-// Option items for product categories.
-//TODO: API calls
-/*const categoryOptions = categories.map(x => {
-  return (
-    <MenuItem key={x.category_name} value={x.category_name}>
-      {x.category_name}
-    </MenuItem>
-  );
-});*/
-
 class ConnectedHeader extends Component {
   state = {
     searchTerm: "",
@@ -53,6 +42,10 @@ class ConnectedHeader extends Component {
 
   async fetchCategories() {
     const categories = await Api.getCategories()
+    //manually add All categories option
+    categories.unshift({
+      category_name: "All categories"
+    })
     const categoryOptions = categories.map(x => {
       return (
         <MenuItem key={x.category_name} value={x.category_name}>
