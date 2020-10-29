@@ -1,9 +1,19 @@
 import React, {Component} from "react";
 import Avatar from "@material-ui/core/Avatar";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import GroupAddIcon from '@material-ui/icons/GroupAdd';
+import TextField from "@material-ui/core/TextField";
 
 class Register extends Component{
-   
+  state = {
+    firstName:"",
+    lastName:"",
+    userName: "",
+    pass: "",
+    confirmpass: "",
+    email: "",
+    adress: "",
+    redirectToReferrer: false
+  };
     render(){
       return(
 
@@ -12,13 +22,12 @@ class Register extends Component{
           height: "100%",
           display: "flex",
           justifyContent: "center",
-
-          alignItems: "center"
+          marginTop: '100px'
         }}
       >
         <div
           style={{
-            height: 300,
+            height: 200,
             width: 200,
             padding: 30,
             display: "flex",
@@ -28,7 +37,7 @@ class Register extends Component{
           }}
         >
           <Avatar style={{ marginBottom: 10 }}>
-            <LockOutlinedIcon />
+            <GroupAddIcon />
           </Avatar>
           <div
             style={{
@@ -38,10 +47,60 @@ class Register extends Component{
             }}
           >
             {" "}
-            REGISTER{" "}
+            Register{" "}
+          </div>
+
+            <div>
+          <TextField
+            value={this.state.firstName}
+            placeholder="First Name"
+            onChange={e => {
+              this.setState({ firstName: e.target.value });
+            }}
+            
+          />
+           <TextField
+            value={this.state.lastName}
+            placeholder="Last name"
+            onChange={e => {
+              this.setState({ lastName: e.target.value });
+            }}
+            style={{marginBottom: 20, marginTop: 10}}
+          />
+          </div>
+
+            <div style={{marginBottom: 20}}>
+          <TextField
+            value={this.state.userName}
+            placeholder="User name"
+            onChange={e => {
+              this.setState({ userName: e.target.value });
+            }}
+          />
+          </div>
+          <TextField
+            value={this.state.pass}
+            type="password"
+            placeholder="Password"
+            onChange={e => {
+              this.setState({ pass: e.target.value });
+            }}
+          />
+          <TextField
+            style={{marginTop: 10}}
+            value={this.state.confirmpass}
+            type="password"
+            placeholder="Confirm password"
+            onChange={e => {
+              this.setState({ confirmpass: e.target.value });
+            }}
+          />
+
+
           </div>
           </div>
-          </div>
+           
+
       )
     }
   }
