@@ -51,20 +51,24 @@ const postCheckout = async(req, res, next) => {
         req.checkBody('total_price').notEmpty()
         req.checkBody('shipping_costs').notEmpty()
 
+        req.user = 1
         if (req.user == null) {
             res.json({
                 message: "Not logged in"
             })
         }
 
-        const { total_price, shipping_costs} = req.body
-        const orderLines = JSON.parse(req.body.order_lines)
+        const { total_price, shipping_costs} = req.body     
 
         const newOrder = new models.Order({
             total_price: total_price,
             shipping_costs: shipping_costs,
             order_date: new Date(Date.now())
         })
+        //const orderLines = JSON.parse(req.body.order_lines)
+
+        const orderLines = [{"product_id":"3","quantity":"4","subtotal_price":"4","discount":"0"}, {"product_id":"1","quantity":"1","subtotal_price":"27","discount":"0"}]
+
         const placedOrder = await storeDb.createOrder(newOrder,orderLines,req.user)
         
         if(placedOrder != null) {
