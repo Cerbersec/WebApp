@@ -73,7 +73,7 @@ class ConnectedLogin extends Component {
             }}
           />
           <Button
-            style={{ marginTop: 20, width: 200 }}
+            style={{ marginTop: 20, width: 200, marginBottom: 10 }}
             variant="outlined"
             color="primary"
             onClick={() => {
