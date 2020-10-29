@@ -89,6 +89,18 @@ class Api {
     });
   }
 
+  checkout(data) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        axios.post("/store/checkout",data).then((response) => { 
+          resolve(response.lenght === 0 ? null : response.data.order)
+          console.log(response)
+        })
+      }, 500);
+    });
+
+  }
+
 }
 
 export default new Api();

@@ -62,6 +62,7 @@ class ConnectedOrder extends Component {
           disabled={totalPrice === 0}
           onClick={() => {
             console.log("purchased");//purchase API call
+
           }}
           style={{ margin: 5, marginTop: 30 }}
         >
