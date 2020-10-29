@@ -11,6 +11,7 @@ import Login from "./Components/Login/Login";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
 import Footer from "./Components/Footer/Footer";
 import PrivacyPolicy from "./Components/PrivacyRegulation/PrivacyRegulation.js";
+import register from "./Components/Register/Register.js";
 
 /* THEME */
 import { MuiThemeProvider } from '@material-ui/core/styles'
@@ -35,6 +36,7 @@ class App extends Component {
               <Route path="/login" component={Login} />
               <Route path="/privacy" component={PrivacyPolicy}/>
               <ProtectedRoute path="/order" component={Order} />
+              <Route path="/register" component={register}/>
               <Route
                 component={() => (
                   <div style={{ padding: 20 }}>Page not found</div>

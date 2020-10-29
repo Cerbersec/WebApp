@@ -7,6 +7,7 @@ import Button from "@material-ui/core/Button";
 import { setLoggedInUser } from "../../Redux/Actions";
 import Avatar from "@material-ui/core/Avatar";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import { NavLink } from "react-router-dom";
 
 class ConnectedLogin extends Component {
   state = {
@@ -95,8 +96,17 @@ class ConnectedLogin extends Component {
           {this.state.wrongCred && (
             <div style={{ color: "red" }}>Wrong username and/or password</div>
           )}
+          <div>
+        <NavLink
+      to={"/register"}
+    >
+      <div >Nog geen account?</div>
+    </NavLink>
         </div>
+        </div>
+        
       </div>
+
     );
   }
 }
