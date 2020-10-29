@@ -73,7 +73,8 @@ class Api {
 
           data = this.sortByPrice(data, sortValue);
 
-          data = data.slice((page - 1) * itemsPerPage, page * itemsPerPage);
+          //data = data.slice((page - 1) * itemsPerPage, page * itemsPerPage);
+          data = data.slice(0, itemsPerPage)
 
           resolve({ data, totalLength });
         }, 500);

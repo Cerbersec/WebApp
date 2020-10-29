@@ -4,11 +4,11 @@ const models = require('../models')
 
 const getProducts = async(req, res, next) => {
     const pageNo = req.params.page
-    const resultsPerPage = 20
+    const resultsPerPage = 10
     const searchOffset = (pageNo -1) * resultsPerPage
 
     try {
-        const products = await storeDb.readProducts(resultsPerPage,searchOffset)
+        const products = await storeDb.readProducts(resultsPerPage + 1,searchOffset)
         
         if (products.length == 0) {
             return res.status(404).json({
