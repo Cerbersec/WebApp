@@ -127,8 +127,28 @@ const getOrderByID = async(req, res) => {
     }
 }
 
+const getCategories = async (req, res, next) => {
+    try {
+        const categories = await storeDb.readCategories()
+
+        if(!categories) {
+            return res.status(404).json({
+                message: 'no categories found'
+            })
+        }
+
+        res.status(200).json({
+            categories: categories
+        })
+    } catch(e) {
+        console.log(e.message)
+        res.sendStatus(500) && next(e)
+    }
+}
+
 exports.getProducts = getProducts
 exports.getProductbyID = getProductbyID
 exports.postCheckout = postCheckout
 exports.getOrders = getOrders
 exports.getOrderByID = getOrderByID
+exports.getCategories = getCategories
