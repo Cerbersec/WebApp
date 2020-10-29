@@ -21,26 +21,6 @@ app.use(cookieParser())
 app.use(express.static('../frontend/public'))
 app.use(cors())
 
-//req.checkBody()
-/*
-app.use(expressValidator({
-    errorFormatter: function(param, msg, value) {
-      var namespace = param.split('.'),
-      root          = namespace.shift(),
-      formParam     = root;
-  
-      while(namespace.lenght) {
-        formParam += '[' + namespace.shift() + ']';
-      }
-      return {
-        param : formParam,
-        msg   : msg,
-        value : value
-      };
-    }
-  }));
-  */
-
 app.use(expressValidator())
 
 // setup database connection
@@ -79,7 +59,7 @@ app.use((err, req, res, next) => {
 
 //sync models with db before app start: force = true to drop tables at start up
 const models = require('./models')
-models.sequelize.sync({ force: false }).then(function() {
+models.sequelize.sync({ force: true }).then(function() {
     app.listen(port, function() {
         console.log(`Server is running on port: ${port}`)
     })

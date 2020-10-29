@@ -47,6 +47,7 @@ class Api {
           let products = response.data.products
 
           let data = products.filter(item => {
+            
             if (
               usePriceFilter &&
               (item.price < minPrice || item.price > maxPrice)
@@ -58,8 +59,9 @@ class Api {
               return item.popular;
             }
 
-            if (category !== "All categories" && category !== item.category_name)
+            if (category !== "All categories" && category !== item.Category.category_name) {
               return false;
+            }
 
             if (term && !item.name.toLowerCase().includes(term.toLowerCase()))
               return false;
