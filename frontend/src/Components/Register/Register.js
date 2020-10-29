@@ -96,7 +96,7 @@ class Register extends Component{
             type="password"
             placeholder="Confirm password"
             onChange={e => {
-              this.setState({ confirmpas: e.target.value });
+              this.setState({ confirmpass: e.target.value });
             }}
           />
           <TextField
