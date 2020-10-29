@@ -1,8 +1,8 @@
 	INSERT INTO brantano.dbo.categories(category_name, category_age, gender, created_at, updated_at)
-	VALUES ('Shoes', 'ADULT', 'M', '202-10-15', '2020-10-15')
+	VALUES ('Shoes', 'ADULT', 'M', '2020-10-15', '2020-10-15')
 
 	INSERT INTO brantano.dbo.categories(category_name, category_age, gender, created_at, updated_at)
-	VALUES ('Shoes', 'ADULT', 'F', '202-10-15', '2020-10-15')
+	VALUES ('Shoes', 'ADULT', 'F', '2020-10-15', '2020-10-15')
 	
 	
 	
