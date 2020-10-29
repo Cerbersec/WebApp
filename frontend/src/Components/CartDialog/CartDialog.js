@@ -13,7 +13,6 @@ import CartRow from "./CartRow";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCartOutlined";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import Api from "../../Api";
 
 const mapStateToProps = state => {
   return { open: state.showCartDialog, items: state.cartItems };
@@ -81,13 +80,6 @@ class ConnectedCartDialog extends Component {
               color="primary"
               disabled={totalPrice === 0}
               onClick={() => {
-                const orderdata = {
-                  "total_price": totalPrice,
-                  "shipping_costs": 12,
-                  "order_lines" : ""
-                };
-                console.log("purchased");//purchase API call
-                Api.checkout(orderdata);
                 this.props.dispatch(showCartDlg(false));
                 this.props.dispatch(setCheckedOutItems(this.props.items));
                 this.props.history.push("/order");

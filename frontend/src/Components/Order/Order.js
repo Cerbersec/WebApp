@@ -8,6 +8,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import { setCheckedOutItems } from "../../Redux/Actions";
+import Api from "../../Api";
 
 const mapStateToProps = state => {
   return {
@@ -61,8 +62,14 @@ class ConnectedOrder extends Component {
           variant="outlined"
           disabled={totalPrice === 0}
           onClick={() => {
+            const orderdata = {
+              "total_price": totalPrice,
+              "shipping_costs": 12,
+              "order_lines" : this.props.checkedOutItems
+            };
+            console.log(this.props.checkedOutItems)
             console.log("purchased");//purchase API call
-
+            Api.checkout(orderdata);
           }}
           style={{ margin: 5, marginTop: 30 }}
         >

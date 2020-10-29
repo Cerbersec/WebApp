@@ -65,9 +65,7 @@ const postCheckout = async(req, res, next) => {
             shipping_costs: shipping_costs,
             order_date: new Date(Date.now())
         })
-        //const orderLines = JSON.parse(req.body.order_lines)
-
-        const orderLines = [{"product_id":"3","quantity":"4","subtotal_price":"4","discount":"0"}, {"product_id":"1","quantity":"1","subtotal_price":"27","discount":"0"}]
+        const orderLines = req.body.order_lines
 
         const placedOrder = await storeDb.createOrder(newOrder,orderLines,req.user)
         
