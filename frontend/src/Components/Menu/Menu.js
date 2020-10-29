@@ -54,7 +54,7 @@ class ConnectedMenu extends Component {
           return {
             name: x.category_name,
             id: i,
-            url: "/category=" + x.category_name,
+            url: "/?category=" + x.category_name,
             icon: x.icon || "group"
           }
         }),     
