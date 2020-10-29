@@ -31,7 +31,7 @@ class Register extends Component{
       >
         <div
           style={{
-            height: 400,
+            height: 500,
             width: 200,
             padding: 30,
             display: "flex",
