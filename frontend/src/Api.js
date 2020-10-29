@@ -79,6 +79,17 @@ class Api {
       })
     });
   }
+
+  getCategories() {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        axios.get("/store/categories/").then((response) => { 
+          resolve(response.lenght === 0 ? null : response.data.categories)
+        })
+      }, 500);
+    });
+  }
+
 }
 
 export default new Api();
