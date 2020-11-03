@@ -22,6 +22,8 @@ class Register extends Component{
     redirectToReferrer: false,
     test: 'false',
     reply:"",
+    bus_nr:"",
+    phone:""
     
   };
     render(){
@@ -41,6 +43,9 @@ class Register extends Component{
             street_name: this.state.street,
             street_nr: this.state.streetnr,
             postal_code: this.state.postal,
+            phone: this.state.phone,
+            bus_nr: this.state.bus_nr,
+
             city: this.state.city,
             country: this.state.country,
           }
@@ -67,7 +72,7 @@ class Register extends Component{
       >
         <div
           style={{
-            height: 500,
+            height: 600,
             width: 200,
             padding: 30,
             display: "flex",
@@ -104,6 +109,14 @@ class Register extends Component{
             placeholder="Last name"
             onChange={e => {
               this.setState({ lastName: e.target.value });
+            }}
+            style={{marginTop: 10}}
+          />
+          <TextField
+            value={this.state.phone}
+            placeholder="Phone"
+            onChange={e => {
+              this.setState({ phone: e.target.value });
             }}
             style={{marginTop: 10}}
           />
@@ -166,6 +179,14 @@ class Register extends Component{
             placeholder="Street number"
             onChange={e => {
               this.setState({ streetnr : e.target.value });
+            }}
+          />
+           <TextField
+            style={{marginTop: 10}}
+            value={this.state.bus_nr}
+            placeholder="Bus number"
+            onChange={e => {
+              this.setState({ bus_nr : e.target.value });
             }}
           />
           <TextField
