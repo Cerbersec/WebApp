@@ -30,18 +30,21 @@ GO
 CREATE TABLE [dbo].[Product_Database_Brantano](
 	[ID] [nvarchar](50) NOT NULL,
 	[Brand] [nvarchar](50) NOT NULL,
-	[Gender] [nvarchar](50) NOT NULL,
+	[Gender] [nvarchar](50)NOT NULL,
 	[Retail_Price] [float] NOT NULL,
-	[Product] [nvarchar](50) NOT NULL,
+	[Product] [nvarchar](50)NOT NULL,
 	[Name] [nvarchar](100) NOT NULL,
 	[Year] [smallint] NOT NULL,
 	[ReleaseDate] [date] NOT NULL,
-	[Product_Category] [nvarchar](50) NOT NULL,
+	[Product_Category] [nvarchar](50)NOT NULL,
+	[Description] [text] NOT NULL,
 	[Sales_Price] [float] NOT NULL,
-	[Review_ID] [nvarchar](50) NOT NULL,
+	[Review_ID] [nvarchar](50)NOT NULL,
 	[Stock] [tinyint] NOT NULL,
 	[Size] [nvarchar](50) NOT NULL,
 	[Category_ID] [bigint] NOT NULL,
-	[Color] [nvarchar](100) NOT NULL
+	[Color] [nvarchar](100) NOT NULL,
+	[Popular] [tinyint] NOT NULL,
+	[Image_url] [nvarchar](max) NULL
 ) ON [PRIMARY]
 GO
