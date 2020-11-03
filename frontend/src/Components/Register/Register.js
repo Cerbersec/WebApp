@@ -3,22 +3,58 @@ import Avatar from "@material-ui/core/Avatar";
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import axios from "axios"
 
 class Register extends Component{
   state = {
     firstName:"",
     lastName:"",
     userName: "",
+    gender: "",
     pass: "",
     confirmpass: "",
     email: "",
-    adress: "",
+    street: "",
+    streetnr: "",
     postal:"",
     city: "",
     country:"",
-    redirectToReferrer: false
+    redirectToReferrer: false,
+    test: 'false',
+    reply:"",
+    
   };
     render(){
+
+      const postUser = () => {
+        axios({
+          method:'post',
+          url:'/account/register',
+          data:{
+            first_name: this.state.firstName,
+            last_name: this.state.lastName,
+            email_address: this.state.email,
+            gender: this.state.gender,
+            username: this.state.userName,
+            password:this.state.pass,
+            verify_password: this.state.confirmpass,
+            street_name: this.state.street,
+            street_nr: this.state.streetnr,
+            postal_code: this.state.postal,
+            city: this.state.city,
+            country: this.state.country,
+          }
+        })
+        .then(response => this.setState({reply: response }))
+        
+        .catch(error =>{
+          
+          console.error('There was an error!', error);
+        });
+        console.log(this.state.reply)
+      }
+       
+
       return(
 
         <div
@@ -69,6 +105,14 @@ class Register extends Component{
             onChange={e => {
               this.setState({ lastName: e.target.value });
             }}
+            style={{marginTop: 10}}
+          />
+          <TextField
+            value={this.state.gender}
+            placeholder="Gender"
+            onChange={e => {
+              this.setState({ gender: e.target.value });
+            }}
             style={{marginBottom: 20, marginTop: 10}}
           />
           
@@ -79,6 +123,13 @@ class Register extends Component{
             placeholder="User name"
             onChange={e => {
               this.setState({ userName: e.target.value });
+            }}
+          />
+          <TextField
+            value={this.state.email}
+            placeholder="E mail"
+            onChange={e => {
+              this.setState({ email: e.target.value });
             }}
           />
           </div>
@@ -103,10 +154,18 @@ class Register extends Component{
           <div style={{flex: 2}}>
           <TextField
             style={{marginTop: 20}}
-            value={this.state.adress}
-            placeholder="Adress"
+            value={this.state.street}
+            placeholder="Street name"
             onChange={e => {
-              this.setState({ adress: e.target.value });
+              this.setState({ street : e.target.value });
+            }}
+          />
+          <TextField
+            style={{marginTop: 10}}
+            value={this.state.streetnr}
+            placeholder="Street number"
+            onChange={e => {
+              this.setState({ streetnr : e.target.value });
             }}
           />
           <TextField
@@ -139,10 +198,8 @@ class Register extends Component{
             style={{ marginTop: 20, width: 200 }}
             variant="outlined"
             color="primary"
-            onClick={() => {
-              // Simulate authentication call
-              alert("Username " + this.state.userName + "\n Password: " + this.state.pass);
-            }}
+            onClick={() => postUser()
+            }
           >
             Register
           </Button>
