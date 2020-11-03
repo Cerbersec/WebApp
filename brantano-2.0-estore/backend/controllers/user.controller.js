@@ -36,7 +36,8 @@ const register = async(req, res, next) => {
         req.checkBody('username', 'Username is required').notEmpty()
         req.checkBody('password', 'Password is required').notEmpty()
         req.checkBody('verify_password', 'Verify password is required').notEmpty()
-
+        req.checkBody('bus_nr', 'Bus number is required is required').notEmpty()
+        req.checkBody('phone', 'Phone is required').notEmpty()
         req.checkBody('street_name', 'Street name is required').notEmpty()
         req.checkBody('postal_code', 'Postal code is required').notEmpty()
         req.checkBody('street_nr', 'Street number is required').notEmpty()
