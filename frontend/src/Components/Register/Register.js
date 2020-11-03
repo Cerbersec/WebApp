@@ -54,7 +54,7 @@ class Register extends Component{
             Register{" "}
           </div>
 
-            <div>
+            <div style={{flex: 1}}>
           <TextField
             value={this.state.firstName}
             placeholder="First Name"
@@ -71,7 +71,7 @@ class Register extends Component{
             }}
             style={{marginBottom: 20, marginTop: 10}}
           />
-          </div>
+          
 
             <div style={{marginBottom: 20}}>
           <TextField
@@ -99,6 +99,8 @@ class Register extends Component{
               this.setState({ confirmpas: e.target.value });
             }}
           />
+          </div>
+          <div style={{flex: 2}}>
           <TextField
             style={{marginTop: 20}}
             value={this.state.adress}
@@ -131,6 +133,7 @@ class Register extends Component{
               this.setState({ country: e.target.value });
             }}
           />
+          </div>
             
             <Button
             style={{ marginTop: 20, width: 200 }}
