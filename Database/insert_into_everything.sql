@@ -9,8 +9,12 @@
 
 	INSERT INTO brantano.dbo.categories(category_name, category_age, gender, created_at, updated_at)
 	VALUES ('Girls', 'CHILDREN', 'F', '2020-10-15', '2020-10-15')
-	
-	
+
+	INSERT INTO brantano.dbo.customers
+	VALUES ('sander', 'forrer', 'M', '', 'sanderforrer@gmail.com', 'sanderf', 'test', '2020-10-15', '2020-10-15')
+
+	INSERT INTO brantano.dbo.addresses
+	VALUES ('violetlaan', '2980', '47', '', 'zoersel', 'belgie', '2020-10-15', '2020-10-15', '1')
 	
 	INSERT INTO brantano.dbo.products(brand,retail_price,name,release_date,price,stock_quantity,size,created_at, updated_at,color, popular, description, image_url, category_id)
 	VALUES ('Nike', '120', 'Nike Zoom Freak 2', '2020-10-15', '147', '4', '41','2020-10-15','2020-10-15','black', '1', 'Beautiful pair of shoes', 'https://image.shutterstock.com/image-photo/genuine-oil-pull-leather-men-600w-1105607897.jpg', '1')

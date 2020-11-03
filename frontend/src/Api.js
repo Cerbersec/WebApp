@@ -1,4 +1,3 @@
-import { sampleProducts } from "./Data";
 import axios from "axios"
 
 class Api {
@@ -48,6 +47,7 @@ class Api {
           let products = response.data.products
 
           let data = products.filter(item => {
+            
             if (
               usePriceFilter &&
               (item.price < minPrice || item.price > maxPrice)
@@ -59,8 +59,9 @@ class Api {
               return item.popular;
             }
 
-            if (category !== "All categories" && category !== item.category)
+            if (category !== "All categories" && category !== item.Category.category_name) {
               return false;
+            }
 
             if (term && !item.name.toLowerCase().includes(term.toLowerCase()))
               return false;
@@ -72,13 +73,37 @@ class Api {
 
           data = this.sortByPrice(data, sortValue);
 
-          data = data.slice((page - 1) * itemsPerPage, page * itemsPerPage);
+          //data = data.slice((page - 1) * itemsPerPage, page * itemsPerPage);
+          data = data.slice(0, itemsPerPage)
 
           resolve({ data, totalLength });
         }, 500);
       })
     });
   }
+
+  getCategories() {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        axios.get("/store/categories/").then((response) => { 
+          resolve(response.lenght === 0 ? null : response.data.categories)
+        })
+      }, 500);
+    });
+  }
+
+  checkout(data) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        axios.post("/store/checkout",data).then((response) => { 
+          resolve(response.lenght === 0 ? null : response.data.order)
+          console.log(response)
+        })
+      }, 500);
+    });
+
+  }
+
 }
 
 export default new Api();

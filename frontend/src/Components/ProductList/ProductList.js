@@ -33,7 +33,7 @@ class ProductList extends Component {
         items: response.data,
         loading: false,
         totalItemsCount: response.totalLength
-      });   
+      });
   }
 
   componentDidMount() {

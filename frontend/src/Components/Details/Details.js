@@ -28,7 +28,7 @@ class ConnectedDetails extends Component {
     let item = await Api.getItemUsingID(productId);
 
     let relatedItems = await Api.searchItems({
-      category: item.category_id
+      category: item.Category_category_name
     });
 
     // Make sure this component is still mounted before we set state..
@@ -103,7 +103,7 @@ class ConnectedDetails extends Component {
                 fontSize: 16
               }}
             >
-              Price: {this.state.item.retail_price} $
+              Price: &euro; {this.state.item.retail_price}
             </div>
             {this.state.item.popular && (
               <div style={{ fontSize: 14, marginTop: 5, color: "#228B22" }}>

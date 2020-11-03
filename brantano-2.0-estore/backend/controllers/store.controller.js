@@ -4,11 +4,11 @@ const models = require('../models')
 
 const getProducts = async(req, res, next) => {
     const pageNo = req.params.page
-    const resultsPerPage = 20
+    const resultsPerPage = 10
     const searchOffset = (pageNo -1) * resultsPerPage
 
     try {
-        const products = await storeDb.readProducts(resultsPerPage,searchOffset)
+        const products = await storeDb.readProducts(resultsPerPage + 1,searchOffset)
         
         if (products.length == 0) {
             return res.status(404).json({
@@ -51,20 +51,22 @@ const postCheckout = async(req, res, next) => {
         req.checkBody('total_price').notEmpty()
         req.checkBody('shipping_costs').notEmpty()
 
+        req.user = 1
         if (req.user == null) {
             res.json({
                 message: "Not logged in"
             })
         }
 
-        const { total_price, shipping_costs} = req.body
-        const orderLines = JSON.parse(req.body.order_lines)
+        const { total_price, shipping_costs} = req.body     
 
         const newOrder = new models.Order({
             total_price: total_price,
             shipping_costs: shipping_costs,
             order_date: new Date(Date.now())
         })
+        const orderLines = req.body.order_lines
+
         const placedOrder = await storeDb.createOrder(newOrder,orderLines,req.user)
         
         if(placedOrder != null) {

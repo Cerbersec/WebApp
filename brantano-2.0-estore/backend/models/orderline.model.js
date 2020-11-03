@@ -11,11 +11,11 @@ module.exports = function(sequelize, Sequelize) {
         },
         subtotal_price: {
             type: Sequelize.INTEGER,
-            allowNull: false
+            allowNull: true
         },
         discount: {
             type: Sequelize.INTEGER,
-            allowNull: false
+            allowNull: true
         }
     },
     {
