@@ -4,6 +4,9 @@ import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import axios from "axios"
+import Select from "@material-ui/core/Select";
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
 
 class Register extends Component{
   state = {
@@ -23,7 +26,9 @@ class Register extends Component{
     test: 'false',
     reply:"",
     bus_nr:"",
-    phone:""
+    phone:"",
+    registerSuccesful: "yes",
+    errorStatus:""
     
   };
     render(){
@@ -45,7 +50,6 @@ class Register extends Component{
             postal_code: this.state.postal,
             phone: this.state.phone,
             bus_nr: this.state.bus_nr,
-
             city: this.state.city,
             country: this.state.country,
           }
@@ -53,12 +57,19 @@ class Register extends Component{
         .then(response => this.setState({reply: response }))
         
         .catch(error =>{
-          
+          this.setState({registerSuccesful: "no", errorStatus: error.response.status})
           console.error('There was an error!', error);
         });
-        console.log(this.state.reply)
+        setTimeout(checkAlert, 1000);
       }
+       const checkAlert = () =>{
+        if(this.state.registerSuccesful === "yes"){
+          alert("Registration succesful!");
+        }
+        else{alert( 'Registration failed! Error status: ' + this.state.errorStatus);}
        
+      }
+      
 
       return(
 
@@ -118,16 +129,27 @@ class Register extends Component{
             onChange={e => {
               this.setState({ phone: e.target.value });
             }}
-            style={{marginTop: 10}}
+            style={{marginTop: 10, marginBottom: 10}}
           />
-          <TextField
-            value={this.state.gender}
-            placeholder="Gender"
-            onChange={e => {
-              this.setState({ gender: e.target.value });
-            }}
-            style={{marginBottom: 20, marginTop: 10}}
-          />
+         <InputLabel id="genderselect">Gender</InputLabel>
+          <Select
+              
+              style={{ width: 150, color:"black" }}
+              value={this.state.gender}
+              placeholder="Gender"
+              MenuProps={{
+                style: {
+                  maxHeight: 500
+                }
+              }}
+              onChange={e => {
+                this.setState({ gender: e.target.value });
+              }}
+            >
+              <MenuItem value={"M"}>M</MenuItem>
+              <MenuItem value={"F"}>F</MenuItem>
+              <MenuItem value={"X"}>X</MenuItem>
+            </Select>
           
 
             <div style={{marginBottom: 20}}>
