@@ -23,7 +23,7 @@
     "express-validator": "5.3.1",
     "http-errors": "^1.8.0",
     "jsonwebtoken": "^8.5.1",
-    "nodemon": "^2.0.5",
+    "nodemon": "^2.0.6",
     "promisify": "0.0.3",
     "sequelize": "^6.3.5",
     "tedious": "^9.2.1"

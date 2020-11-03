@@ -1,0 +1,36 @@
+html,
+#root,
+body {
+  height: 100%;
+  margin: 0px;
+}
+
+body {
+  font-family: Helvetica, Arial;
+}
+
+.app {
+  min-height: 100%;
+  flex-direction: column;
+  display: flex;
+  min-width: 900px;
+}
+
+.app-body {
+  display: flex;
+  flex: 1;
+}
+
+.content {
+  position: relative;
+  flex: 1;
+}
+
+.circular {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}

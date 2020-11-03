@@ -11,11 +11,11 @@ module.exports = function(sequelize, Sequelize) {
         },
         subtotal_price: {
             type: Sequelize.INTEGER,
-            allowNull: false
+            allowNull: true
         },
         discount: {
             type: Sequelize.INTEGER,
-            allowNull: false
+            allowNull: true
         }
     },
     {
@@ -26,7 +26,7 @@ module.exports = function(sequelize, Sequelize) {
         Orderline.belongsTo(models.Product, {
             foreignKey: {
                 name: 'product_id',
-                allowNull: false
+                allowNull: true //bug workaround for now
             }
         })
 
