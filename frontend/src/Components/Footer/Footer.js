@@ -37,7 +37,7 @@ class Footer extends Component {
             <div className="footerItem">Terms of payment</div>
           </NavLink>
           <NavLink
-            to={"/delivery"}
+            to={"/support"}
             exact
             style={{
               textDecoration: "none",
@@ -48,7 +48,7 @@ class Footer extends Component {
               textDecoration: "underline"
             }}
           >
-            <div className="footerItem">Delivery</div>
+            <div className="footerItem">Support</div>
           </NavLink>
         </div>
         <div>

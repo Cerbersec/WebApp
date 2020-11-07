@@ -13,6 +13,7 @@ import Footer from "./Components/Footer/Footer";
 import PrivacyPolicy from "./Components/PrivacyRegulation/PrivacyRegulation.js";
 import register from "./Components/Register/Register.js";
 import contact from "./Components/Contact/Contact.js";
+import support from "./Components/Support/Support.js";
 
 /* THEME */
 import { MuiThemeProvider } from '@material-ui/core/styles'
@@ -39,6 +40,7 @@ class App extends Component {
               <ProtectedRoute path="/order" component={Order} />
               <Route path="/register" component={register}/>
               <Route path="/contact" component={contact}/>
+              <Route path="/support" component={support}/>
               <Route
                 component={() => (
                   <div style={{ padding: 20 }}>Page not found</div>

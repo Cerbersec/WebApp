@@ -29,7 +29,6 @@ class Register extends Component{
     phone:"",
     registerSuccesful: "yes",
     errorStatus:""
-    
   };
     render(){
 
@@ -105,9 +104,6 @@ class Register extends Component{
             {" "}
             Register{" "}
           </div>
-
-
-
             <div className="RegisterPage">
               <div class="Column">
                     <div style={{flex: 1}}>
@@ -244,12 +240,6 @@ class Register extends Component{
                 </div>
               </div>
             </div>
-
-            
-         
-            
-
-
 
             <Button
             style={{ marginTop: 20, width: 200 }}

@@ -1,4 +1,4 @@
-.RegisterPage {
+.SupportPage {
   margin-left: 200px;
   margin-right: 200px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -10,7 +10,7 @@
   width: 50%;
 }
 
-.RegisterPage:after {
+.SupportPage:after {
   content: "";
   display: table;
   clear: both;
