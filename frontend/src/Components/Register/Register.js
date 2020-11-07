@@ -84,14 +84,14 @@ class Register extends Component{
         <div
           style={{
             height: 600,
-            width: 200,
+            width: 600,
             padding: 30,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             flexDirection: "column"
           }}
-        >
+        > 
           <Avatar style={{ marginBottom: 10 }}>
             <GroupAddIcon />
           </Avatar>
@@ -106,137 +106,151 @@ class Register extends Component{
             Register{" "}
           </div>
 
-            <div style={{flex: 1}}>
-          <TextField
-            value={this.state.firstName}
-            placeholder="First Name"
-            onChange={e => {
-              this.setState({ firstName: e.target.value });
-            }}
-            
-          />
-           <TextField
-            value={this.state.lastName}
-            placeholder="Last name"
-            onChange={e => {
-              this.setState({ lastName: e.target.value });
-            }}
-            style={{marginTop: 10}}
-          />
-          <TextField
-            value={this.state.phone}
-            placeholder="Phone"
-            onChange={e => {
-              this.setState({ phone: e.target.value });
-            }}
-            style={{marginTop: 10, marginBottom: 10}}
-          />
-         <InputLabel id="genderselect">Gender</InputLabel>
-          <Select
-              
-              style={{ width: 150, color:"black" }}
-              value={this.state.gender}
-              placeholder="Gender"
-              MenuProps={{
-                style: {
-                  maxHeight: 500
-                }
-              }}
-              onChange={e => {
-                this.setState({ gender: e.target.value });
-              }}
-            >
-              <MenuItem value={"M"}>M</MenuItem>
-              <MenuItem value={"F"}>F</MenuItem>
-              <MenuItem value={"X"}>X</MenuItem>
-            </Select>
-          
 
-            <div style={{marginBottom: 20}}>
-          <TextField
-            value={this.state.userName}
-            placeholder="User name"
-            onChange={e => {
-              this.setState({ userName: e.target.value });
-            }}
-          />
-          <TextField
-            value={this.state.email}
-            placeholder="E mail"
-            onChange={e => {
-              this.setState({ email: e.target.value });
-            }}
-          />
+
+            <div className="RegisterPage">
+              <div class="Column">
+                    <div style={{flex: 1}}>
+                <TextField
+                  value={this.state.firstName}
+                  placeholder="First Name"
+                  onChange={e => {
+                    this.setState({ firstName: e.target.value });
+                  }}
+                  
+                />
+                <TextField
+                  value={this.state.lastName}
+                  placeholder="Last name"
+                  onChange={e => {
+                    this.setState({ lastName: e.target.value });
+                  }}
+                  style={{marginTop: 10}}
+                />
+                <TextField
+                  value={this.state.phone}
+                  placeholder="Phone"
+                  onChange={e => {
+                    this.setState({ phone: e.target.value });
+                  }}
+                  style={{marginTop: 10, marginBottom: 10}}
+                />
+              <InputLabel id="genderselect"></InputLabel>
+                <Select
+                    
+                    style={{ width: 193, color:"black" }}
+                    value={this.state.gender}
+                    placeholder="Gender"
+                    MenuProps={{
+                      style: {
+                        maxHeight: 500
+                      }
+                    }}
+                    onChange={e => {
+                      this.setState({ gender: e.target.value });
+                    }}
+                  >
+                    <MenuItem value={"M"}>M</MenuItem>
+                    <MenuItem value={"F"}>F</MenuItem>
+                    <MenuItem value={"X"}>X</MenuItem>
+                  </Select>
+                
+
+                  <div style={{marginBottom: 20}}>
+                <TextField
+                  value={this.state.userName}
+                  placeholder="User name"
+                  onChange={e => {
+                    this.setState({ userName: e.target.value });
+                  }}
+                />
+                <TextField
+                  value={this.state.email}
+                  placeholder="E mail"
+                  onChange={e => {
+                    this.setState({ email: e.target.value });
+                  }}
+                />
+                </div>
+                <TextField
+                  value={this.state.pass}
+                  type="password"
+                  placeholder="Password"
+                  onChange={e => {
+                    this.setState({ pass: e.target.value });
+                  }}
+                />
+                <TextField
+                  style={{marginTop: 10}}
+                  value={this.state.confirmpass}
+                  type="password"
+                  placeholder="Confirm password"
+                  onChange={e => {
+                    this.setState({ confirmpass: e.target.value });
+                  }}
+                />
           </div>
-          <TextField
-            value={this.state.pass}
-            type="password"
-            placeholder="Password"
-            onChange={e => {
-              this.setState({ pass: e.target.value });
-            }}
-          />
-          <TextField
-            style={{marginTop: 10}}
-            value={this.state.confirmpass}
-            type="password"
-            placeholder="Confirm password"
-            onChange={e => {
-              this.setState({ confirmpass: e.target.value });
-            }}
-          />
-          </div>
-          <div style={{flex: 2}}>
-          <TextField
-            style={{marginTop: 20}}
-            value={this.state.street}
-            placeholder="Street name"
-            onChange={e => {
-              this.setState({ street : e.target.value });
-            }}
-          />
-          <TextField
-            style={{marginTop: 10}}
-            value={this.state.streetnr}
-            placeholder="Street number"
-            onChange={e => {
-              this.setState({ streetnr : e.target.value });
-            }}
-          />
-           <TextField
-            style={{marginTop: 10}}
-            value={this.state.bus_nr}
-            placeholder="Bus number"
-            onChange={e => {
-              this.setState({ bus_nr : e.target.value });
-            }}
-          />
-          <TextField
-            style={{marginTop: 10}}
-            value={this.state.city}
-            placeholder="City"
-            onChange={e => {
-              this.setState({ city: e.target.value });
-            }}
-          />
-          <TextField
-            style={{marginTop: 10}}
-            value={this.state.postal}
-            placeholder="Postal code"
-            onChange={e => {
-              this.setState({ postal: e.target.value });
-            }}
-          />
-          <TextField
-            style={{marginTop: 10}}
-            value={this.state.Country}
-            placeholder="Country"
-            onChange={e => {
-              this.setState({ country: e.target.value });
-            }}
-          />
-          </div>
+              </div>
+              <div class="Column">
+                    <div style={{flex: 2}}>
+                <TextField
+                  style={{marginTop: 20}}
+                  value={this.state.street}
+                  placeholder="Street name"
+                  onChange={e => {
+                    this.setState({ street : e.target.value });
+                  }}
+                />
+                <TextField
+                  style={{marginTop: 10}}
+                  value={this.state.streetnr}
+                  placeholder="Street number"
+                  onChange={e => {
+                    this.setState({ streetnr : e.target.value });
+                  }}
+                />
+                <TextField
+                  style={{marginTop: 10}}
+                  value={this.state.bus_nr}
+                  placeholder="Bus number"
+                  onChange={e => {
+                    this.setState({ bus_nr : e.target.value });
+                  }}
+                />
+                <TextField
+                  style={{marginTop: 10}}
+                  value={this.state.city}
+                  placeholder="City"
+                  onChange={e => {
+                    this.setState({ city: e.target.value });
+                  }}
+                />
+                <TextField
+                  style={{marginTop: 10}}
+                  value={this.state.postal}
+                  placeholder="Postal code"
+                  onChange={e => {
+                    this.setState({ postal: e.target.value });
+                  }}
+                />
+                <TextField
+                  style={{marginTop: 10}}
+                  value={this.state.Country}
+                  placeholder="Country"
+                  onChange={e => {
+                    this.setState({ country: e.target.value });
+                  }}
+                />
+                </div>
+              </div>
+            </div>
+
             
+         
+            
+
+
+
             <Button
             style={{ marginTop: 20, width: 200 }}
             variant="outlined"

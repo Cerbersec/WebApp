@@ -1,0 +1,17 @@
+.ContactPage {
+  margin-left: 200px;
+  margin-right: 200px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  padding: 20px;
+}
+
+.Column {
+  float: left;
+  width: 50%;
+}
+
+.ContactPage:after {
+  content: "";
+  display: table;
+  clear: both;
+}
