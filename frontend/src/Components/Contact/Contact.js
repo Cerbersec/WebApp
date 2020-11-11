@@ -20,13 +20,13 @@ class Contact extends Component
                 <div class="Column">
                     <h1>&nbsp;</h1>
                     <h2>Opening Hours:</h2> 
-                    <ul>Mon: 09:30 - 18:30</ul>
-                    <ul>Tue: 09:30 - 18:30</ul>
-                    <ul>Wed: 09:30 - 18:30</ul>
-                    <ul>Thu: 09:30 - 18:30</ul>
-                    <ul>Fri: 09:30 - 18:30</ul>
-                    <ul>Sat: 09:30 - 18:30</ul>
-                    <ul>Sun: 09:30 - 18:30</ul>
+                    <ul>Mon: <li>09:30 - 18:30</li></ul>
+                    <ul>Tue: <li>09:30 - 18:30</li></ul>
+                    <ul>Wed: <li>09:30 - 18:30</li></ul>
+                    <ul>Thu: <li>09:30 - 18:30</li></ul>
+                    <ul>Fri: <li>09:30 - 18:30</li></ul>
+                    <ul>Sat: <li>09:30 - 18:30</li></ul>
+                    <ul>Sun: <li>09:30 - 18:30</li></ul>
                 </div>
             </div>
         )
