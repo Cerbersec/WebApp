@@ -93,7 +93,7 @@ class Footer extends Component {
             Social Media
           </div>
           <a
-            href="http://www.facebook.com"
+            href="https://www.facebook.com/Brantayes"
             target="blank"
             style={{
               textDecoration: "none",
