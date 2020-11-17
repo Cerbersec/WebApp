@@ -11,6 +11,8 @@ router.get('/', express.static('../frontend/public'))
 
 router.get('/store/productinfo/:productId', storeController.getProductbyID)
 router.get('/store/products/:page', storeController.getProducts)
+router.get('/store/reviews/:productid', storeController.getReviews)
+router.post('/store/reviews/create', storeController.postReview)
 
 router.get('/store/categories', storeController.getCategories)
 //router.get('/store/search', storeController.getSearch)

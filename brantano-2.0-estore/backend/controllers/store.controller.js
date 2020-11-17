@@ -45,13 +45,11 @@ const getProductbyID = async(req, res, next) => {
     }
 }
 
-//TODO: checkout and future cart functionality in its own controller
 const postCheckout = async(req, res, next) => {
     try {
         req.checkBody('total_price').notEmpty()
         req.checkBody('shipping_costs').notEmpty()
 
-        req.user = 1
         if (req.user == null) {
             res.json({
                 message: "Not logged in"
@@ -148,9 +146,61 @@ const getCategories = async (req, res, next) => {
     }
 }
 
+const getReviews = async (req, res, next) => {
+
+    try {
+        const reviews = await storeDb.readReviews(req.params.productid)
+        
+        if (reviews.length == 0) {
+            return res.status(404).json({
+                message: 'reviews not found'
+            })
+        }
+        res.status(200).json({
+            reviews: reviews
+        })
+
+    } catch(e) {
+        console.log(e.message)
+        res.sendStatus(500) && next(e)
+    }
+}
+
+const postReview = async (req, res, next) => {
+    try {
+
+        if (req.user == null) {
+            res.json({
+                message: "Not logged in"
+            })
+        }
+
+        const { rating, description, productId} = req.body
+
+        const newModel = new models.Review({
+            rating: rating,
+            description: description,
+            review_date: new Date(),
+            product_id: productId,
+            customer_id: req.user
+        })
+
+        const review = await storeDb.createReview(newModel)
+        res.send({
+            message: 'review submitted'
+        })
+
+    } catch(e) {
+        console.log(e.message)
+        res.sendStatus(500) && next(e)
+    }
+}
+
 exports.getProducts = getProducts
 exports.getProductbyID = getProductbyID
 exports.postCheckout = postCheckout
 exports.getOrders = getOrders
 exports.getOrderByID = getOrderByID
 exports.getCategories = getCategories
+exports.getReviews = getReviews
+exports.postReview = postReview

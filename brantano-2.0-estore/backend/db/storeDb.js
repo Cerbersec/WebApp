@@ -57,6 +57,21 @@ const readCategories = () => {
     return models.Category.findAll()
 }
 
+const readReviews = async (product_Id) => {
+    console.log(product_Id)
+    return models.Review.findAll({where: { product_id: product_Id }})
+}
+
+const createReview = async (review) => {
+    return models.Review.create({
+        rating: review.rating,
+        description: review.description,
+        review_date: review.review_date,
+        product_id: review.product_id,
+        customer_id: review.customer_id
+    })
+}
+
 exports.readProducts = readProducts
 exports.readProduct = readProduct
 exports.createOrder = createOrder
@@ -64,3 +79,5 @@ exports.readOrders = readOrders
 exports.readOrder = readOrder
 exports.readOrderLines = readOrderLines
 exports.readCategories = readCategories
+exports.readReviews = readReviews
+exports.createReview = createReview
