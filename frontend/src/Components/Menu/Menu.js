@@ -47,6 +47,7 @@ class ConnectedMenu extends Component {
 
     const dataForTheMenu = [
       { name: "Home", url: "/", icon: "home", id: 0 },
+      { name: "Blog", url: "/blog", icon: "sms", id: 0 },
       {
         name: "Product categories",
         id: 1,
