@@ -1,5 +1,5 @@
 import axios from "axios"
-const url = "http://brantayes.be:5000"
+const url = "" //set target URL to manually override express.js routing
 
 class Api {
 
