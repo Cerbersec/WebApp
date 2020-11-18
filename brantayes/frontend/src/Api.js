@@ -1,11 +1,12 @@
 import axios from "axios"
+const url = "http://brantayes.be:5000"
 
 class Api {
 
   getItemUsingID(id) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        axios.get("/store/productinfo/" + parseInt(id, 10)).then((response) => { 
+        axios.get(url + "/store/productinfo/" + parseInt(id, 10)).then((response) => { 
           resolve(response.lenght === 0 ? null : response.data.product)
         })
       }, 500);
@@ -43,7 +44,7 @@ class Api {
         setTimeout(() => {
 
           //axios API call
-          axios.get("/store/products/" + page).then((response) => { 
+          axios.get(url + "/store/products/" + page).then((response) => { 
           let products = response.data.products
 
           let data = products.filter(item => {
@@ -85,7 +86,7 @@ class Api {
   getCategories() {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        axios.get("/store/categories/").then((response) => { 
+        axios.get(url + "/store/categories/").then((response) => { 
           resolve(response.lenght === 0 ? null : response.data.categories)
         })
       }, 500);
@@ -95,7 +96,7 @@ class Api {
   checkout(data) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        axios.post("/store/checkout",data).then((response) => { 
+        axios.post(url + "/store/checkout",data).then((response) => { 
           resolve(response.lenght === 0 ? null : response.data.order)
           console.log(response)
         })
