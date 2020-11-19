@@ -1,10 +1,10 @@
 {
-  "name": "backend",
+  "name": "brantayes-api",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
-  "directories": {
-    "test": "tests"
+  "engines": {
+    "node": "14.14.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -21,6 +21,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-validator": "5.3.1",
+    "helmet": "^4.2.0",
     "http-errors": "^1.8.0",
     "jsonwebtoken": "^8.5.1",
     "nodemon": "^2.0.6",
