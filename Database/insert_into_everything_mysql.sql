@@ -16,7 +16,7 @@
 	VALUES ('sander', 'forrer', 'M', '', 'sanderforrer@gmail.com', 'sanderf', 'test', '2020-10-15', '2020-10-15');
 
 	INSERT INTO addresses(street_name, postal_code, street_nr, bus_nr, city, country, created_at, updated_at, customer_id)
-	VALUES ('violetlaan', '2980', '47', '', 'zoersel', 'belgie', '2020-10-15', '2020-10-15', '1');
+	VALUES ('violetlaan', '2980', '47', '47', 'zoersel', 'belgie', '2020-10-15', '2020-10-15', '1');
 	
 	
 	
