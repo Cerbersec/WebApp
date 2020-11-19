@@ -3,6 +3,7 @@
 # dependencies
 /node_modules
 /frontend/node_modules
+/brantano-2.0-estore/backend/node_modules
 /.pnp
 .pnp.js
 
