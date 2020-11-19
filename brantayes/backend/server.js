@@ -82,7 +82,11 @@ models.sequelize.sync({ force: false }).then(function() {
     //    console.log(`Server is running on port: ${port}`)
     //})
     
-    httpServer.listen(80)
-    httpsServer.listen(443)
+    httpServer.listen(80, function() {
+        console.log('HTTP Server is running on port: 80')
+    })
+    httpsServer.listen(443, function() {
+        console.log('HTTPS Server is running on port: 443')
+    })
 })
 
