@@ -8,6 +8,7 @@ import { setLoggedInUser } from "../../Redux/Actions";
 import Avatar from "@material-ui/core/Avatar";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { NavLink } from "react-router-dom";
+import axios from 'axios';
 
 class ConnectedLogin extends Component {
   state = {
@@ -15,6 +16,24 @@ class ConnectedLogin extends Component {
     pass: "",
     redirectToReferrer: false
   };
+
+  handleSubmit = e => {
+    e.preventDefault();
+
+    const data = {
+      email_address: this.state.emailAddress,
+      password: this.state.pass
+    }
+
+    axios.post('account/login', data)
+    .then(res => {
+      console.log(res)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+  }
+
   render() {
     const { from } = this.props.location.state || { from: { pathname: "/" } };
 
@@ -76,20 +95,7 @@ class ConnectedLogin extends Component {
             style={{ marginTop: 20, width: 200, marginBottom: 10 }}
             variant="outlined"
             color="primary"
-            onClick={() => {
-              // Simulate authentication call
-              Auth.authenticate(this.state.emailAddress, this.state.pass, user => {
-                if (!user) {
-                  this.setState({ wrongCred: true });
-                  return;
-                }
-
-                this.props.dispatch(setLoggedInUser({ name: user.name }));
-                this.setState(() => ({
-                  redirectToReferrer: true
-                }));
-              });
-            }}
+            onClick={this.handleSubmit}
           >
             Log in
           </Button>
