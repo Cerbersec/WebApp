@@ -7,9 +7,17 @@ const expressValidator = require('express-validator')
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
 const helmet = require('helmet')
+const http = require('http')
+const https = require('https')
+const fs = require('fs')
 
 if(process.env.NODE_ENV !== 'production') {
     require('dotenv').config()
+}
+
+const credentials = {
+    key: fs.readFileSync(__dirname + '/certs/privkey.pem'),
+    cert: fs.readFileSync(__dirname + '/certs/fullchain.pem')
 }
 
 const app = express()
@@ -63,11 +71,18 @@ app.use((err, req, res, next) => {
     res.status(err.status || 500).json(err);
 })
 
+//init server objects
+var httpServer = http.createServer(app)
+var httpsServer = https.createServer(credentials, app)
+
 //sync models with db before app start: force = true to drop tables at start up
 const models = require('./models')
 models.sequelize.sync({ force: false }).then(function() {
-    app.listen(port, function() {
-        console.log(`Server is running on port: ${port}`)
-    })
+    //app.listen(port, function() {
+    //    console.log(`Server is running on port: ${port}`)
+    //})
+    
+    httpServer.listen(80)
+    httpsServer.listen(443)
 })
 

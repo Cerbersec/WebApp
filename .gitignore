@@ -26,3 +26,10 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# SSL
+*/fullchain.pem
+*/privkey.pem
+/backend/certs/fullchain.pem
+/backend/certs/privkey.pem
+*/certs
