@@ -7,8 +7,11 @@ import Api from "../../Api";
 import Item from "../Item/Item";
 import { connect } from "react-redux";
 import TextField from "@material-ui/core/TextField";
+import BeautyStars from 'beauty-stars';
+
 
 class ConnectedDetails extends Component {
+ 
   constructor(props) {
     super(props);
 
@@ -18,7 +21,8 @@ class ConnectedDetails extends Component {
       relatedItems: [],
       quantity: 1,
       item: null,
-      itemLoading: false
+      itemLoading: false,
+      value: 0
     };
   }
 
@@ -174,6 +178,20 @@ class ConnectedDetails extends Component {
         {this.state.relatedItems.slice(0, 3).map(x => {
           return <Item key={x.product_id} item={x} />;
         })}
+        <div
+          style={{
+            marginTop: 20,
+            marginBottom: 10,
+            fontSize: 22
+          }}
+        >
+          Reviews
+        </div>
+        
+        <BeautyStars
+        value={this.state.value}
+        onChange={value => this.setState({ value })}
+      />
       </div>
     );
   }
