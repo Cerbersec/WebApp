@@ -10,6 +10,13 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { NavLink } from "react-router-dom";
 import axios from 'axios';
 
+
+const mapStateToProps = state => {
+  return {
+    loggedInUser: state.loggedInUser
+  };
+};
+
 class ConnectedLogin extends Component {
   state = {
     emailAddress: "",
@@ -28,6 +35,8 @@ class ConnectedLogin extends Component {
     axios.post('account/login', data)
     .then(res => {
       console.log(res)
+      this.props.dispatch(setLoggedInUser(true));
+      this.setState({redirectToReferrer: true});
     })
     .catch(err => {
         console.log(err)
@@ -38,7 +47,7 @@ class ConnectedLogin extends Component {
     const { from } = this.props.location.state || { from: { pathname: "/" } };
 
     // If user was authenticated, redirect her to where she came from.
-    if (this.state.redirectToReferrer === true) {
+    if (this.state.redirectToReferrer) {
       return <Redirect to={from} />;
     }
 
@@ -116,6 +125,6 @@ class ConnectedLogin extends Component {
     );
   }
 }
-const Login = withRouter(connect()(ConnectedLogin));
+const Login = withRouter(connect(mapStateToProps)(ConnectedLogin));
 
 export default Login;
