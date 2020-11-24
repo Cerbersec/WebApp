@@ -22,9 +22,12 @@ class ConnectedDetails extends Component {
       quantity: 1,
       item: null,
       itemLoading: false,
-      value: 0
+      rating: 1,
+      review: ''
+      
     };
   }
+  
 
   async fetchProductAndRelatedItems(productId) {
     this.setState({ itemLoading: true });
@@ -61,6 +64,17 @@ class ConnectedDetails extends Component {
   componentWillUnmount() {
     this.isCompMounted = false;
   }
+  myChangeHandler = (event) => {
+    let nam = event.target.name;
+    let val = event.target.value;
+    this.setState({[nam]: val});
+  }
+  mySubmitHandler = (event) => {
+    event.preventDefault();
+    var rev = this.state.review;
+    var score = this.state.rating; 
+    console.log(rev + score);
+  }
 
   render() {
     if (this.state.itemLoading) {
@@ -70,6 +84,7 @@ class ConnectedDetails extends Component {
     if (!this.state.item) {
       return null;
     }
+    
 
     return (
       <div style={{ padding: 10 }}>
@@ -187,12 +202,19 @@ class ConnectedDetails extends Component {
         >
           Reviews
         </div>
-        
+        <form onSubmit={this.mySubmitHandler}>
         <BeautyStars
-        value={this.state.value}
-        onChange={value => this.setState({ value })}
-      />
+        value={this.state.rating}
+        onChange={rating => this.setState({ rating })}
+        />
+        <input type="text" name='review' 
+        onChange={this.myChangeHandler}/>
+        <div></div>
+        <button input type='submit'>press me</button>
+        
+        </form>
       </div>
+      
     );
   }
 }
