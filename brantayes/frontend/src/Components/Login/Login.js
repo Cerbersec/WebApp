@@ -27,25 +27,23 @@ class ConnectedLogin extends Component {
     };
   }
 
-  async handleSubmit(e) {
-    e.preventDefault();
+  render() {
 
-    console.log(this.state.emailAddress)
-    
-    const data = {
-      email_address: this.state.emailAddress,
-      password: this.state.pass
+    const handleSubmit = async (e) => {
+
+      const data = {
+        email_address: this.state.emailAddress,
+        password: this.state.pass
+      }
+  
+      //TODO: validate response, handle cookie with JWT token
+      const response = await Api.login(data);
+  
+      this.props.dispatch(setLoggedInUser(true));
+      this.setState({redirectToReferrer: true});
     }
 
-    let response = await Api.login(data);
 
-    console.log(response)
-
-    //this.props.dispatch(setLoggedInUser(true));
-    //this.setState({redirectToReferrer: true});
-  }
-
-  render() {
     const { from } = this.props.location.state || { from: { pathname: "/" } };
 
     // If user was authenticated, redirect her to where she came from.
@@ -106,7 +104,7 @@ class ConnectedLogin extends Component {
             style={{ marginTop: 20, width: 200, marginBottom: 10 }}
             variant="outlined"
             color="primary"
-            onClick={this.handleSubmit}
+            onClick={handleSubmit}
           >
             Log in
           </Button>
