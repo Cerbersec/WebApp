@@ -63,8 +63,6 @@ class ConnectedOrder extends Component {
           disabled={totalPrice === 0}
           onClick={() => {
             const orderdata = {
-              "total_price": totalPrice,
-              "shipping_costs": 12,
               "order_lines" : this.props.checkedOutItems
             };
             console.log(this.props.checkedOutItems)

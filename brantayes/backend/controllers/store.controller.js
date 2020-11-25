@@ -47,25 +47,16 @@ const getProductbyID = async(req, res, next) => {
 
 const postCheckout = async(req, res, next) => {
     try {
-        req.checkBody('total_price').notEmpty()
-        req.checkBody('shipping_costs').notEmpty()
+        req.checkBody('order_lines').notEmpty()
 
         if (req.user == null) {
-            res.json({
-                message: "Not logged in"
+            return res.status(400).json({
+                message: 'Not logged in'
             })
         }
-
-        const { total_price, shipping_costs} = req.body     
-
-        const newOrder = new models.Order({
-            total_price: total_price,
-            shipping_costs: shipping_costs,
-            order_date: new Date(Date.now())
-        })
         const orderLines = req.body.order_lines
 
-        const placedOrder = await storeDb.createOrder(newOrder,orderLines,req.user)
+        const placedOrder = await storeDb.createOrder(orderLines,req.user)
         
         if(placedOrder != null) {
             return res.status(200).json({
@@ -73,7 +64,7 @@ const postCheckout = async(req, res, next) => {
             })
         }
         else {
-            res.json({
+            res.status(500).json({
                 message: "Something went wrong, Order could not be placed"
             })
         }
