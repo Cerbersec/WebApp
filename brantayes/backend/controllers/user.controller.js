@@ -156,7 +156,7 @@ const login = async (req, res, next) => {
             }
    
             res.cookie('jwt', token, cookieOptions );
-            res.status(200).redirect("/account");//redirect after login
+            //res.status(200).redirect("/account");
         }  
     } catch (error) {
       console.log(error);

@@ -102,9 +102,17 @@ class Api {
         })
       }, 500);
     });
-
   }
 
+  login(data) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        axios.post(url + "/account/login", data).then((response) => {
+          resolve(response.status === 200 ? 400 : response.cookie)
+        })
+      }, 500);
+    });
+  }
 }
 
 export default new Api();

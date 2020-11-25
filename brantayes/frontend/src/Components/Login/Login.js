@@ -1,14 +1,13 @@
 import React, { Component } from "react";
 import { withRouter, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import Auth from "../../Auth";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { setLoggedInUser } from "../../Redux/Actions";
 import Avatar from "@material-ui/core/Avatar";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { NavLink } from "react-router-dom";
-import axios from 'axios';
+import Api from "../../Api";
 
 
 const mapStateToProps = state => {
@@ -24,7 +23,7 @@ class ConnectedLogin extends Component {
     redirectToReferrer: false
   };
 
-  handleSubmit = e => {
+  async handleSubmit(e) {
     e.preventDefault();
 
     const data = {
@@ -32,15 +31,12 @@ class ConnectedLogin extends Component {
       password: this.state.pass
     }
 
-    axios.post('account/login', data)
-    .then(res => {
-      console.log(res)
-      this.props.dispatch(setLoggedInUser(true));
-      this.setState({redirectToReferrer: true});
-    })
-    .catch(err => {
-        console.log(err)
-    })
+    let response = await Api.login(data);
+
+    console.log(response)
+
+    //this.props.dispatch(setLoggedInUser(true));
+    //this.setState({redirectToReferrer: true});
   }
 
   render() {
