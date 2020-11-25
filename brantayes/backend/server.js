@@ -10,6 +10,7 @@ const helmet = require('helmet')
 const http = require('http')
 const https = require('https')
 const fs = require('fs')
+const csurf = require('csurf')
 
 if(process.env.NODE_ENV !== 'production') {
     require('dotenv').config()
@@ -41,6 +42,20 @@ db.authenticate().then(() => {
 })
 .catch(error => {
     console.log('Unable to connect to the database', error)
+})
+
+//csrf protection
+const csrfProtection = csurf({
+    cookie: {
+        key: '_csrf-brantayes',
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production', //cookie only readable over https
+        maxAge: 3600 //1h
+    }
+})
+app.use(csrfProtection)
+app.get('/csrf-token', (req, res) => {
+    res.json({ csrfToken: req.csrfToken() })
 })
 
 // routers

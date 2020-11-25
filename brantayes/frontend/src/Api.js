@@ -1,6 +1,12 @@
 import axios from "axios"
 const url = "" //set target URL to manually override express.js routing
 
+//setup csrf token
+axios.get(url + '/csrf-token').then((response) => {
+  axios.defaults.headers.post['X-CSRF-TOKEN'] = response.data.csrfToken;
+  console.log(response.data)
+})
+
 class Api {
 
   getItemUsingID(id) {

@@ -36,7 +36,7 @@ class ConnectedLogin extends Component {
         password: this.state.pass
       }
   
-      //TODO: validate response, handle cookie with JWT token
+      //TODO: validate response
       const response = await Api.login(data);
   
       this.props.dispatch(setLoggedInUser(true));

@@ -1,7 +1,6 @@
 //PGUR: Put, Get, Update, Remove
 const userDb = require('../db/userDb')
 const models = require('../models')
-
 const jwt = require('jsonwebtoken')
 const config = require('../config/jwt-config')
 const ensureAuthenticated = require('../modules/ensureAuthenticated')
@@ -194,12 +193,14 @@ const isLoggedIn = async (req, res, next) => {
 }
    
 const logout = async (req, res) => {
+    /*
     res.cookie('jwt', 'logout', {
         expires: new Date(Date.now() + 2*1000),
         httpOnly: true
     });
-   
-    res.status(200).redirect('/');
+    */
+    res.clearCookie('jwt')
+    res.sendStatus(200)
 }
 
 exports.getUsers = getUsers
