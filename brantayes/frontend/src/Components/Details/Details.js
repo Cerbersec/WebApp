@@ -8,7 +8,6 @@ import Item from "../Item/Item";
 import { connect } from "react-redux";
 import TextField from "@material-ui/core/TextField";
 import BeautyStars from 'beauty-stars';
-import axios from "axios";
 
 
 class ConnectedDetails extends Component {

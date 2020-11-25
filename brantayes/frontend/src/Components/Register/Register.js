@@ -105,7 +105,7 @@ class Register extends Component{
             Register{" "}
           </div>
             <div className="RegisterPage">
-              <div class="Column">
+              <div className="Column">
                     <div style={{flex: 1}}>
                 <TextField
                   value={this.state.firstName}

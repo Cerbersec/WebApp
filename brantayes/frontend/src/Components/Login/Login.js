@@ -17,15 +17,21 @@ const mapStateToProps = state => {
 };
 
 class ConnectedLogin extends Component {
-  state = {
-    emailAddress: "",
-    pass: "",
-    redirectToReferrer: false
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      emailAddress: "",
+      pass: "",
+      redirectToReferrer: false
+    };
+  }
 
   async handleSubmit(e) {
     e.preventDefault();
 
+    console.log(this.state.emailAddress)
+    
     const data = {
       email_address: this.state.emailAddress,
       password: this.state.pass
