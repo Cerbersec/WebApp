@@ -74,7 +74,6 @@ class Register extends Component{
 
         <div
         style={{
-          height: "100%",
           display: "flex",
           justifyContent: "center",
           marginTop: '100px'
