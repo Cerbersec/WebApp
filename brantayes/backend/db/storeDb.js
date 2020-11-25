@@ -9,34 +9,47 @@ const readProduct = (productId) => {
     return models.Product.findOne({ where: { product_id: productId } })
 }
 
-const createOrder = async (cart,orderLines,userid) => {
+const createOrder = async (orderLines,userid) => {
+    const shipping_costs = 12;
+
     const OrderPlaced = await models.Order.create({
-        total_price: cart.total_price,
-        shipping_costs: cart.shipping_costs,
-        order_date: cart.order_date,
+        total_price: 0, 
+        shipping_costs: shipping_costs,
+        order_date: new Date(Date.now()),
         customer_id: userid
     })
 
-    orderLines.forEach(element => {
-        const prod = models.Product.findOne({ where: { product_id: element.product_id } })
+    const totalprice = await (createOrderlines(orderLines,OrderPlaced))
+ 
+    OrderPlaced.total_price = totalprice
+    OrderPlaced.save().then((order) => {console.log(order)})
+
+    return OrderPlaced
+}
+
+const createOrderlines = async(orderLines, OrderPlaced) => {
+    var totalprice = 0;
+
+    for(const element of orderLines) {
+        const prod = await models.Product.findOne({ where: { product_id: element.product_id } })
+        var subtotal = 0;
 
         if (prod == null){
             throw new Error('Product not found')
-            //TODO: implement proper error handling
         }
 
-        //TODO: check price
-        console.log("prod id: " + element.product_id)
-        const newOrderLine = OrderPlaced.createOrderline({
+        subtotal = prod.retail_price * element.quantity
+        totalprice = totalprice + subtotal
+        element.discount = 0;
+        
+        OrderPlaced.createOrderline({
             quantity: element.quantity,
-            subtotal_price: element.subtotal_price,
+            subtotal_price: subtotal,
             discount: element.discount,
             product_id: element.product_id
         })
-    });
-
-    //TODO: check order total
-    return OrderPlaced
+    }
+    return totalprice;
 }
 
 const readOrders = (userid) => {
