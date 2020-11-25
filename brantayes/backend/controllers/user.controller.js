@@ -5,7 +5,7 @@ const models = require('../models')
 const jwt = require('jsonwebtoken')
 const config = require('../config/jwt-config')
 const ensureAuthenticated = require('../modules/ensureAuthenticated')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 const TypedError = require('../modules/ErrorHandler')
 
 const { promisify } = require('util');

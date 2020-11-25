@@ -14,7 +14,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^5.0.0",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.5",
@@ -29,8 +29,7 @@
     "mysql2": "^2.2.5",
     "nodemon": "^2.0.6",
     "promisify": "0.0.3",
-    "sequelize": "^6.3.5",
-    "tedious": "^9.2.1"
+    "sequelize": "^6.3.5"
   },
   "devDependencies": {
     "@babel/core": "^7.12.1",
