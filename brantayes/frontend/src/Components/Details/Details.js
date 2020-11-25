@@ -8,6 +8,7 @@ import Item from "../Item/Item";
 import { connect } from "react-redux";
 import TextField from "@material-ui/core/TextField";
 import BeautyStars from 'beauty-stars';
+import axios from "axios";
 
 
 class ConnectedDetails extends Component {
@@ -64,17 +65,7 @@ class ConnectedDetails extends Component {
   componentWillUnmount() {
     this.isCompMounted = false;
   }
-  myChangeHandler = (event) => {
-    let nam = event.target.name;
-    let val = event.target.value;
-    this.setState({[nam]: val});
-  }
-  mySubmitHandler = (event) => {
-    event.preventDefault();
-    var rev = this.state.review;
-    var score = this.state.rating; 
-    console.log(rev + score);
-  }
+
 
   render() {
     if (this.state.itemLoading) {
@@ -84,8 +75,14 @@ class ConnectedDetails extends Component {
     if (!this.state.item) {
       return null;
     }
-    
+    const submitReview = () => {
+      var rev = this.state.review;
+      var sco = this.state.rating;
 
+      console.log(rev + sco);
+
+    }
+    
     return (
       <div style={{ padding: 10 }}>
         <div
@@ -202,22 +199,39 @@ class ConnectedDetails extends Component {
         >
           Reviews
         </div>
-        <form onSubmit={this.mySubmitHandler}>
+        
         <BeautyStars
         value={this.state.rating}
         onChange={rating => this.setState({ rating })}
         />
-        <input type="text" name='review' 
-        onChange={this.myChangeHandler}/>
-        <div></div>
-        <button input type='submit'>press me</button>
+        <div>
+          <TextField 
+            label="Type your review here"
+            multiline
+            rows={4}
+            value={this.state.review}
+            placeholder="review"
+            onChange={e => {
+              this.setState({ review : e.target.value });
+          }}/>
+        </div>
+        <Button
+          style={{ marginTop: 20, width: 200 }}
+          variant="outlined"
+          color="primary"
+          onClick={() => submitReview()
+          }>
+            submit
+        </Button>
         
-        </form>
+        
       </div>
       
     );
   }
+  
 }
+
 
 let Details = connect()(ConnectedDetails);
 export default Details;
