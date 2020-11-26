@@ -76,7 +76,7 @@ class ConnectedOrder extends Component {
         <Button
           color="secondary"
           variant="outlined"
-          disabled={totalPrice === 0}
+          disabled={totalPrice !== 0}
           onClick={() => {
             this.props.dispatch(setCheckedOutItems([]));
           }}

@@ -178,14 +178,14 @@ class ConnectedHeader extends Component {
                 this.setState({ anchorEl: null });
               }}
             >
-              <MenuItem
+              {/* <MenuItem
                 onClick={() => {
                   this.setState({ anchorEl: null });
                   this.props.history.push("/order");
                 }}
               >
                 Checkout page
-              </MenuItem>
+              </MenuItem> */}
               <MenuItem
                 onClick={() => {
                   handleSubmit()
