@@ -151,6 +151,8 @@ class Api {
       setTimeout(() => {
         axios.get(url + '/store/reviews/' + productId).then((response) => {
           resolve(response.lenght === 0 ? null : response.data.reviews)
+        }).catch((err) => {
+          reject(err)
         })
       }, 500);
     })

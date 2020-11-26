@@ -35,7 +35,7 @@ class ConnectedDetails extends Component {
     this.setState({ itemLoading: true });
 
     let item = await Api.getItemUsingID(productId);
-    let reviews = await Api.getReviews(productId);
+    let reviews = Api.getReviews(productId); //removed await to prevent page from not loading in case 0 reviews in database
 
     console.log(reviews);
 
