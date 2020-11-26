@@ -4,9 +4,36 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import Api from "../../Api";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+
+const mapStateToProps = state => {
+    return {
+      loggedInUser: state.loggedInUser,
+    };
+  };
 
 class Account extends Component 
 {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            orders: null
+        };
+    }
+
+
+    componentDidMount() {
+        this.fetchOrders(this.props.match.params.id);
+    }
+
+    async fetchOrders(userId) {
+        let response = await Api.getOrders(userId)
+        console.log(response)
+    }
+
     render()
     {
         return (
@@ -38,4 +65,5 @@ class Account extends Component
     }
 }
 
+//const Account = withRouter(connect(mapStateToProps)(ConnectedAccount));
 export default Account;
