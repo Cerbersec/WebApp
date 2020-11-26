@@ -119,6 +119,16 @@ class Api {
       }, 500);
     });
   }
+
+  logout() {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        axios.get(url + "/account/logout").then((response) => {
+          resolve(response.status !== 200? "something went wrong" : "successfully logged out")
+        })
+      }, 500);
+    })
+  }
 }
 
 export default new Api();

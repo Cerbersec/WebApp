@@ -179,8 +179,9 @@ const isLoggedIn = async (req, res, next) => {
             }
    
             req.user = result.customer_id;
-            console.log("user is")
-            console.log(req.user);
+
+            console.log("user is: " + req.user)//DEBUG
+
             return next();
 
       } catch (error) {
