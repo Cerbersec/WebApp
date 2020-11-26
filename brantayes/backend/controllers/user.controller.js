@@ -155,10 +155,16 @@ const login = async (req, res, next) => {
             }
    
             res.cookie('jwt', token, cookieOptions );
-            res.sendStatus(200)
+            res.status(200).send({
+                id: result.customer_id,
+                username: result.username,
+                email: result.email_address,
+                accessToken: token
+            })
         }  
     } catch (error) {
       console.log(error);
+      res.status(500).send({ message: error.message})
     }
 }
 
