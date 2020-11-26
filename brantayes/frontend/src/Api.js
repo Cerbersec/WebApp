@@ -114,24 +114,23 @@ class Api {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         axios.post(url + "/account/login", data).then((response) => {
-          resolve(response.status !== 200 ? null : response)
-          console.log(response)
+          resolve(response.status !== 200 ? null : response.status)
         })
-        .catch((err) => {console.log(err.response.status)
-          if (err.response.data.type == "invalid_field"){
-            alert("E-mail is not in correct format")
+        .catch((err) => {
+          if (err.response.data.type === "invalid_field"){
+            resolve("E-mail is not in correct format")
           }
-          else if (err.response.data.type == "missing_field")
+          else if (err.response.data.type === "missing_field")
           {
-            alert("E-mail or password can't be empty!")
-
+            resolve("E-mail or password can't be empty!")
           }
-          else if (err.response.status == 401)
+          else if (err.response.status === 401)
           {
-            alert("Invalid credentials")
-
+            resolve("Invalid credentials")
           }
-          else {alert("Something went wrong, try again!")}
+          else {
+            resolve("Something went wrong, try again!")
+          }
         })
       }, 500);
     });

@@ -23,7 +23,9 @@ class ConnectedLogin extends Component {
     this.state = {
       emailAddress: "",
       pass: "",
-      redirectToReferrer: false
+      redirectToReferrer: false,
+      wrongCred: false,
+      wrongCredMsg: ""
     };
   }
 
@@ -38,9 +40,17 @@ class ConnectedLogin extends Component {
   
       //TODO: validate response
       const response = await Api.login(data);
-  
-      this.props.dispatch(setLoggedInUser(true));
-      this.setState({redirectToReferrer: true});
+
+      if(response !== 200) {
+        this.setState({ 
+          wrongCred: true,
+          wrongCredMsg: response
+        })
+      }
+      else {
+        this.props.dispatch(setLoggedInUser(true));
+        this.setState({redirectToReferrer: true});
+      }
     }
 
 
@@ -109,7 +119,7 @@ class ConnectedLogin extends Component {
             Log in
           </Button>
           {this.state.wrongCred && (
-            <div style={{ color: "red" }}>Wrong email address and/or password</div>
+            <div style={{ color: "red", width: 200, textAlign: "center" }}>{ this.state.wrongCredMsg }</div>
           )}
           <div>
         <NavLink
