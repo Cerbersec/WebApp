@@ -109,7 +109,7 @@ class Api {
       }, 500);
     });
   }
-
+ 
   login(data) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -142,6 +142,27 @@ class Api {
       setTimeout(() => {
         axios.get(url + "/account/logout").then((response) => {
           resolve(response.status !== 200? "something went wrong" : "successfully logged out")
+        })
+      }, 500);
+    })
+  }
+
+  getReviews(productId) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        axios.get(url + '/store/reviews/' + productId).then((response) => {
+          resolve(response.lenght === 0 ? null : response.data.reviews)
+        })
+      }, 500);
+    })
+  }
+
+  //TODO: resolve aanpassen
+  submitReview(data){
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        axios.post(url + '/store/reviews/create', data).then((response) => {
+          resolve(response.status !== 200? "something went wrong" : "successfully submitted review")
         })
       }, 500);
     })

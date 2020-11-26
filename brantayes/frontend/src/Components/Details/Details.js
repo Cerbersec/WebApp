@@ -23,8 +23,10 @@ class ConnectedDetails extends Component {
       item: null,
       itemLoading: false,
       rating: 1,
-      review: ''
-      
+      review: '',
+      productId: '',
+      reviews: null,
+
     };
   }
   
@@ -33,6 +35,9 @@ class ConnectedDetails extends Component {
     this.setState({ itemLoading: true });
 
     let item = await Api.getItemUsingID(productId);
+    let reviews = await Api.getReviews(productId);
+
+    console.log(reviews);
 
     let relatedItems = await Api.searchItems({
       category: item.Category_category_name
@@ -44,7 +49,8 @@ class ConnectedDetails extends Component {
         item,
         quantity: 1,
         relatedItems: relatedItems.data.filter(x => x.product_id !== item.product_id),
-        itemLoading: false
+        itemLoading: false,
+        reviews: reviews,
       });
     }
   }
@@ -65,7 +71,6 @@ class ConnectedDetails extends Component {
     this.isCompMounted = false;
   }
 
-
   render() {
     if (this.state.itemLoading) {
       return <CircularProgress className="circular" />;
@@ -74,14 +79,24 @@ class ConnectedDetails extends Component {
     if (!this.state.item) {
       return null;
     }
-    const submitReview = () => {
+
+
+    //TODO: get review na submit / review venster leeg maken
+    var ID = this.props.match.params.id;
+    const submitReview = async() => {
+      console.log("test");
+
       var rev = this.state.review;
       var sco = this.state.rating;
+      
+      var data = {productId:ID, description:rev, rating:sco};
 
-      console.log(rev + sco);
-
+      let resultaat = await Api.submitReview(data);
+      
+      console.log(resultaat);
+      this.fetchProductAndRelatedItems(ID);
     }
-    
+
     return (
       <div style={{ padding: 10 }}>
         <div
