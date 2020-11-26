@@ -25,7 +25,7 @@ const CartRow = props => {
           </div>
         </Link>
       </TableCell>
-      <TableCell>{item.retail_price}</TableCell>
+      <TableCell>{item.retail_price + " €"}</TableCell>
       <TableCell>
         <TextField
           type="number"
@@ -45,8 +45,9 @@ const CartRow = props => {
       </TableCell>
       <TableCell>
         <Button
-          color="secondary"
+          color="primary"
           onClick={() => {
+            //props.dispatch(deleteCartItem(item.product_id));
             props.dispatch(deleteCartItem(item.product_id));
           }}
         >

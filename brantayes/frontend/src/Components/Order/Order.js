@@ -7,14 +7,17 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import { setCheckedOutItems } from "../../Redux/Actions";
+import { setCheckedOutItems, setCartItems} from "../../Redux/Actions";
 import Api from "../../Api";
+import StripeCheckout from "react-stripe-checkout";
 
 const mapStateToProps = state => {
   return {
     checkedOutItems: state.checkedOutItems
   };
 };
+
+
 
 // This component shows the items user checked out from the cart.
 class ConnectedOrder extends Component {
@@ -23,6 +26,13 @@ class ConnectedOrder extends Component {
       return accumulator + item.retail_price * item.quantity;
     }, 0);
 
+     
+
+    function handleToken(token, addresses){
+      console.log({token , addresses})
+      alert("Payment received!");
+      
+    }
     return (
       <div style={{ padding: 10 }}>
         <div style={{ fontSize: 24, marginTop: 10 }}>Order summary</div>
@@ -57,7 +67,7 @@ class ConnectedOrder extends Component {
         >
           Total price: &euro; {totalPrice}
         </div>
-        <Button
+       {/*  <Button
           color="primary"
           variant="outlined"
           disabled={totalPrice === 0}
@@ -72,18 +82,34 @@ class ConnectedOrder extends Component {
           style={{ margin: 5, marginTop: 30 }}
         >
           Purchase
-        </Button>
+        </Button> */}
+        <div onClick={() => {
+            this.props.dispatch(setCheckedOutItems([]));
+            this.props.dispatch(setCartItems([]));
+            
+          }}>
+        <StripeCheckout
+        stripeKey="pk_test_51HrjMQAhYVhfBMPgiJOlGVoQVTCtytMCzQmKcwhTNeIAdpHFdHTqDr9I2fxT2VopxfvOZFSg24wl0Ab4CCBlTIi6005qykfakb"
+        token={handleToken}
+        amount={totalPrice * 100}
+        style={{ marginTop: 10 }}
+        
+         />
+         </div>
         <Button
-          color="secondary"
+          color="primary"
           variant="outlined"
-          disabled={totalPrice !== 0}
+          
           onClick={() => {
             this.props.dispatch(setCheckedOutItems([]));
+            this.props.dispatch(setCartItems([]));
+            
           }}
-          style={{ margin: 5, marginTop: 30 }}
+          //style={{ margin: 5, marginTop: 30 }}
         >
           Discard
         </Button>
+        
       </div>
     );
   }
