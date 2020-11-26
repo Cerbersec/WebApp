@@ -34,7 +34,7 @@ const rootReducer = (state = initialState, action) => {
     case CONSTANTS.DELETE_CART_ITEM:
       return {
         ...state,
-        cartItems: state.cartItems.filter(x => x.id !== action.payload)
+        cartItems: state.cartItems.filter(x => x.product_id !== action.payload)
       };
     case CONSTANTS.TOGGLE_MENU:
       return { ...state, showMenu: !state.showMenu };
@@ -45,7 +45,7 @@ const rootReducer = (state = initialState, action) => {
     case CONSTANTS.SET_CHECKEDOUT_ITEMS:
       return { ...state, checkedOutItems: action.payload };
     case CONSTANTS.UPDATE_CART_ITEM_QUANTITY: {
-      let index = state.cartItems.findIndex(x => x.id === action.payload.id);
+      let index = state.cartItems.findIndex(x => x.product_id === action.payload.id);
 
       // User wants to update quantity of existing item.
       if (index !== -1) {

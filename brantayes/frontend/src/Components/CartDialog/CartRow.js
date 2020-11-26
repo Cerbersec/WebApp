@@ -28,7 +28,7 @@ const CartRow = props => {
       <TableCell>{item.retail_price + " €"}</TableCell>
       <TableCell>
         <TextField
-          
+          type="number"
           style={{ width: 40 }}
           value={item.quantity}
           onChange={e => {
@@ -45,8 +45,9 @@ const CartRow = props => {
       </TableCell>
       <TableCell>
         <Button
-          color="secondary"
+          color="primary"
           onClick={() => {
+            //props.dispatch(deleteCartItem(item.product_id));
             props.dispatch(deleteCartItem(item.product_id));
           }}
         >
