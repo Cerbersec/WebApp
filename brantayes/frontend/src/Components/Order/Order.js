@@ -9,6 +9,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import { setCheckedOutItems } from "../../Redux/Actions";
 import Api from "../../Api";
+import StripeCheckout from "react-stripe-checkout";
 
 const mapStateToProps = state => {
   return {
@@ -23,6 +24,10 @@ class ConnectedOrder extends Component {
       return accumulator + item.retail_price * item.quantity;
     }, 0);
 
+    function handleToken(token, addresses){
+      console.log({token , addresses})
+      alert("Payment received!");
+    }
     return (
       <div style={{ padding: 10 }}>
         <div style={{ fontSize: 24, marginTop: 10 }}>Order summary</div>
@@ -84,6 +89,12 @@ class ConnectedOrder extends Component {
         >
           Discard
         </Button>
+        <StripeCheckout
+        stripeKey="pk_test_51HrjMQAhYVhfBMPgiJOlGVoQVTCtytMCzQmKcwhTNeIAdpHFdHTqDr9I2fxT2VopxfvOZFSg24wl0Ab4CCBlTIi6005qykfakb"
+        token={handleToken}
+        amount={totalPrice * 100}
+        style={{ margin: 5, marginTop: 50 }}
+         />
       </div>
     );
   }
