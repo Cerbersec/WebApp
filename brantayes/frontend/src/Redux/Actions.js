@@ -24,6 +24,10 @@ export const setCheckedOutItems = items => ({
   type: CONSTANTS.SET_CHECKEDOUT_ITEMS,
   payload: items
 });
+export const setCartItems = items => ({
+  type: CONSTANTS.SET_CART_ITEMS,
+  payload: items
+});
 export const setLoggedInUser = user => ({
   type: CONSTANTS.SET_LOGGED_IN_USER,
   payload: user
