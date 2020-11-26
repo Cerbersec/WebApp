@@ -22,7 +22,7 @@ router.post('/store/checkout', userController.isLoggedIn,storeController.postChe
 //router.post('/store/checkout', ensureAuthenticated, storeController.postCheckout)
 //router.get('/store/payment/success', ensureAuthenticated, storeController.getPaymentSuccess)
 
-router.get('/orders',userController.isLoggedIn,storeController.getOrders)
+router.get('/:userid/orders',userController.isLoggedIn,storeController.getOrders)
 router.get('/order/:orderid',userController.isLoggedIn,storeController.getOrderByID)
 
 module.exports = router
