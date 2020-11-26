@@ -6,7 +6,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import Badge from "@material-ui/core/Badge";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import { withRouter, Link } from "react-router-dom";
+import { withRouter, Link, NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import { showCartDlg, toggleMenu, logout } from "../../Redux/Actions";
 import cartImage from "../../Images/brantayes.png";
@@ -186,6 +186,11 @@ class ConnectedHeader extends Component {
               >
                 Checkout page
               </MenuItem> */}
+              <MenuItem>
+                <NavLink to={"/account"} style={{textDecoration: 'none', color: "rgb(32, 32, 34)" }} >
+                  My account
+                </NavLink>
+              </MenuItem>
               <MenuItem
                 onClick={() => {
                   handleSubmit()
@@ -194,6 +199,7 @@ class ConnectedHeader extends Component {
               >
                 Logout
               </MenuItem>
+              
             </Menu>
           </div>
         </Toolbar>

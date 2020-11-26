@@ -20,6 +20,7 @@ import blog from "./Components/Blog/Blog.js";
 import { MuiThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import theme from './theme'
+import Account from "./Components/Account/Account";
 /* END */
 
 class App extends Component {
@@ -43,6 +44,7 @@ class App extends Component {
               <Route path="/contact" component={contact}/>
               <Route path="/support" component={support}/>
               <Route path="/blog" component={blog}/>
+              <Route path="/account" component={Account}/>
               <Route
                 component={() => (
                   <div style={{ padding: 20 }}>Page not found</div>
