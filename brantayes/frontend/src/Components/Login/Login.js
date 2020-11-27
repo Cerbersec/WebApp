@@ -7,35 +7,79 @@ import { setLoggedInUser } from "../../Redux/Actions";
 import Avatar from "@material-ui/core/Avatar";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { NavLink } from "react-router-dom";
-import Api from "../../Api";
+//import Api from "../../Api";
+import { login } from "../../Redux/actions/auth"
 
-
-const mapStateToProps = state => {
+function mapStateToProps(state) {
+  const { isLoggedIn } = state;
+  const { message } = state;
   return {
+    isLoggedIn,
+    message,
     loggedInUser: state.loggedInUser
   };
-};
+}
 
 class ConnectedLogin extends Component {
   constructor(props) {
     super(props);
 
+    //init event handlers
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.onChangeEmail = this.onChangeEmail.bind(this)
+    this.onChangePassword = this.onChangePassword.bind(this)
+
     this.state = {
       emailAddress: "",
-      pass: "",
+      password: "",
       redirectToReferrer: false,
       wrongCred: false,
-      wrongCredMsg: ""
+      wrongCredMsg: "",
+      loading: false
     };
   }
 
-  render() {
+  onChangeEmail(e) {
+    this.setState({
+      emailAddress: e.target.value
+    })
+  }
 
+  onChangePassword(e) {
+    this.setState({
+      password: e.target.value
+    })
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    this.setState({loading: true})
+
+    const { dispatch, history } = this.props;
+    const data = {
+      email_address: this.state.emailAddress,
+      password: this.state.password
+    }
+
+    dispatch(login(data))
+      .then(() => {
+        this.setState({redirectToReferrer: true})
+      })
+      .catch((e) => {
+        this.setState({loading: false, wrongCred: true, wrongCredMsg: e.message})
+      })
+
+    //TODO: check if necessary
+    dispatch(setLoggedInUser(true))
+  }
+
+  render() {
+    /*
     const handleSubmit = async (e) => {
 
       const data = {
         email_address: this.state.emailAddress,
-        password: this.state.pass
+        password: this.state.password
       }
   
       //TODO: validate response
@@ -52,7 +96,7 @@ class ConnectedLogin extends Component {
         this.setState({redirectToReferrer: true});
       }
     }
-
+    */
 
     const { from } = this.props.location.state || { from: { pathname: "/" } };
 
@@ -98,23 +142,19 @@ class ConnectedLogin extends Component {
           <TextField
             value={this.state.emailAddress}
             placeholder="Email address"
-            onChange={e => {
-              this.setState({ emailAddress: e.target.value });
-            }}
+            onChange={this.onChangeEmail}
           />
           <TextField
-            value={this.state.pass}
+            value={this.state.password}
             type="password"
             placeholder="Password"
-            onChange={e => {
-              this.setState({ pass: e.target.value });
-            }}
+            onChange={this.onChangePassword}
           />
           <Button
             style={{ marginTop: 20, width: 200, marginBottom: 10 }}
             variant="outlined"
             color="primary"
-            onClick={handleSubmit}
+            onClick={this.handleSubmit}
           >
             Log in
           </Button>
