@@ -8,9 +8,8 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { withRouter, Link, NavLink } from "react-router-dom";
 import { connect } from "react-redux";
-import { showCartDlg, toggleMenu, logout } from "../../Redux/Actions";
+import { showCartDlg, toggleMenu } from "../../Redux/Actions";
 import cartImage from "../../Images/brantayes.png";
-import Auth from "../../Auth";
 import Api from "../../Api";
 import Person from "@material-ui/icons/PersonOutline";
 import Avatar from "@material-ui/core/Avatar";
@@ -19,22 +18,33 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
+import { logout } from "../../Redux/actions/auth";
 
 
 const mapStateToProps = state => {
+  const { user } = state;
+  const { message } = state;
   return {
     nrOfItemsInCard: state.cartItems.length,
-    loggedInUser: state.loggedInUser
+    loggedInUser: state.loggedInUser,
+    message,
+    user,
   };
 };
 
-class ConnectedHeader extends Component {
-  state = {
-    searchTerm: "",
-    anchorEl: null,
-    categories: [],
-    categoryFilterValue: ""
-  };
+class Header extends Component {
+  constructor(props) {
+    super(props);
+  
+    this.handleSubmit = this.handleSubmit.bind(this)
+
+    this.state = {
+      searchTerm: "",
+      anchorEl: null,
+      categories: [],
+      categoryFilterValue: ""
+    }
+  }
 
   componentDidMount() {
     this.fetchCategories();
@@ -60,8 +70,17 @@ class ConnectedHeader extends Component {
     })
   }
 
+  handleSubmit(e) {
+    e.preventDefault();
+    this.setState({ anchorEl: null });
+
+    this.props.dispatch(logout())
+    this.props.history.push("/")
+  }
+
   render() {
 
+    /*
     const handleSubmit = async () => {
       const response = await Api.logout()
 
@@ -69,8 +88,7 @@ class ConnectedHeader extends Component {
       this.props.dispatch(logout());
       this.props.history.push("/");
     }
-
-
+    */
 
     let { anchorEl } = this.state;
 
@@ -178,28 +196,19 @@ class ConnectedHeader extends Component {
                 this.setState({ anchorEl: null });
               }}
             >
-              {/* <MenuItem
-                onClick={() => {
-                  this.setState({ anchorEl: null });
-                  this.props.history.push("/order");
-                }}
-              >
-                Checkout page
-              </MenuItem> */}
-              <MenuItem>
-                <NavLink to={"/account"} style={{textDecoration: 'none', color: "rgb(32, 32, 34)" }} >
-                  My account
-                </NavLink>
-              </MenuItem>
               <MenuItem
                 onClick={() => {
-                  handleSubmit()
-                  this.setState({ anchorEl: null });
+                  this.setState({ anchorEl: null});
+                  this.props.history.push("/account")
                 }}
               >
-                Logout
+                My account
               </MenuItem>
-              
+              <MenuItem
+                onClick={this.handleSubmit}
+              >
+                Logout
+              </MenuItem>      
             </Menu>
           </div>
         </Toolbar>
@@ -208,5 +217,4 @@ class ConnectedHeader extends Component {
   }
 }
 
-const Header = withRouter(connect(mapStateToProps)(ConnectedHeader));
-export default Header;
+export default withRouter(connect(mapStateToProps)(Header));
