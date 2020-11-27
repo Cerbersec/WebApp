@@ -159,7 +159,7 @@ const login = async (req, res, next) => {
                 id: result.customer_id,
                 username: result.username,
                 email: result.email_address,
-                accessToken: token
+                //accessToken: token
             })
         }  
     } catch (error) {
