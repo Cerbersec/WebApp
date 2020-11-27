@@ -3,72 +3,117 @@ import Avatar from "@material-ui/core/Avatar";
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import axios from "axios"
 import Select from "@material-ui/core/Select";
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
+import Api from "../../Api";
+import { register } from "../../Redux/actions/auth";
+import { connect } from "react-redux";
+
+const mapStateToProps = state => {
+  const { message } = state;
+  return {
+    message,
+  }
+}
 
 class Register extends Component{
-  state = {
-    firstName:"",
-    lastName:"",
-    userName: "",
-    gender: "",
-    pass: "",
-    confirmpass: "",
-    email: "",
-    street: "",
-    streetnr: "",
-    postal:"",
-    city: "",
-    country:"",
-    redirectToReferrer: false,
-    test: 'false',
-    reply:"",
-    bus_nr:"",
-    phone:"",
-    registerSuccesful: "yes",
-    errorStatus:""
-  };
-    render(){
+  constructor(props) {
+    super(props);
 
-      const postUser = () => {
-        axios({
-          method:'post',
-          url:'account/register',
-          data:{
-            first_name: this.state.firstName,
-            last_name: this.state.lastName,
-            email_address: this.state.email,
-            gender: this.state.gender,
-            username: this.state.userName,
-            password:this.state.pass,
-            verify_password: this.state.confirmpass,
-            street_name: this.state.street,
-            street_nr: this.state.streetnr,
-            postal_code: this.state.postal,
-            phone: this.state.phone,
-            bus_nr: this.state.bus_nr,
-            city: this.state.city,
-            country: this.state.country,
-          }
-        })
-        .then(response => this.setState({reply: response }))
-        
-        .catch(error =>{
-          this.setState({registerSuccesful: "no", errorStatus: error.response.status})
-          console.error('There was an error!', error);
-        });
-        setTimeout(checkAlert, 1000);
-      }
-       const checkAlert = () =>{
-        if(this.state.registerSuccesful === "yes"){
-          alert("Registration succesful!");
+    this.handleSubmit = this.handleSubmit.bind(this)
+
+    this.state = {
+      firstName:"",
+      lastName:"",
+      userName: "",
+      gender: "",
+      pass: "",
+      confirmpass: "",
+      email: "",
+      street: "",
+      streetnr: "",
+      postal: "",
+      city: "",
+      country: "",
+      redirectToReferrer: false,
+      test: 'false',
+      reply: "",
+      bus_nr: "",
+      phone: "",
+      registerSuccesful: false,
+      errorStatus: ""
+    }
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+
+    this.setState({
+      registerSuccesful: false,
+    })
+
+    const { dispatch } = this.props;
+    const data = {
+      first_name: this.state.firstName,
+      last_name: this.state.lastName,
+      email_address: this.state.email,
+      gender: this.state.gender,
+      username: this.state.userName,
+      password:this.state.pass,
+      verify_password: this.state.confirmpass,
+      street_name: this.state.street,
+      street_nr: this.state.streetnr,
+      postal_code: this.state.postal,
+      phone: this.state.phone,
+      bus_nr: this.state.bus_nr,
+      city: this.state.city,
+      country: this.state.country,
+    }
+
+    dispatch(register(data))
+      .then(() => {
+        this.setState({registerSuccesful: true})
+      })
+      .catch((e) => {
+        this.setState({registerSuccesful: false, errorStatus: e.message})
+      })
+  }
+
+
+    render(){
+      /*
+      const handleSubmit = async(e) => {
+        const data = {
+          first_name: this.state.firstName,
+          last_name: this.state.lastName,
+          email_address: this.state.email,
+          gender: this.state.gender,
+          username: this.state.userName,
+          password:this.state.pass,
+          verify_password: this.state.confirmpass,
+          street_name: this.state.street,
+          street_nr: this.state.streetnr,
+          postal_code: this.state.postal,
+          phone: this.state.phone,
+          bus_nr: this.state.bus_nr,
+          city: this.state.city,
+          country: this.state.country,
         }
-        else{alert( 'Registration failed! Error status: ' + this.state.errorStatus);}
-       
+
+        const response = await Api.register(data)
+
+        if(response !== 200) {
+          this.setState({ 
+            registerSuccesful: "no",
+            errorStatus: response.error.message
+          })
+        }
+        else {
+          this.setState({ reply: response })
+        }
       }
-      
+      */
 
       return(
 
@@ -244,8 +289,7 @@ class Register extends Component{
             style={{ marginTop: 20, width: 200 }}
             variant="outlined"
             color="primary"
-            onClick={() => postUser()
-            }
+            onClick={this.handleSubmit}
           >
             Register
           </Button>
@@ -256,4 +300,4 @@ class Register extends Component{
       )
     }
   }
-export default Register;
+export default connect(mapStateToProps)(Register);
