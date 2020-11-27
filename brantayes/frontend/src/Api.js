@@ -110,6 +110,7 @@ class Api {
     });
   }
  
+  /*
   login(data) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -144,6 +145,34 @@ class Api {
         })
       }, 500);
     })
+  }
+  */
+
+  login(data) {
+    return axios
+      .post(url + "/account/login", data)
+      .then((response) => {
+        if(response.data.id) {
+          localStorage.setItem("user", JSON.stringify(response.data));
+        }
+        return response.data;
+      });    
+  }
+
+  logout() {
+    return axios
+      .get(url + "/account/logout")
+      .then((response) => {
+        localStorage.removeItem("user");
+      });
+  }
+
+  register(data) {
+    return axios
+      .post(url + "/account/register", data)
+      .then((reponse) => {
+
+      })
   }
 
   getReviews(productId) {
