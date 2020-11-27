@@ -35,12 +35,12 @@ class Account extends Component
 
 
     componentDidMount() {
-        this.fetchOrders(this.props.user.id);
+        this.fetchOrders();
     }
 
-    async fetchOrders(userId) {
+    async fetchOrders() {
         this.setState({loading: true})
-        let response = await Api.getOrders(userId)
+        let response = await Api.getOrders()
         this.setState({orders: response, loading: false})
     }
 

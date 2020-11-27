@@ -3,25 +3,10 @@ const userDb = require('../db/userDb')
 const models = require('../models')
 const jwt = require('jsonwebtoken')
 const config = require('../config/jwt-config')
-const ensureAuthenticated = require('../modules/ensureAuthenticated')
 const bcrypt = require('bcryptjs')
 const TypedError = require('../modules/ErrorHandler')
 
 const { promisify } = require('util');
-
-//showcase method
-const getUsers = async(req, res, next) => {
-    try {
-        const users = await userDb.readUsers()
-        console.log(users)
-        res.send(JSON.stringify(users, null, 2))
-
-        
-    } catch(e) {
-        console.log(e.message)
-        res.sendStatus(500) && next(e)
-    }
-}
 
 const register = async(req, res, next) => {
     try {
@@ -145,11 +130,9 @@ const login = async (req, res, next) => {
                 expiresIn: config.jwt_expires_in
             });
    
-            console.log("The token is: " + token);//debug
-   
             const cookieOptions = {
                 expires: new Date(
-                    Date.now() + config.jwt_cookie_expires * 24 * 60 * 60 * 1000
+                    Date.now() + config.jwt_cookie_expires
                 ),
                 httpOnly: true
             }
@@ -159,7 +142,6 @@ const login = async (req, res, next) => {
                 id: result.customer_id,
                 username: result.username,
                 email: result.email_address,
-                //accessToken: token
             })
         }  
     } catch (error) {
@@ -200,18 +182,40 @@ const isLoggedIn = async (req, res, next) => {
 }
    
 const logout = async (req, res) => {
-    /*
-    res.cookie('jwt', 'logout', {
-        expires: new Date(Date.now() + 2*1000),
-        httpOnly: true
-    });
-    */
     res.clearCookie('jwt')
     res.sendStatus(200)
 }
 
-exports.getUsers = getUsers
+const verifyToken = async (req, res, next) => {
+    const token = req.cookies.jwt
+
+    if(!token) {
+        return res.status(403).send({
+            message: "No token provided!"
+        })
+    }
+
+    try {
+        jwt.verify(token, config.jwt_secret, (err, decoded) => {
+            if(err) {
+                return res.status(401).send({
+                    message: "Unauthorized!"
+                })
+            }
+            req.customer_id = decoded.id
+            next()
+        })
+    }
+    catch(error) {
+        console.log(error)
+        res.status(500).send({
+            message: "Something went wrong!"
+        })
+    }
+}
+
 exports.register = register
 exports.login = login
 exports.logout = logout
-exports.isLoggedIn = isLoggedIn
+//exports.isLoggedIn = isLoggedIn
+exports.verifyToken = verifyToken

@@ -76,7 +76,7 @@ const postCheckout = async(req, res, next) => {
 
 const getOrders = async(req, res) => {
     try {
-        const orders = await storeDb.readOrders(req.params.userid)
+        const orders = await storeDb.readOrders(req.customer_id)
         
         if (orders == null) {
             return res.status(404).json({

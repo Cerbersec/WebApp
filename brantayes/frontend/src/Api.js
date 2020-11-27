@@ -198,10 +198,10 @@ class Api {
     })
   }
 
-  getOrders(userId) {
+  getOrders() {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        axios.get(url + userId+ '/orders/').then((response) => {
+        axios.get(url + '/orders').then((response) => {
           resolve(response.lenght === 0 ? null : response.data.orders)
         })
       }, 500);
