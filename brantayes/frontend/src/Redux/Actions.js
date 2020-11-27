@@ -28,6 +28,14 @@ export const setCartItems = items => ({
   type: CONSTANTS.SET_CART_ITEMS,
   payload: items
 });
+export const setMessage = message => ({
+  type: CONSTANTS.SET_MESSAGE,
+  payload: message
+})
+export const clearMessage = () => ({
+  type: CONSTANTS.CLEAR_MESSAGE,
+})
+
 export const setLoggedInUser = user => ({
   type: CONSTANTS.SET_LOGGED_IN_USER,
   payload: user

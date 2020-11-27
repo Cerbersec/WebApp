@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import Header from "./Components/Header/Header.js";
 import ProductList from "./Components/ProductList/ProductList";
-import { Switch, Route } from "react-router-dom";
+import { withRouter, Router, Switch, Route } from "react-router-dom";
 import Menu from "./Components/Menu/Menu";
 import CartDialog from "./Components/CartDialog/CartDialog";
 import Details from "./Components/Details/Details";
@@ -15,6 +15,9 @@ import register from "./Components/Register/Register.js";
 import contact from "./Components/Contact/Contact.js";
 import support from "./Components/Support/Support.js";
 import blog from "./Components/Blog/Blog.js";
+import { history } from "./helpers/history";
+import { clearMessage } from "./Redux/Actions";
+import { connect } from "react-redux";
 
 /* THEME */
 import { MuiThemeProvider } from '@material-ui/core/styles'
@@ -23,8 +26,38 @@ import theme from './theme'
 import Account from "./Components/Account/Account";
 /* END */
 
+const mapStateToProps = state => {
+  return {
+    user: state.auth,
+  };
+}
+
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      currentUser: undefined,
+    };
+
+    history.listen((location) => {
+      props.dispatch(clearMessage());
+    });
+  }
+
+  componentDidMount() {
+    const user = this.props.user;
+
+    if(user) {
+      this.setState({
+        currentUser: user,
+      })
+    }
+  }
+
   render() {
+    const { currentUser } = this.state;
+
     return (
       <MuiThemeProvider theme={theme}>
         <CssBaseline />
@@ -60,4 +93,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(connect(mapStateToProps)(App));
