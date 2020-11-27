@@ -4,13 +4,21 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import Api from "../../Api";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
+//test
+import Item from "../Item/Item";
+
 const mapStateToProps = state => {
+    const { user } = state;
+    const { message } = state;
     return {
       loggedInUser: state.loggedInUser,
+      user,
+      message,
     };
   };
 
@@ -20,23 +28,32 @@ class Account extends Component
         super(props);
 
         this.state = {
-            orders: null
+            orders: [],
+            loading: false
         };
     }
 
 
     componentDidMount() {
-        this.fetchOrders(this.props.match.params.id);
+        this.fetchOrders(this.props.user.id);
     }
 
     async fetchOrders(userId) {
+        this.setState({loading: true})
         let response = await Api.getOrders(userId)
-        console.log(response)
+        this.setState({orders: response, loading: false})
     }
 
     render()
     {
+        if (this.state.loading) {
+            return <CircularProgress className="circular" />;
+        }
+
+        console.log(this.state.orders)
+
         return (
+
             <div className="AccountPage">
                 <h1>Account Page</h1>
                 <div className="Order History">    
@@ -44,26 +61,27 @@ class Account extends Component
                     <Table>
                         <TableHead>
                             <TableRow>
-                                <TableCell>Item Name</TableCell>
+                                <TableCell>Order ID</TableCell>
                                 <TableCell>Price</TableCell>
-                                <TableCell>Quantity</TableCell>
+                                <TableCell>Shipping Cost</TableCell>
+                                <tableCell>Order Date</tableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            <TableRow>
-                                <TableCell>temp</TableCell>
-                                <TableCell>temp</TableCell>
-                                <TableCell>temp</TableCell>
+                        {this.state.orders.map(order => {
+                            return <TableRow key={order.order_id} item={order}>
+                                <TableCell> {order.order_id} </TableCell>
+                                <TableCell> {order.total_price} </TableCell>
+                                <TableCell> {order.shipping_costs} </TableCell>
+                                <TableCell> {new Date(order.order_date).toISOString().split('T')[0]} </TableCell>
                             </TableRow>
+                        })}
                         </TableBody>
                     </Table>
                 </div>
-                
-                <h1>!Under Construction!</h1>
             </div>
         )
     }
 }
 
-//const Account = withRouter(connect(mapStateToProps)(ConnectedAccount));
-export default Account;
+export default withRouter(connect(mapStateToProps)(Account));
