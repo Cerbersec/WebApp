@@ -158,7 +158,7 @@ class ConnectedLogin extends Component {
           </div>
           <div className="form-group">
             <Input
-              type="text"
+              type="email"
               className="form-control"
               value={this.state.emailAddress}
               placeholder="Email address"
