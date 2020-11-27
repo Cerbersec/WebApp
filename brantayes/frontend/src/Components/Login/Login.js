@@ -7,8 +7,13 @@ import { setLoggedInUser } from "../../Redux/Actions";
 import Avatar from "@material-ui/core/Avatar";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { NavLink } from "react-router-dom";
-//import Api from "../../Api";
 import { login } from "../../Redux/actions/auth"
+
+//validation
+import Form from "react-validation/build/form";
+import Input from "react-validation/build/input";
+import CheckButton from "react-validation/build/button";
+import { isEmail } from "validator";
 
 function mapStateToProps(state) {
   const { isLoggedIn } = state;
@@ -18,6 +23,27 @@ function mapStateToProps(state) {
     message,
     loggedInUser: state.loggedInUser
   };
+}
+
+//setup validation
+const required = (value) => {
+  if(!value){
+    return (
+      <div className="alert alert-danger" role="alert">
+        This field is required!
+      </div>
+    )
+  }
+}
+
+const email = value => {
+  if(!isEmail(value)) {
+    return(
+      <div className="alert alert-danger" role="alert">
+        This is not a valid email.
+      </div>
+    )
+  }
 }
 
 class ConnectedLogin extends Component {
@@ -55,50 +81,34 @@ class ConnectedLogin extends Component {
     e.preventDefault();
     this.setState({loading: true})
 
+    this.form.validateAll();
+
     const { dispatch, history } = this.props;
     const data = {
       email_address: this.state.emailAddress,
       password: this.state.password
     }
 
-    dispatch(login(data))
-      .then(() => {
-        this.setState({redirectToReferrer: true})
-      })
-      .catch((e) => {
-        this.setState({loading: false, wrongCred: true, wrongCredMsg: e.message})
-      })
+    if(this.checkBtn.context._errors.length === 0) {
+      dispatch(login(data))
+        .then(() => {
+          this.setState({redirectToReferrer: true})
+        })
+        .catch((e) => {
+          this.setState({loading: false, wrongCred: true, wrongCredMsg: e.message})
+        })
 
-    //TODO: check if necessary
-    dispatch(setLoggedInUser(true))
+      //TODO: check if necessary
+      dispatch(setLoggedInUser(true))
+    } else {
+      this.setState({loading: false})
+    }
   }
 
   render() {
-    /*
-    const handleSubmit = async (e) => {
-
-      const data = {
-        email_address: this.state.emailAddress,
-        password: this.state.password
-      }
-  
-      //TODO: validate response
-      const response = await Api.login(data);
-
-      if(response !== 200) {
-        this.setState({ 
-          wrongCred: true,
-          wrongCredMsg: response
-        })
-      }
-      else {
-        this.props.dispatch(setLoggedInUser(true));
-        this.setState({redirectToReferrer: true});
-      }
-    }
-    */
 
     const { from } = this.props.location.state || { from: { pathname: "/" } };
+    const { message } = this.props;
 
     // If user was authenticated, redirect her to where she came from.
     if (this.state.redirectToReferrer) {
@@ -129,6 +139,13 @@ class ConnectedLogin extends Component {
           <Avatar style={{ marginBottom: 10 }}>
             <LockOutlinedIcon />
           </Avatar>
+
+          <Form
+            onSubmit={this.handleSubmit}
+            ref={(c) => {
+              this.form = c;
+            }}
+          >
           <div
             style={{
               marginBottom: 20,
@@ -139,39 +156,66 @@ class ConnectedLogin extends Component {
             {" "}
             Log in{" "}
           </div>
-          <TextField
-            value={this.state.emailAddress}
-            placeholder="Email address"
-            onChange={this.onChangeEmail}
-          />
-          <TextField
-            value={this.state.password}
-            type="password"
-            placeholder="Password"
-            onChange={this.onChangePassword}
-          />
-          <Button
-            style={{ marginTop: 20, width: 200, marginBottom: 10 }}
-            variant="outlined"
-            color="primary"
-            onClick={this.handleSubmit}
-          >
-            Log in
-          </Button>
-          {this.state.wrongCred && (
-            <div style={{ color: "red", width: 200, textAlign: "center" }}>{ this.state.wrongCredMsg }</div>
+          <div className="form-group">
+            <Input
+              type="text"
+              className="form-control"
+              value={this.state.emailAddress}
+              placeholder="Email address"
+              onChange={this.onChangeEmail}
+              validations={[required, email]}
+            />
+          </div>
+          <div className="form-group">
+            <Input
+              type="password"
+              className="form-control"
+              value={this.state.password}             
+              placeholder="Password"
+              onChange={this.onChangePassword}
+              validations={[required]}
+            />
+          </div>
+          <div className="form-group">
+            <button
+            className="btn btn-primary btn-block"
+              style={{ marginTop: 20, width: 200, marginBottom: 10 }}
+              //variant="outlined"
+              //color="primary"
+              //onClick={this.handleSubmit}
+              disabled={this.state.loading}
+            >
+              {this.state.loading && (
+                <span className="spinner-border spinner-border-sm"></span>
+              )}
+              <span>Login</span>
+            </button>
+          </div>
+          {message && (
+            <div className="form-group">
+              <div className="alert alert-danger" role="alert">
+                {message}
+              </div>
+            </div>
           )}
           <div>
-        <NavLink
-      to={"/register"}
-    >
-      <div >Nog geen account?</div>
-    </NavLink>
-        </div>
-        </div>
-        
+          <CheckButton
+            style={{display: "none"}}
+            ref={(c) => {
+              this.checkBtn = c;
+            }}
+          />
+          <div className="form-group">
+            <NavLink
+              to={"/register"}
+            >
+              <span>Nog geen account?</span>
+            </NavLink>
+          </div>
+          </div>
+          </Form>
+        </div>       
       </div>
-
     );
   }
 }
