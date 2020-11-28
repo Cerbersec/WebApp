@@ -53,7 +53,7 @@ const createOrderlines = async(orderLines, OrderPlaced) => {
 }
 
 const readOrders = (userid) => {
-    return models.Order.findAll({where: { customer_id: userid} })
+    return models.Order.findAll({where: { customer_id: userid}, include: models.Orderline})
 }
 
 const readOrder = (userId,orderId) => {
