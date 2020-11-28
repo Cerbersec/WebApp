@@ -9,7 +9,7 @@ const readProduct = (productId) => {
     return models.Product.findOne({ where: { product_id: productId } })
 }
 
-const createOrder = async (orderLines,userid) => {
+const createOrder = async (orderlines, userid) => {
     const shipping_costs = 12;
 
     const OrderPlaced = await models.Order.create({
@@ -19,7 +19,7 @@ const createOrder = async (orderLines,userid) => {
         customer_id: userid
     })
 
-    const totalprice = await (createOrderlines(orderLines,OrderPlaced))
+    const totalprice = await (createOrderlines(orderlines, OrderPlaced))
  
     OrderPlaced.total_price = totalprice
     OrderPlaced.save().then((order) => {console.log(order)})
@@ -27,10 +27,10 @@ const createOrder = async (orderLines,userid) => {
     return OrderPlaced
 }
 
-const createOrderlines = async(orderLines, OrderPlaced) => {
+const createOrderlines = async(orderlines, OrderPlaced) => {
     var totalprice = 0;
 
-    for(const element of orderLines) {
+    for(const element of orderlines) {
         const prod = await models.Product.findOne({ where: { product_id: element.product_id } })
         var subtotal = 0;
 
@@ -62,8 +62,8 @@ const readOrder = (userId,orderId) => {
 }
 
 const readOrderLines = (orderId) => {
-    const orderLines = models.Orderline.findAll({ where: { order_id: orderId } })
-    return orderLines
+    const orderlines = models.Orderline.findAll({ where: { order_id: orderId } })
+    return orderlines
 }
 
 const readCategories = () => {
