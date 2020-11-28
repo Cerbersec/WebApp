@@ -71,8 +71,7 @@ const readCategories = () => {
 }
 
 const readReviews = async (product_Id) => {
-    console.log(product_Id)
-    return models.Review.findAll({where: { product_id: product_Id }})
+    return models.Review.findAll({where: { product_id: product_Id }, include: models.Customer})
 }
 
 const createReview = async (review) => {
