@@ -16,6 +16,10 @@ module.exports = function(sequelize, Sequelize) {
         order_date: {
             type: Sequelize.DATE,
             allowNull: false
+        },
+        paid: {
+            type: Sequelize.BOOLEAN,
+            allowNull: false
         }
     },
     {
