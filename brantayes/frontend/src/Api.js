@@ -102,9 +102,8 @@ class Api {
   checkout(data) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        axios.post(url + "/store/checkout",data).then((response) => { 
-          resolve(response.lenght === 0 ? null : response.data.order)
-          console.log(response)
+        axios.post(url + "/store/checkout", data).then((response) => { 
+          resolve(response.status !== 200 ? null : response.data.order)
         })
       }, 500);
     });
