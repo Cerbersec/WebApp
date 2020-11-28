@@ -16,7 +16,8 @@ const createOrder = async (orderlines, userid) => {
         total_price: 0, 
         shipping_costs: shipping_costs,
         order_date: new Date(Date.now()),
-        customer_id: userid
+        customer_id: userid,
+        paid: false
     })
 
     const totalprice = await (createOrderlines(orderlines, OrderPlaced))
@@ -57,7 +58,7 @@ const readOrders = (userid) => {
 }
 
 const readOrder = (userId,orderId) => {
-    const order = models.Order.findOne({ where: { customer_id: userId, order_id: orderId } })
+    const order = models.Order.findOne({ where: { customer_id: userId, order_id: orderId }, include: models.Orderline })
     return order
 }
 
