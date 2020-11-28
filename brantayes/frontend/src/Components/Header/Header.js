@@ -24,11 +24,13 @@ import { logout } from "../../Redux/actions/auth";
 const mapStateToProps = state => {
   const { user } = state;
   const { message } = state;
+  const {isLoggedIn } = state;
   return {
     nrOfItemsInCard: state.cartItems.length,
     loggedInUser: state.loggedInUser,
     message,
     user,
+    isLoggedIn,
   };
 };
 
@@ -80,23 +82,13 @@ class Header extends Component {
 
   render() {
 
-    /*
-    const handleSubmit = async () => {
-      const response = await Api.logout()
-
-      //TODO: validate response
-      this.props.dispatch(logout());
-      this.props.history.push("/");
-    }
-    */
-
     let { anchorEl } = this.state;
 
     return (
       <AppBar
         position="static"
         color="primary"
-        style={{ /*backgroundColor: "#183399",*/ padding: 0, marginBottom: 10 }}//header color
+        style={{ padding: 0, marginBottom: 10 }}
       >
         <Toolbar>
           <div className="left-part">
@@ -140,7 +132,7 @@ class Header extends Component {
             <Button
               color="secondary"
               variant="outlined"
-              style={{marginLeft: 20, /*color:"white"*/ }}
+              style={{marginLeft: 20}}
               onClick={() => {
                 this.props.history.push(
                   "/?category=" +
@@ -155,11 +147,11 @@ class Header extends Component {
             </Button>
           </div>
           <div className="right-part">
-            {!this.props.loggedInUser ? (
+            {!this.props.isLoggedIn ? (
               <Button
                 color="secondary"
                 variant="outlined"
-                style={{ marginRight: 20 , /*color:"white"*/ }}
+                style={{ marginRight: 20 }}
                 
                 onClick={() => {
                   this.props.history.push("/login");
@@ -179,7 +171,6 @@ class Header extends Component {
             )}
             <IconButton
               aria-label="Cart"
-              //style={{color:"white"}}
               color="secondary"
               onClick={() => {
                 this.props.dispatch(showCartDlg(true));
