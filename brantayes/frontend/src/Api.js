@@ -170,9 +170,9 @@ class Api {
   register(data) {
     return axios
       .post(url + "/account/register", data)
-      .then((reponse) => {
-
-      })
+      .then((response) => {
+        return response.data;
+      });
   }
 
   getReviews(productId) {
