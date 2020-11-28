@@ -9,12 +9,12 @@ import { connect } from "react-redux";
 import TextField from "@material-ui/core/TextField";
 import BeautyStars from 'beauty-stars';
 
-
 class ConnectedDetails extends Component {
  
   constructor(props) {
     super(props);
 
+    this.submitReview = this.submitReview.bind(this);
     this.isCompMounted = false;
 
     this.state = {
@@ -26,7 +26,6 @@ class ConnectedDetails extends Component {
       review: '',
       productId: '',
       reviews: null,
-
     };
   }
   
@@ -35,7 +34,7 @@ class ConnectedDetails extends Component {
     this.setState({ itemLoading: true });
 
     let item = await Api.getItemUsingID(productId);
-    let reviews = Api.getReviews(productId); //removed await to prevent page from not loading in case 0 reviews in database
+    let reviews = Api.getReviews(productId); //possible to remove api call and include reviews with getItemUsingID call
 
     console.log(reviews);
 
@@ -71,6 +70,19 @@ class ConnectedDetails extends Component {
     this.isCompMounted = false;
   }
 
+  async submitReview() {
+    var data = {
+      productId: this.props.match.params.id,
+      description: this.state.review,
+      rating: this.state.rating
+    };
+
+    let resultaat = await Api.submitReview(data);
+    
+    console.log(resultaat);
+    this.fetchProductAndRelatedItems(this.props.match.params.id);
+  }
+
   render() {
     if (this.state.itemLoading) {
       return <CircularProgress className="circular" />;
@@ -78,23 +90,6 @@ class ConnectedDetails extends Component {
 
     if (!this.state.item) {
       return null;
-    }
-
-
-    //TODO: get review na submit / review venster leeg maken
-    var ID = this.props.match.params.id;
-    const submitReview = async() => {
-      console.log("test");
-
-      var rev = this.state.review;
-      var sco = this.state.rating;
-      
-      var data = {productId:ID, description:rev, rating:sco};
-
-      let resultaat = await Api.submitReview(data);
-      
-      console.log(resultaat);
-      this.fetchProductAndRelatedItems(ID);
     }
 
     return (
@@ -233,8 +228,7 @@ class ConnectedDetails extends Component {
           style={{ marginTop: 20, width: 200 }}
           variant="outlined"
           color="primary"
-          onClick={() => submitReview()
-          }>
+          onClick={this.submitReview}>
             submit
         </Button>
         
