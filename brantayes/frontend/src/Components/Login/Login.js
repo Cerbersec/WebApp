@@ -178,7 +178,7 @@ class ConnectedLogin extends Component {
           </div>
           <div className="form-group">
             <button
-            className="btn btn-primary btn-block"
+              className="btn btn-primary btn-block"
               style={{ marginTop: 20, width: 200, marginBottom: 10 }}
               //variant="outlined"
               //color="primary"
