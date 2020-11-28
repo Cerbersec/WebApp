@@ -47,20 +47,18 @@ const getProductbyID = async(req, res, next) => {
 
 const postCheckout = async(req, res, next) => {
     try {
-        req.checkBody('order_lines').notEmpty()
+        const { orderlines } = req.body
 
-        const orderLines = req.body.order_lines
-
-        const placedOrder = await storeDb.createOrder(orderLines,req.customer_id)
+        const placedOrder = await storeDb.createOrder(orderlines, req.customer_id)
         
         if(placedOrder != null) {
             return res.status(200).json({
-                Order: placedOrder
+                order: placedOrder
             })
         }
         else {
             res.status(500).json({
-                message: "Something went wrong, Order could not be placed"
+                message: "Something went wrong, order could not be placed"
             })
         }
     } catch(e) {
