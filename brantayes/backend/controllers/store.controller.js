@@ -49,14 +49,9 @@ const postCheckout = async(req, res, next) => {
     try {
         req.checkBody('order_lines').notEmpty()
 
-        if (req.user == null) {
-            return res.status(400).json({
-                message: 'Not logged in'
-            })
-        }
         const orderLines = req.body.order_lines
 
-        const placedOrder = await storeDb.createOrder(orderLines,req.user)
+        const placedOrder = await storeDb.createOrder(orderLines,req.customer_id)
         
         if(placedOrder != null) {
             return res.status(200).json({
@@ -159,25 +154,25 @@ const getReviews = async (req, res, next) => {
 
 const postReview = async (req, res, next) => {
     try {
-
-        if (req.user == null) {
-            res.json({
-                message: "Not logged in"
-            })
-        }
-
         const { rating, description, productId} = req.body
 
+        //TODO: perform validation => XSS
         const newModel = new models.Review({
             rating: rating,
             description: description,
             review_date: new Date(),
             product_id: productId,
-            customer_id: req.user
+            customer_id: req.customer_id
         })
 
         const review = await storeDb.createReview(newModel)
-        res.send({
+
+        if(!review){
+            return res.status(404).send({
+                message: 'something went wrong'
+            })
+        }
+        res.status(200).send({
             message: 'review submitted'
         })
 
