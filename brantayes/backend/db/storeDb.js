@@ -28,6 +28,14 @@ const createOrder = async (orderlines, userid) => {
     return OrderPlaced
 }
 
+const updateOrderPaidStatus = async (orderid, status) => {
+    const order = await models.Order.findOne({ where: {order_id: orderid} })
+    order.paid = status
+    order.save()
+
+    return order
+}
+
 const createOrderlines = async(orderlines, OrderPlaced) => {
     var totalprice = 0;
 
@@ -94,3 +102,4 @@ exports.readOrderLines = readOrderLines
 exports.readCategories = readCategories
 exports.readReviews = readReviews
 exports.createReview = createReview
+exports.updateOrderPaidStatus = updateOrderPaidStatus

@@ -108,6 +108,10 @@ class Api {
       }, 500);
     });
   }
+
+  pay(data) {
+    return axios.post(url + "/store/payment", data)
+  }
  
   /*
   login(data) {

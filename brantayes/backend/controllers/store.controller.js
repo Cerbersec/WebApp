@@ -1,6 +1,8 @@
 //PGUR: Put, Get, Update, Remove
 const storeDb = require('../db/storeDb')
 const models = require('../models')
+const config = require('../config/stripe')
+const stripe = require("stripe")(config.STRIPE_SECRET_TEST);
 
 const getProducts = async(req, res, next) => {
     const pageNo = req.params.page
@@ -90,7 +92,7 @@ const getOrderByID = async(req, res) => {
     const orderId = req.params.orderid
 
     try {
-        const order = await storeDb.readOrder(req.user,orderId)
+        const order = await storeDb.readOrder(req.customer_id, orderId)
 
         if (order == null) {
             return res.status(404).json({
@@ -98,11 +100,8 @@ const getOrderByID = async(req, res) => {
             })
         }
 
-        const orderLines = await storeDb.readOrderLines(orderId)
-
         res.status(200).json({
-            order: order,
-            orderlines: orderLines
+            order: order
         })
 
     } catch(e) {
@@ -180,6 +179,60 @@ const postReview = async (req, res, next) => {
     }
 }
 
+const postPayment = async (req, res, next) => {
+    //process payment for orderId
+    const { order_id } = req.body;
+    const userId = req.customer_id;
+
+    req.params.orderid = order_id;
+    const order = getOrderByID(req, res)
+
+    if(order){
+        if(!order.paid) {
+            //proceed with payment
+            //calculate amount to be paid
+            const amount = order.total_price + order.shipping_costs
+            const { id } = req.body
+
+            try {
+                const payment = await stripe.paymentIntents.create({
+                    amount: amount * 100,
+                    currency: "EUR",
+                    description: "BRANTAYES.BE",
+                    payment_method: id,
+                    confirm: true,
+                })
+
+                //update Order paid status to true
+                const result = await storeDb.updateOrderPaidStatus(order_id, true)
+
+                res.status(200).send({
+                    message: "payment successful",
+                    success: true
+                })
+            }
+            catch(error) {
+                res.status(500).send({
+                    message: "payment failed",
+                    success: false
+                })
+            }
+        }
+        else {
+            res.status(403).send({
+                message: "order already paid",
+                success: false
+            })
+        }
+    }
+    else {
+        res.status(404).send({
+            message: "order does not exist",
+            success: false
+        })
+    }
+}
+
 exports.getProducts = getProducts
 exports.getProductbyID = getProductbyID
 exports.postCheckout = postCheckout
@@ -188,3 +241,4 @@ exports.getOrderByID = getOrderByID
 exports.getCategories = getCategories
 exports.getReviews = getReviews
 exports.postReview = postReview
+exports.postPayment = postPayment
