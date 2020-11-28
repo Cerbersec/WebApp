@@ -73,8 +73,8 @@ const register = async(req, res, next) => {
         const [ user, created ] = await userDb.createUser(newCustomer, newAddress)
 
         if(created) {
-            res.json({
-                message: "user created"
+            res.status(200).send({
+                message: "register successful"
             })
         }
         else {
