@@ -28,8 +28,9 @@ import Account from "./Components/Account/Account";
 /* END */
 
 const mapStateToProps = state => {
+  const { user } = state;
   return {
-    user: state.auth,
+    user,
   };
 }
 
