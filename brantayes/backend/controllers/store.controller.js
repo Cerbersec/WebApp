@@ -180,54 +180,60 @@ const postReview = async (req, res, next) => {
 }
 
 const postPayment = async (req, res, next) => {
-    //process payment for orderId
-    const { order_id } = req.body;
-    const userId = req.customer_id;
+    try {
+        //process payment for orderId
+        const { orderId } = req.body.order_id.orderId;
 
-    req.params.orderid = order_id;
-    const order = getOrderByID(req, res)
+        const order = await storeDb.readOrder(req.customer_id, orderId)
 
-    if(order){
-        if(!order.paid) {
-            //proceed with payment
-            //calculate amount to be paid
-            const amount = order.total_price + order.shipping_costs
-            const { id } = req.body
+        if(order){
+            if(!order.paid) {
+                const amount = order.total_price + order.shipping_costs
+                const { id } = req.body
 
-            try {
-                const payment = await stripe.paymentIntents.create({
-                    amount: amount * 100,
-                    currency: "EUR",
-                    description: "BRANTAYES.BE",
-                    payment_method: id,
-                    confirm: true,
-                })
+                console.log(amount + " " + id)
 
-                //update Order paid status to true
-                const result = await storeDb.updateOrderPaidStatus(order_id, true)
+                try {
+                    const payment = await stripe.paymentIntents.create({
+                        amount: amount * 100,
+                        currency: "EUR",
+                        description: "BRANTAYES.BE",
+                        payment_method: id,
+                        confirm: true,
+                    })
 
-                res.status(200).send({
-                    message: "payment successful",
-                    success: true
-                })
+                    //update Order paid status to true
+                    const result = await storeDb.updateOrderPaidStatus(orderId, true)
+
+                    res.status(200).send({
+                        message: "payment successful",
+                        success: true
+                    })
+                }
+                catch(error) {
+                    res.status(500).send({
+                        message: "payment failed",
+                        success: false
+                    })
+                }
             }
-            catch(error) {
-                res.status(500).send({
-                    message: "payment failed",
+            else {
+                res.status(403).send({
+                    message: "order already paid",
                     success: false
                 })
             }
         }
         else {
-            res.status(403).send({
-                message: "order already paid",
+            res.status(404).send({
+                message: "order does not exist",
                 success: false
             })
         }
     }
-    else {
-        res.status(404).send({
-            message: "order does not exist",
+    catch(error) {
+        res.status(500).send({
+            message: "something went wrong" + error.message,
             success: false
         })
     }

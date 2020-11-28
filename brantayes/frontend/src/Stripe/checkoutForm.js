@@ -19,14 +19,19 @@ export const CheckoutForm = (orderId) => {
         //token = paymentMethod
         try {
             const { id } = paymentMethod;
-            const response = await Api.pay({id:id, order_id: orderId})
+            const data = {
+                id: id,
+                order_id: orderId,
+            }
+            const response = await Api.pay(data)
 
             if(response.data.success) {
-                console.log("payment success")
+                alert("payment success")
+                window.location.href = window.location.href.split("/")[0] + "/"
             }
         }
         catch(error) {
-            console.log(error.message)
+            alert(error.message)
         }
 
     } else {
@@ -36,7 +41,7 @@ export const CheckoutForm = (orderId) => {
 
   return (
     <form onSubmit={handleSubmit} style={{ maxWidth: 400 }}>
-      <CardElement />
+      <CardElement hidePostalCode={true}/>
       <button>Pay</button>
     </form>
   );

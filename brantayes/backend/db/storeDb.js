@@ -29,11 +29,16 @@ const createOrder = async (orderlines, userid) => {
 }
 
 const updateOrderPaidStatus = async (orderid, status) => {
-    const order = await models.Order.findOne({ where: {order_id: orderid} })
-    order.paid = status
-    order.save()
-
-    return order
+    models.Order.update(
+        { paid: status},
+        { where: {order_id: orderid} }
+    )
+    .then(order => {
+        return order
+    })
+    .catch(error => {
+        return error
+    })
 }
 
 const createOrderlines = async(orderlines, OrderPlaced) => {
