@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import { withRouter, Redirect } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import TextField from "@material-ui/core/TextField";
@@ -54,8 +55,9 @@ const vpassword = (value) => {
   }
 };
 
+let p = ""
 const vconfirmpassword = (value) => {
-  if (value != this.state.password) {
+  if (value != p) {
     return (
       <div className="alert alert-danger" role="alert">
         Password does not match.
@@ -115,8 +117,8 @@ class Register extends Component{
       lastName:"",
       userName: "",
       gender: "",
-      pass: "",
-      confirmpass: "",
+      password: "",
+      confirmpassword: "",
       email: "",
       street: "",
       streetnr: "",
@@ -124,11 +126,11 @@ class Register extends Component{
       city: "",
       country: "",
       redirectToReferrer: false,
-      test: 'false',
-      reply: "",
       bus_nr: "",
       phone: "",
       successful: false,
+      loading: false,
+      message: ""
     }
   }
 
@@ -137,11 +139,12 @@ class Register extends Component{
 
     this.setState({
       successful: false,
+      loading: true
     })
 
     this.form.validateAll();
 
-    if(this.checkBtn.context._errors.lenth === 0) {
+    if(this.checkBtn.context._errors.length === 0) {
       const { dispatch } = this.props;
       const data = {
         first_name: this.state.firstName,
@@ -149,8 +152,8 @@ class Register extends Component{
         email_address: this.state.email,
         gender: this.state.gender,
         username: this.state.userName,
-        password:this.state.pass,
-        verify_password: this.state.confirmpass,
+        password:this.state.password,
+        verify_password: this.state.confirmpassword,
         street_name: this.state.street,
         street_nr: this.state.streetnr,
         postal_code: this.state.postal,
@@ -162,17 +165,22 @@ class Register extends Component{
 
       dispatch(register(data))
         .then(() => {
-          this.setState({successful: true})
+          this.setState({successful: true, loading: false, message: "Successfully registered."})
         })
         .catch((e) => {
-          this.setState({successful: false})
+          this.setState({successful: false, loading: false, message: "Register failed. User already exists."})
         })
+    }
+    else {
+      this.setState({loading: false, message: "Something went wrong!"})
     }
   }
 
 
     render(){
-      const { message } = this.props;
+      //const { message } = this.props;
+      const message = this.state.message;
+
       return(
         <div
         style={{
@@ -267,17 +275,10 @@ class Register extends Component{
                         />
                       </div>
                       <div className="col">
-                        {//<InputLabel id="genderselect"></InputLabel>
-                        }
                         <Select
                         className="form-control"
                           value={this.state.gender}
                           displayEmpty
-                          MenuProps={{
-                            style: {
-                              //maxHeight: 500
-                            }
-                          }}
                           onChange={e => {
                             this.setState({ gender: e.target.value });
                           }}
@@ -308,11 +309,11 @@ class Register extends Component{
                         <Input
                           type="password"
                           className="form-control"
-                          value={this.state.pass}
+                          value={this.state.password}
                           type="password"
                           placeholder="Password"
                           onChange={e => {
-                            this.setState({ pass: e.target.value });
+                            this.setState({ password: e.target.value });
                           }}
                           validations={[required, vpassword]}
                         />
@@ -321,11 +322,12 @@ class Register extends Component{
                         <Input
                           type="password"
                           className="form-control"
-                          value={this.state.confirmpass}
+                          value={this.state.confirmpassword}
                           type="password"
                           placeholder="Confirm password"
                           onChange={e => {
-                            this.setState({ confirmpass: e.target.value });
+                            this.setState({ confirmpassword: e.target.value });
+                            p = e.target.value
                           }}
                           validations={[required, vconfirmpassword]}
                         />
@@ -398,7 +400,7 @@ class Register extends Component{
                         <Input
                           type="text"
                           className="form-control"
-                          value={this.state.Country}
+                          value={this.state.country}
                           placeholder="Country"
                           onChange={e => {
                             this.setState({ country: e.target.value });
@@ -407,19 +409,22 @@ class Register extends Component{
                         />
                       </div>
                     </div>
-                  </div>
-                    <div className="row">
-                      <div className="form-group col">
+
+                    <div className="row form-group">
+                      <div className="col">
                         <button
                           className="btn btn-primary btn-block"
-                          //variant="outlined"
-                          //color="primary"
+                          disabled={this.state.loading}
                           //onClick={this.handleSubmit}
                         >
-                        Register
+                          {this.state.loading && (
+                            <span className="spinner-border spinner-border-sm"></span>
+                          )}
+                          <span>Register</span>
                         </button>
                       </div>
                     </div>
+                  </div>
                 </div>
               )}
               {message && (
