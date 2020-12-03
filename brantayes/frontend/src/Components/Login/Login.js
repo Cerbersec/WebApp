@@ -209,7 +209,7 @@ class ConnectedLogin extends Component {
             <NavLink
               to={"/register"}
             >
-              <span>Nog geen account?</span>
+              <span>Don't have an account yet?</span>
             </NavLink>
           </div>
           </div>
