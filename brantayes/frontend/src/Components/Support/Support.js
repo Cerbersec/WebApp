@@ -57,7 +57,7 @@ class Support extends Component
                     <p>Your e-mailaddress:</p>
                 <input type="text" name='email' onChange={this.myChangeHandler} />
                 <p>Your message:</p>
-                <input type="text" name='message' onChange={this.myChangeHandler} />
+                <textarea name='message' maxlength="250"  placeholder="Tell us your problem" onChange={this.myChangeHandler}></textarea>
                 <button input type='submit'>Send</button>
                 </form>
                 </div>
