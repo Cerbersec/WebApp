@@ -70,6 +70,7 @@ class ConnectedOrder extends Component {
             <Table>
               <TableHead>
                 <TableRow>
+                  <TableCell>Picture</TableCell>
                   <TableCell>Item name</TableCell>
                   <TableCell>Price</TableCell>
                   <TableCell>Quantity</TableCell>
@@ -79,6 +80,12 @@ class ConnectedOrder extends Component {
                 {this.props.checkedOutItems.map((item, index) => {
                   return (
                     <TableRow key={item.product_id}>
+                      <TableCell>
+                        <img src={item.image_url}
+                        alt=""
+                        height={100}
+                        ></img>
+                      </TableCell>
                       <TableCell>{item.name}</TableCell>
                       <TableCell>{item.retail_price}</TableCell>
                       <TableCell>{item.quantity}</TableCell>
@@ -109,13 +116,8 @@ class ConnectedOrder extends Component {
             </Button>
             <Button
               color="primary"
-<<<<<<< HEAD
               variant="outlined"
               style={{ margin: 5, marginTop: 30 }}         
-=======
-              variant="outlined"  
-              style={{ margin: 5, marginTop: 30 }}       
->>>>>>> 183c3efad83adc391a61c1da5151c323905c7a2a
               onClick={() => {
                 this.props.dispatch(setCheckedOutItems([]));
                 this.props.dispatch(setCartItems([]));            
