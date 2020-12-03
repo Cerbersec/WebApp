@@ -8,6 +8,7 @@ import Item from "../Item/Item";
 import { connect } from "react-redux";
 import TextField from "@material-ui/core/TextField";
 import BeautyStars from 'beauty-stars';
+import Review from "../Review/Review.js";
 
 class ConnectedDetails extends Component {
  
@@ -232,7 +233,7 @@ class ConnectedDetails extends Component {
             submit
         </Button>
         
-        
+        <Review></Review>
       </div>
       
     );
