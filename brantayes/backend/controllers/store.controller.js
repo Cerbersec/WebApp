@@ -3,6 +3,7 @@ const storeDb = require('../db/storeDb')
 const models = require('../models')
 const config = require('../config/stripe')
 const stripe = require("stripe")(config.STRIPE_SECRET_TEST);
+const TypedError = require('../modules/ErrorHandler')
 
 const getProducts = async(req, res, next) => {
     const pageNo = req.params.page
@@ -151,9 +152,27 @@ const getReviews = async (req, res, next) => {
 
 const postReview = async (req, res, next) => {
     try {
-        const { rating, description, productId} = req.body
 
-        //TODO: perform validation => XSS
+        req.checkBody('description','description is required').notEmpty()
+        req.checkBody('rating','rating is required').notEmpty().isInt()
+        req.checkBody('productId','productID is required').notEmpty().isInt()
+
+        const validationResults = req.validationErrors()
+        
+        if(validationResults)
+        {
+            console.log("errors were found:")
+            console.log(validationResults);
+            let err = new TypedError('register error', 400, 'missing_field', {
+                errors: validationResults,
+            })
+            return next(err)
+        }
+
+        req.sanitizeBody('description').escape().trim();
+
+        const { rating, description, productId} = req.body  
+
         const newModel = new models.Review({
             rating: rating,
             description: description,
