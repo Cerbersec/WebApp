@@ -70,7 +70,7 @@ const postCheckout = async(req, res, next) => {
     }
 }
 
-const getOrders = async(req, res) => {
+const getOrders = async(req, res, next) => {
     try {
         const orders = await storeDb.readOrders(req.customer_id)
         
@@ -89,7 +89,7 @@ const getOrders = async(req, res) => {
     }
 }
 
-const getOrderByID = async(req, res) => {
+const getOrderByID = async(req, res, next) => {
     const orderId = req.params.orderid
 
     try {
