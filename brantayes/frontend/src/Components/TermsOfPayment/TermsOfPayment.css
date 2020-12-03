@@ -1,0 +1,27 @@
+.SupportPage {
+    margin-left: 200px;
+    margin-right: 200px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    padding: 20px;
+  }
+  
+  .Column {
+    float: left;
+    width: 50%;
+  }
+  
+  .SupportPage:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  
+  textarea {
+    resize: none;
+    height: 150px;
+    width: 250px;
+  }
+  
+  input {
+    width: 250px;
+  }
