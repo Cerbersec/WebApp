@@ -109,8 +109,13 @@ class ConnectedOrder extends Component {
             </Button>
             <Button
               color="primary"
+<<<<<<< HEAD
               variant="outlined"
               style={{ margin: 5, marginTop: 30 }}         
+=======
+              variant="outlined"  
+              style={{ margin: 5, marginTop: 30 }}       
+>>>>>>> 183c3efad83adc391a61c1da5151c323905c7a2a
               onClick={() => {
                 this.props.dispatch(setCheckedOutItems([]));
                 this.props.dispatch(setCartItems([]));            
