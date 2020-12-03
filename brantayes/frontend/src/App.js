@@ -15,6 +15,7 @@ import PrivacyPolicy from "./Components/PrivacyRegulation/PrivacyRegulation.js";
 import register from "./Components/Register/Register.js";
 import contact from "./Components/Contact/Contact.js";
 import support from "./Components/Support/Support.js";
+import TermsOfPayment from "./Components/TermsOfPayment/TermsOfPayment.js";
 import blog from "./Components/Blog/Blog.js";
 import { history } from "./helpers/history";
 import { clearMessage } from "./Redux/Actions";
@@ -80,6 +81,7 @@ class App extends Component {
               <Route path="/support" component={support}/>
               <Route path="/blog" component={blog}/>
               <Route path="/account" component={Account}/>
+              <Route path="/payment" component={TermsOfPayment}/>
               <Route
                 component={() => (
                   <div style={{ padding: 20 }}>Page not found</div>
