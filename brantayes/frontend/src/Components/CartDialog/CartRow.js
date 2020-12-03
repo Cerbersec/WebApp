@@ -25,6 +25,12 @@ const CartRow = props => {
           </div>
         </Link>
       </TableCell>
+          <TableCell>
+            <img src={item.image_url}
+            alt=""
+            height={35}
+            ></img>
+          </TableCell>
       <TableCell>{item.retail_price + " €"}</TableCell>
       <TableCell>
         <TextField

@@ -42,27 +42,49 @@ class Support extends Component
     render()
     {
         return (
-            <div className="ContactPage">
-                <div class="Column">
-                    <h1>Contact Page</h1>
-                    <h2>Can't find your answer?</h2>
-                    Contact us through one of the following options: <br></br><br></br>
-                    <ul><EmailIcon style={{ fontSize: 50}}></EmailIcon> &nbsp; <li>support@brantayes.be</li></ul>
-                    
+            <div>
+                <div className="Column">
+                    <h1>Support Page</h1>
                     <br></br>
+                    <h4>Shipping costs</h4>
+                    FREE SHIPPING FROM € 40,-
+                    <br></br><br></br>
+                    <h4>Deliverance?</h4>
+                    We ship our parcels with PostNL. If you order on workdays before 22:45, we guarantee that we will transfer your order to PostNL the same day. You will receive your order the next day, both in the Netherlands and Belgium. Of course, this often works, but not always. We ask for your understanding.
+                    <br></br><br></br>
+                    <h4>Not at home?</h4>
+                    If you are not at home to receive your parcel, PostNL will try to drop off your parcel at the neighbors. If this also fails, PostNL will try to deliver your parcel the next day. In both cases the driver of PostNL will leave a message in your mailbox. With the "non home code" on the message you can indicate where and when you want PostNL to make the second delivery attempt. If the second delivery attempt is also unsuccessful, PostNL will deliver your parcel to the nearest post office. With the pickup message you can pick up your parcel, you have 7 days to do so. After 7 days your parcel will be returned to us. As soon as we have received the parcel back we will contact you.
+                    <br></br><br></br>
+                    <h4>Package delayed?</h4>
+                    PostNL aims to deliver your order within 1 working day. 99% of our orders are delivered within 1 working day. The remaining 1% is unfortunately delayed. Of course we find this very annoying, but unfortunately we have no influence on this. If your order has not been delivered one day after the expected delivery date, please contact us!
+                    <br></br><br></br>
+                    <h4>Change or cancel your order?</h4>
+                    Would you like to change or cancel your order? Too bad. Not an option :)
+                    <br></br><br></br>
+                    <h4>Exchange or return your order?</h4>
+                    Would you like to exchange or return your order? Too bad. Not an option :)
+                    <br></br><br></br>
                 </div>
-                <div>
-                    or send a message directly
-                <form onSubmit={this.mySubmitHandler}>
-                    <p>Your e-mailaddress:</p>
-                <input type="text" name='email' onChange={this.myChangeHandler} />
-                <p>Your message:</p>
-                <textarea name='message' maxlength="250"  placeholder="Tell us your problem" onChange={this.myChangeHandler}></textarea>
-                <button input type='submit'>Send</button>
-                </form>
+                <div className="Column">
+                    <h1>&nbsp;</h1>
+                    <br></br>
+                    <h4>Want to mail us?</h4>
+                    <EmailIcon style={{ fontSize: 50}}></EmailIcon> &nbsp; support@brantayes.be
+                    <br></br><br></br>
+                    <div>
+                    <h4>Message us directly:</h4>
+                    <form onSubmit={this.mySubmitHandler}>
+                        <p>Your e-mailaddress:</p>
+                    <input type="text" name='email' onChange={this.myChangeHandler} />
+                    <br></br><br></br>
+                    <p>Your message:</p>
+                    <textarea name='message' maxlength="250"  placeholder="Tell us your problem" onChange={this.myChangeHandler}></textarea>
+                    <br></br>
+                    <button input type='submit'>Send</button>
+                    </form>
                 </div>
             </div>
-            
+            </div>
         )
     }
 }
