@@ -35,6 +35,7 @@ class ConnectedDetails extends Component {
     this.setState({ itemLoading: true });
 
     let item = await Api.getItemUsingID(productId);
+    
     let reviews = await Api.getReviews(productId); //possible to remove api call and include reviews with getItemUsingID call
 
     console.log(reviews);
@@ -92,6 +93,7 @@ class ConnectedDetails extends Component {
     if (!this.state.item) {
       return null;
     }
+
 
     return (
       <div style={{ padding: 10 }}>
@@ -235,12 +237,11 @@ class ConnectedDetails extends Component {
 
         <div/>
         
-        {this.state.reviews.map(review => {
-          //do stuff here voor elke review
+        <div>{this.state.review && this.state.reviews.map(review => {
             return <Review key={review.review_id} item={review}/>
 
-        })}
-
+        })}</div>
+      
       </div>
       
     );
