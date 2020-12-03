@@ -14,11 +14,11 @@ module.exports = function(sequelize, Sequelize) {
             allowNull: false
         },
         size: {
-            type: Sequelize.FLOAT,
+            type: Sequelize.STRING(5),
             allowNull: false
         },
         color: {
-            type: Sequelize.STRING(20),
+            type: Sequelize.STRING(255),
             allowNull: false
         },
         release_date: {
@@ -38,7 +38,7 @@ module.exports = function(sequelize, Sequelize) {
             allowNull: false
         },
         popular: {
-            type: Sequelize.BOOLEAN,
+            type: Sequelize.INTEGER,
             allowNull: false
         },
         description: {

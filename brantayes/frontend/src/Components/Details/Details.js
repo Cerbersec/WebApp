@@ -130,7 +130,7 @@ class ConnectedDetails extends Component {
             >
               Price: &euro; {this.state.item.retail_price}
             </div>
-            {this.state.item.popular && (
+            {this.state.item.popular > 3 && (
               <div style={{ fontSize: 14, marginTop: 5, color: "#228B22" }}>
                 (Popular product)
               </div>
