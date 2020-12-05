@@ -33,3 +33,4 @@ yarn-error.log*
 /backend/certs/fullchain.pem
 /backend/certs/privkey.pem
 */certs
+.vscode/settings.json
