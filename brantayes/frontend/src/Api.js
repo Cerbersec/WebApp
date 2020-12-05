@@ -182,7 +182,7 @@ class Api {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         axios.get(url + '/store/reviews/' + productId).then((response) => {
-          resolve(response.lenght === 0 ? null : response.data.reviews)
+          resolve(response.length === 0 ? null : response.data.reviews)
         }).catch((err) => {
           reject(err)
         })
@@ -206,6 +206,8 @@ class Api {
       setTimeout(() => {
         axios.get(url + '/orders').then((response) => {
           resolve(response.lenght === 0 ? null : response.data.orders)
+        }).catch((err) => {
+          reject(err)
         })
       }, 500);
     })

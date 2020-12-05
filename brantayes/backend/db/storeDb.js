@@ -84,7 +84,7 @@ const readCategories = () => {
     return models.Category.findAll()
 }
 
-const readReviews = async (product_Id) => {
+const readReviews = (product_Id) => {
     return models.Review.findAll({where: { product_id: product_Id }, include: models.Customer})
 }
 
