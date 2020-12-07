@@ -8,6 +8,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import Api from "../../Api";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import Button from "@material-ui/core/Button";
 
 const mapStateToProps = state => {
     const { user } = state;
@@ -47,8 +48,6 @@ class Account extends Component
             return <CircularProgress className="circular" />;
         }
 
-        console.log(this.state.orders)
-
         return (
 
             <div className="AccountPage">
@@ -58,19 +57,22 @@ class Account extends Component
                     <Table>
                         <TableHead>
                             <TableRow>
-                                <TableCell>Order ID</TableCell>
-                                <TableCell>Price</TableCell>
-                                <TableCell>Shipping Cost</TableCell>
-                                <tableCell>Order Date</tableCell>
+                                <TableCell style={{fontWeight:"bold"}}>Order no.</TableCell>
+                                <TableCell style={{fontWeight:"bold"}}>Total Price</TableCell>
+                                <TableCell style={{fontWeight:"bold"}}>Shipping Cost</TableCell>
+                                <TableCell style={{fontWeight:"bold"}}>Order Date</TableCell>
+                                <TableCell style={{fontWeight:"bold"}}> Payment status</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                         {this.state.orders.map(order => {
-                            return <TableRow key={order.order_id} item={order}>
+                            return <TableRow key={order.order_id}>
                                 <TableCell> {order.order_id} </TableCell>
-                                <TableCell> {order.total_price} </TableCell>
-                                <TableCell> {order.shipping_costs} </TableCell>
-                                <TableCell> {new Date(order.order_date).toISOString().split('T')[0]} </TableCell>
+                                <TableCell> &euro;{order.total_price} </TableCell>
+                                <TableCell> &euro;{order.shipping_costs} </TableCell>
+                                <TableCell> {new Date(order.order_date).toLocaleString('nl-BE')/*.toISOString().split('T')[0]*/} </TableCell>
+                                <TableCell> {order.paid ? <Button variant="outlined" color="primary" style={{width:"160px"}}> View details</Button>
+                                            : <Button variant="outlined" color="primary" style={{width:"160px"}}> Checkout </Button> } </TableCell>
                             </TableRow>
                         })}
                         </TableBody>
