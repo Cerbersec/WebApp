@@ -9,6 +9,9 @@ import CartDialog from "./Components/CartDialog/CartDialog";
 import Details from "./Components/Details/Details";
 import Order from "./Components/Order/Order";
 import Login from "./Components/Login/Login";
+import Account from "./Components/Account/Account";
+import OrderSuccess from "./Components/OrderSuccess/OrderSuccess";
+import OrderCancel from "./Components/OrderCancel/OrderCancel";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
 import Footer from "./Components/Footer/Footer";
 import PrivacyPolicy from "./Components/PrivacyRegulation/PrivacyRegulation.js";
@@ -25,7 +28,6 @@ import { connect } from "react-redux";
 import { MuiThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import theme from './theme'
-import Account from "./Components/Account/Account";
 /* END */
 
 const mapStateToProps = state => {
@@ -80,6 +82,8 @@ class App extends Component {
               <Route path="/blog" component={blog}/>
               <Route path="/account" component={Account}/>
               <Route path="/payment" component={TermsOfPayment}/>
+              <Route path="/ordersuccess" component={OrderSuccess}/>
+              <Route path="/ordercancel" component={OrderCancel}/>
               <Route
                 component={() => (
                   <div style={{ padding: 20 }}>Page not found</div>

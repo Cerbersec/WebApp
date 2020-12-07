@@ -5,7 +5,7 @@ const readProducts = async (pageLimit,pageOffset) => {
     return models.Product.findAll({ offset: pageOffset, limit: pageLimit, include: models.Category})
 }
 
-const readProduct = (productId) => {
+const readProduct = async (productId) => {
     return models.Product.findOne({ where: { product_id: productId } })
 }
 
