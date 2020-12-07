@@ -9,9 +9,6 @@ import Api from "../../Api";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
-//test
-import Item from "../Item/Item";
-
 const mapStateToProps = state => {
     const { user } = state;
     const { message } = state;

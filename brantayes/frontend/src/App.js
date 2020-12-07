@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import Header from "./Components/Header/Header.js";
 import ProductList from "./Components/ProductList/ProductList";
-import { withRouter, Router, Switch, Route } from "react-router-dom";
+import { withRouter, Switch, Route } from "react-router-dom";
 import Menu from "./Components/Menu/Menu";
 import CartDialog from "./Components/CartDialog/CartDialog";
 import Details from "./Components/Details/Details";
@@ -59,8 +59,6 @@ class App extends Component {
   }
 
   render() {
-    const { currentUser } = this.state;
-
     return (
       <MuiThemeProvider theme={theme}>
         <CssBaseline />

@@ -9,7 +9,6 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import { setCheckedOutItems, setCartItems} from "../../Redux/Actions";
 import Api from "../../Api";
-import StripeCheckout from "react-stripe-checkout";
 import StripeContainer from "../../Stripe/stripeContainer";
 
 const mapStateToProps = state => {

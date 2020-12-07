@@ -26,7 +26,7 @@ class ConnectedMenu extends Component {
     this.state = {
       // initially item with id 1 is expanded
       expandedMenuItems: {
-        1: true
+        2: true
       },
       dataForTheMenu: []
     };
@@ -47,10 +47,10 @@ class ConnectedMenu extends Component {
 
     const dataForTheMenu = [
       { name: "Home", url: "/", icon: "home", id: 0 },
-      { name: "Blog", url: "/blog", icon: "sms", id: 0 },
+      { name: "Blog", url: "/blog", icon: "sms", id: 1 },
       {
         name: "Product categories",
-        id: 1,
+        id: 2,
         children: categories.map((x, i) => {
           return {
             name: x.category_name,
