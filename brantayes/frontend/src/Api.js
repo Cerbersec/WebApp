@@ -57,7 +57,7 @@ class Api {
             
             if (
               usePriceFilter &&
-              (item.price < minPrice || item.price > maxPrice)
+              (item.retail_price < minPrice || item.retail_price > maxPrice)
             ) {
               return false;
             }
