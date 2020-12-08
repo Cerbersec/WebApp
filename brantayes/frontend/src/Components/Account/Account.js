@@ -59,12 +59,12 @@ class Account extends Component
         return (
 
             <div className="AccountPage">
-                <h1>Account Page</h1>
-                <h2>Account info</h2>
+                <h1>My Brantayes account</h1>
+                <h2>Account information</h2>
                     <Table>
                         <TableHead>
                             <TableRow>
-                                <TableCell style={{fontWeight:"bold"}}>My Brantayes account</TableCell>
+                                <TableCell style={{fontWeight:"bold"}}>Personal info</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -105,6 +105,10 @@ class Account extends Component
                             <TableRow>
                                 <TableCell>E-mail:</TableCell>
                                 <TableCell>email</TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell>Phone:</TableCell>
+                                <TableCell>phone number</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell>Address:</TableCell>
