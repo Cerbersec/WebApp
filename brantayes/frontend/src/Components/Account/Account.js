@@ -68,8 +68,8 @@ class Account extends Component
                         {this.state.orders.map(order => {
                             return <TableRow key={order.order_id}>
                                 <TableCell> {order.order_id} </TableCell>
-                                <TableCell> &euro;{order.total_price} </TableCell>
-                                <TableCell> &euro;{order.shipping_costs} </TableCell>
+                                <TableCell> &euro; {order.total_price} </TableCell>
+                                <TableCell> &euro; {order.shipping_costs} </TableCell>
                                 <TableCell> {new Date(order.order_date).toLocaleString('nl-BE')/*.toISOString().split('T')[0]*/} </TableCell>
                                 <TableCell> {order.paid ? <Button variant="outlined" color="primary" style={{width:"160px"}}> View details</Button>
                                             : <Button variant="outlined" color="primary" style={{width:"160px"}}> Checkout </Button> } </TableCell>

@@ -42,27 +42,27 @@ class ConnectedItem extends Component {
             </div>
             <div style={{ margin: 5 }}>Price: &euro; {this.props.item.retail_price} </div>
             <div style={{ color: "#1a9349", fontWeight: "bold", margin: 5 }}>
-              {this.props.item.popular && "Popular"}
+              {this.props.item.popular > 3 && "Popular"}
             </div>
           </CardContent>
         </CardActionArea>
         <CardActions
           style={{ display: "flex", alignItems: "center", height: 45 }}
         >
-          <Button
+          {/*<Button
             size="small"
-            style={{ marginRight: 60 , marginTop: 40}}
+            style={{ marginRight: 50, marginLeft: 10, marginTop: 40}}
             onClick={() => {
               this.props.history.push("/details/" + this.props.item.product_id);
             }}
           >
             {" "}
             Details
-          </Button>
+          </Button>*/}
           <Tooltip title="Add to cart">
             <IconButton
               size="small"
-              style={{ marginTop: 40 }}
+              style={{ marginTop: 40, marginLeft: 150 }}
               onClick={e => {
                 e.stopPropagation();
                 this.props.dispatch(

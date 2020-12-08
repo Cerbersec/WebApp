@@ -9,6 +9,12 @@ import { connect } from "react-redux";
 import TextField from "@material-ui/core/TextField";
 import BeautyStars from 'beauty-stars';
 import Review from "../Review/Review.js";
+import Slider from "@material-ui/core/Slider";
+import Typography from "@material-ui/core/Typography";
+
+const valuetext = (value) => {
+  return `${value}EU`;
+}
 
 class ConnectedDetails extends Component {
  
@@ -101,13 +107,15 @@ class ConnectedDetails extends Component {
     }
 
     return (     
-      <div className="row" style={{ padding: 10 }}>
-        <div className="col-md-6">
+      <div className="row" style={{ padding: 10, margin: 0 }}>
+        <div className="col-md-7">
           <div
             style={{
               marginBottom: 20,
               marginTop: 10,
-              fontSize: 22
+              fontSize: 22,
+              fontWeight: 700,
+              textTransform: "uppercase",
             }}
           >
             {this.state.item.name}
@@ -143,6 +151,21 @@ class ConnectedDetails extends Component {
                   (Popular product)
                 </div>
               )}
+
+              <Typography id="discrete-slider" gutterBottom>
+                Size
+              </Typography>
+              <Slider
+                defaultValue={parseInt(this.state.item.size.split('-')[0])}
+                getAriaValueText={valuetext}
+                aria-labelledby="discrete-slider"
+                valueLabelDisplay="auto"
+                step={1}
+                marks
+                min={parseInt(this.state.item.size.split('-')[0])}
+                max={parseInt(this.state.item.size.split('-')[1])}
+                style={{width: 160}}
+              />
 
               <TextField
                 type="number"
@@ -210,7 +233,7 @@ class ConnectedDetails extends Component {
 
         <div/>
       </div>
-      <div className="col-md-6">
+      <div className="col-md-3">
           <div
             style={{
               marginTop: 20,
@@ -243,10 +266,6 @@ class ConnectedDetails extends Component {
             onClick={this.submitReview}>
               submit
           </Button>
-{/*
-          <div/>
-      </div>
-<div className="col-md-6">*/}
         {this.state.reviews.length > 0 && (
           this.state.reviews.map(review => {
           //do stuff here voor elke review
