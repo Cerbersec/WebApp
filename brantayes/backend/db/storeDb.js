@@ -29,8 +29,14 @@ const readProduct = async (productId) => {
     return models.Product.findOne({ where: { product_id: productId } })
 }
 
-const countProducts = async () => {
-    return models.Product.count()
+const countProductsByCategory = async (category) => {
+    if(category !== "All categories") {
+        const result = await models.Category.findOne({ where: { category_name: category} })
+        return models.Product.count({ where: { category_id: result.category_id } })
+    }
+    else {
+        return models.Product.count()
+    }
 }
 
 const createOrder = async (orderlines, userid) => {
@@ -141,4 +147,4 @@ exports.readCategories = readCategories
 exports.readReviews = readReviews
 exports.createReview = createReview
 exports.updateOrderPaidStatus = updateOrderPaidStatus
-exports.countProducts = countProducts
+exports.countProductsByCategory = countProductsByCategory

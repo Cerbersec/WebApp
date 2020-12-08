@@ -30,7 +30,7 @@ class ProductList extends Component {
 
     let response = await Api.searchItems(qsAsObject);
 
-    let pcount = await Api.getProductCount();
+    let pcount = await Api.getProductCount(qsAsObject.category);
 
     this.setState({
         items: response.data,

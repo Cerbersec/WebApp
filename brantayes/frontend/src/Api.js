@@ -33,10 +33,16 @@ class Api {
     return items;
   }
 
-  getProductCount() {
+  getProductCount(category) {
+    if(!category) {
+      category = "All categories"
+    }
+    const data = {
+      category: category
+    }
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        axios.get(url + "/store/productcount").then((response) => { 
+        axios.post(url + "/store/productcount", data).then((response) => { 
           resolve(response.lenght === 0 ? null : response.data.productcount)
         })
       }, 500);

@@ -7,7 +7,7 @@ router.get('/', express.static('../frontend/public'))
 
 router.get('/store/productinfo/:productId', storeController.getProductbyID)
 router.post('/store/products/', storeController.getProducts)
-router.get('/store/productcount', storeController.getProductCount)
+router.post('/store/productcount', storeController.getProductCountByCategory)
 
 router.get('/store/reviews/:productid', storeController.getReviews)
 router.post('/store/reviews/create', userController.verifyToken, storeController.postReview)

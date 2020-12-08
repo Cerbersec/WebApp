@@ -29,9 +29,11 @@ const getProducts = async(req, res, next) => {
     }
 }
 
-const getProductCount = async(req, res, next) => {
+const getProductCountByCategory = async(req, res, next) => {
+    const category = req.body.category
+    console.log(category)
     try {
-        const productcount = await storeDb.countProducts()
+        const productcount = await storeDb.countProductsByCategory(category)
 
         if(!productcount) {
             res.status(404).json({
@@ -327,4 +329,4 @@ exports.getCategories = getCategories
 exports.getReviews = getReviews
 exports.postReview = postReview
 exports.postPayment = postPayment
-exports.getProductCount = getProductCount
+exports.getProductCountByCategory = getProductCountByCategory
