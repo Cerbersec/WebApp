@@ -214,6 +214,26 @@ const verifyToken = async (req, res, next) => {
     }
 }
 
+const getCustomerByID = async(req, res, next) => {
+    const customerId = req.params.customerId
+    try {
+        const customer = await userDb.readUserById(customerId)
+
+        if(customer == null) {
+            return res.status(404).json({
+                message: 'product could not be found'
+            })
+        }
+        return res.status(200).json({
+            customer: customer
+        })
+
+    } catch(e) {
+        console.log(e.message)
+        res.sendStatus(500) && next(e)
+    }
+}
+
 exports.register = register
 exports.login = login
 exports.logout = logout

@@ -27,6 +27,7 @@ class Account extends Component
 
         this.state = {
             orders: [],
+            customers: [],
             loading: false
         };
     }
@@ -34,12 +35,19 @@ class Account extends Component
 
     componentDidMount() {
         this.fetchOrders();
+        this.fetchCustomers();
     }
 
     async fetchOrders() {
         this.setState({loading: true})
         let response = await Api.getOrders()
         this.setState({orders: response, loading: false})
+    }
+
+    async fetchCustomers() {
+        this.setState({loading: true})
+        let response = await Api.getCustomerByID()
+        this.setState({customers: response, loading: false})
     }
 
     render()
@@ -52,8 +60,35 @@ class Account extends Component
 
             <div className="AccountPage">
                 <h1>Account Page</h1>
+                <h2>Account info</h2>
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell style={{fontWeight:"bold"}}>My Brantayes account</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                        {/* {this.state.customers.map(customer => { return
+                            <TableRow key={customer.customer_id}>
+                                <TableCell>Username</TableCell>
+                                <TableCell> {customer.username} </TableCell>
+                                <TableCell>Password</TableCell>
+                                <TableCell> <Button>Change</Button> </TableCell>
+                            </TableRow>
+                        })} */}
+                        </TableBody>
+
+                        <TableHead>
+                            <TableRow>
+                                <TableCell style={{fontWeight:"bold"}}>Personal info</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+
+                        </TableBody>
+                    </Table>
                 <div className="Order History">    
-                    <h2>Order History</h2>
+                    <h2>Order history</h2>
                     <Table>
                         <TableHead>
                             <TableRow>
@@ -61,7 +96,7 @@ class Account extends Component
                                 <TableCell style={{fontWeight:"bold"}}>Total Price</TableCell>
                                 <TableCell style={{fontWeight:"bold"}}>Shipping Cost</TableCell>
                                 <TableCell style={{fontWeight:"bold"}}>Order Date</TableCell>
-                                <TableCell style={{fontWeight:"bold"}}> Payment status</TableCell>
+                                <TableCell style={{fontWeight:"bold"}}>Payment status</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
