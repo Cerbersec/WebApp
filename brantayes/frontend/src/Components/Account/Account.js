@@ -68,6 +68,24 @@ class Account extends Component
                             </TableRow>
                         </TableHead>
                         <TableBody>
+                            <TableRow>
+                                <TableCell>Name:</TableCell>
+                                <TableCell>first name</TableCell>
+                                <TableCell>last name</TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell>Username:</TableCell>
+                                <TableCell>username</TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell>Password:</TableCell>
+                                <TableCell><Button>Change</Button></TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell>Gender:</TableCell>
+                                <TableCell>gender</TableCell>
+                            </TableRow>
+
                         {/* {this.state.customers.map(customer => { return
                             <TableRow key={customer.customer_id}>
                                 <TableCell>Username</TableCell>
@@ -80,11 +98,26 @@ class Account extends Component
 
                         <TableHead>
                             <TableRow>
-                                <TableCell style={{fontWeight:"bold"}}>Personal info</TableCell>
+                                <TableCell style={{fontWeight:"bold"}}>Contact info</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
-
+                            <TableRow>
+                                <TableCell>E-mail:</TableCell>
+                                <TableCell>email</TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell>Address:</TableCell>
+                                <TableCell>street name</TableCell>
+                                <TableCell>street number</TableCell>
+                                <TableCell>bus number</TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell>City:</TableCell>
+                                <TableCell>postal code</TableCell>
+                                <TableCell>city</TableCell>
+                                <TableCell>country</TableCell>
+                            </TableRow>
                         </TableBody>
                     </Table>
                 <div className="Order History">    
