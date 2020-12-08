@@ -33,6 +33,16 @@ class Api {
     return items;
   }
 
+  getProductCount() {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        axios.get(url + "/store/productcount").then((response) => { 
+          resolve(response.lenght === 0 ? null : response.data.productcount)
+        })
+      }, 500);
+    });
+  }
+
   searchItems({
     category = "All categories",//popular
     term = "",
