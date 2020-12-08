@@ -1,8 +1,28 @@
 // CRUD: create, read, update, delete
 const models = require('../models')
 
-const readProducts = async (pageLimit,pageOffset) => {
-    return models.Product.findAll({ offset: pageOffset, limit: pageLimit, include: models.Category})
+const readProducts = async (pageLimit,pageOffset, category) => {
+    if(category !== "All categories") {
+        return models.Product.findAll({
+            where: {'$category.category_name$': category},
+            offset: pageOffset,
+            limit: pageLimit,
+            include: [{
+                model: models.Category,
+                as: 'category'
+            }]
+        })
+    }
+    else {
+        return models.Product.findAll({
+            offset: pageOffset,
+            limit: pageLimit,
+            include: [{
+                model: models.Category,
+                as: 'category'
+            }]
+        })
+    }
 }
 
 const readProduct = async (productId) => {

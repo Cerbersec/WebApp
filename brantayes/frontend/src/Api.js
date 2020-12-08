@@ -59,8 +59,13 @@ class Api {
       return new Promise((resolve, reject) => {
         setTimeout(() => {
 
+          const data = {
+            page: page,
+            category: category
+          }
+
           //axios API call
-          axios.get(url + "/store/products/" + page).then((response) => { 
+          axios.post(url + "/store/products/", data).then((response) => { 
           let products = response.data.products
 
           let data = products.filter(item => {
@@ -76,7 +81,7 @@ class Api {
               return item.popular;
             }
 
-            if (category !== "All categories" && category !== item.Category.category_name) {
+            if (category !== "All categories" && category !== item.category.category_name) {
               return false;
             }
 

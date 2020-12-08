@@ -6,12 +6,13 @@ const stripe = require("stripe")(config.STRIPE_SECRET_TEST);
 const TypedError = require('../modules/ErrorHandler')
 
 const getProducts = async(req, res, next) => {
-    const pageNo = req.params.page
+    const pageNo = req.body.page
+    const category = req.body.category
     const resultsPerPage = 10
     const searchOffset = (pageNo -1) * resultsPerPage
 
     try {
-        const products = await storeDb.readProducts(resultsPerPage + 1,searchOffset)
+        const products = await storeDb.readProducts(resultsPerPage + 1,searchOffset, category)
         
         if (products.length == 0) {
             return res.status(404).json({
