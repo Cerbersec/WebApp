@@ -33,6 +33,16 @@ class Api {
     return items;
   }
 
+  getProductCount() {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        axios.get(url + "/store/productcount").then((response) => { 
+          resolve(response.lenght === 0 ? null : response.data.productcount)
+        })
+      }, 500);
+    });
+  }
+
   searchItems({
     category = "All categories",//popular
     term = "",
@@ -57,7 +67,7 @@ class Api {
             
             if (
               usePriceFilter &&
-              (item.price < minPrice || item.price > maxPrice)
+              (item.retail_price < minPrice || item.retail_price > maxPrice)
             ) {
               return false;
             }
@@ -112,44 +122,6 @@ class Api {
   pay(data) {
     return axios.post(url + "/store/payment", data)
   }
- 
-  /*
-  login(data) {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        axios.post(url + "/account/login", data).then((response) => {
-          resolve(response.status !== 200 ? null : response.status)
-        })
-        .catch((err) => {
-          if (err.response.data.type === "invalid_field"){
-            resolve("E-mail is not in correct format")
-          }
-          else if (err.response.data.type === "missing_field")
-          {
-            resolve("E-mail or password can't be empty!")
-          }
-          else if (err.response.status === 401)
-          {
-            resolve("Invalid credentials")
-          }
-          else {
-            resolve("Something went wrong, try again!")
-          }
-        })
-      }, 500);
-    });
-  }
-
-  logout() {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        axios.get(url + "/account/logout").then((response) => {
-          resolve(response.status !== 200? "something went wrong" : "successfully logged out")
-        })
-      }, 500);
-    })
-  }
-  */
 
   login(data) {
     return axios
@@ -182,7 +154,7 @@ class Api {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         axios.get(url + '/store/reviews/' + productId).then((response) => {
-          resolve(response.lenght === 0 ? null : response.data.reviews)
+          resolve(response.length === 0 ? null : response.data.reviews)
         }).catch((err) => {
           reject(err)
         })
@@ -206,10 +178,39 @@ class Api {
       setTimeout(() => {
         axios.get(url + '/orders').then((response) => {
           resolve(response.lenght === 0 ? null : response.data.orders)
+        }).catch((err) => {
+          reject(err)
         })
       }, 500);
     })
   }
+
+  getBlogPosts() {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        axios.get(url + '/blog').then((response) => {
+          resolve(response.length === 0 ? null : response.data.posts)
+        }).catch((err) => {
+          reject(err)
+        })
+      }, 500);
+    })
+  }
+
+  getCustomerByID () {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        axios.get(url + '/details').then((response) => {
+          resolve(response.length === 0 ? null : response.data.posts)
+        }).catch((err) => {
+          reject(err)
+        })
+      }, 500);
+    })
+  }
+
+
+
 }
 
 export default new Api();

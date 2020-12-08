@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { withRouter, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
 import { setLoggedInUser } from "../../Redux/Actions";
 import Avatar from "@material-ui/core/Avatar";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
@@ -83,7 +81,7 @@ class ConnectedLogin extends Component {
 
     this.form.validateAll();
 
-    const { dispatch, history } = this.props;
+    const { dispatch } = this.props;
     const data = {
       email_address: this.state.emailAddress,
       password: this.state.password
@@ -209,7 +207,7 @@ class ConnectedLogin extends Component {
             <NavLink
               to={"/register"}
             >
-              <span>Nog geen account?</span>
+              <span>Don't have an account yet?</span>
             </NavLink>
           </div>
           </div>

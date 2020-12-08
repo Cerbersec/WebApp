@@ -5,8 +5,12 @@ const readProducts = async (pageLimit,pageOffset) => {
     return models.Product.findAll({ offset: pageOffset, limit: pageLimit, include: models.Category})
 }
 
-const readProduct = (productId) => {
+const readProduct = async (productId) => {
     return models.Product.findOne({ where: { product_id: productId } })
+}
+
+const countProducts = async () => {
+    return models.Product.count()
 }
 
 const createOrder = async (orderlines, userid) => {
@@ -62,6 +66,15 @@ const createOrderlines = async(orderlines, OrderPlaced) => {
             discount: element.discount,
             product_id: element.product_id
         })
+
+        //update product quantity
+        if(prod.stock_quantity - element.quantity >= 0) {
+            prod.stock_quantity = prod.stock_quantity - element.quantity;
+        }
+        else {
+            prod.stock_quantity = 0;
+        }
+        prod.save();
     }
     return totalprice;
 }
@@ -84,7 +97,7 @@ const readCategories = () => {
     return models.Category.findAll()
 }
 
-const readReviews = async (product_Id) => {
+const readReviews = (product_Id) => {
     return models.Review.findAll({where: { product_id: product_Id }, include: models.Customer})
 }
 
@@ -108,3 +121,4 @@ exports.readCategories = readCategories
 exports.readReviews = readReviews
 exports.createReview = createReview
 exports.updateOrderPaidStatus = updateOrderPaidStatus
+exports.countProducts = countProducts

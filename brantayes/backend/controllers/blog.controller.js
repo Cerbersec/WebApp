@@ -1,20 +1,22 @@
 //PGUR: Put, Get, Update, Remove
-const userDb = require('../db/userDb')
 const blogDb = require('../db/blogDb')
 const models = require('../models')
-
-const jwt = require('jsonwebtoken')
-const config = require('../config/jwt-config')
-const ensureAuthenticated = require('../modules/ensureAuthenticated')
-const bcrypt = require('bcryptjs')
 const TypedError = require('../modules/ErrorHandler')
-
-const { promisify } = require('util');
 
 const getPosts = async (req, res, next) => {
     try {
         const posts = await blogDb.readPosts()
-        res.send(JSON.stringify(posts, null, 2))
+
+        if(posts) {
+            res.json({
+                posts: posts,
+            })
+        }
+        else {
+            res.send({
+                message: "no posts found"
+            })
+        }
 
     } catch(e) {
         console.log(e.message)

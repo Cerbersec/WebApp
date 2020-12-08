@@ -8,10 +8,22 @@
 .Column {
   float: left;
   width: 50%;
+  padding-left: 2%;
+  padding-right: 2%;
 }
 
 .SupportPage:after {
   content: "";
   display: table;
   clear: both;
+}
+
+textarea {
+  resize: none;
+  height: 150px;
+  width: 250px;
+}
+
+input {
+  width: 250px;
 }

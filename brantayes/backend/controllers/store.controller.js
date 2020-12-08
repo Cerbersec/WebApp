@@ -3,6 +3,7 @@ const storeDb = require('../db/storeDb')
 const models = require('../models')
 const config = require('../config/stripe')
 const stripe = require("stripe")(config.STRIPE_SECRET_TEST);
+const TypedError = require('../modules/ErrorHandler')
 
 const getProducts = async(req, res, next) => {
     const pageNo = req.params.page
@@ -21,6 +22,25 @@ const getProducts = async(req, res, next) => {
             products: products
         })
 
+    } catch(e) {
+        console.log(e.message)
+        res.sendStatus(500) && next(e)
+    }
+}
+
+const getProductCount = async(req, res, next) => {
+    try {
+        const productcount = await storeDb.countProducts()
+
+        if(!productcount) {
+            res.status(404).json({
+                message: "no products in database"
+            })
+        }
+
+        res.status(200).json({
+            productcount: productcount
+        })
     } catch(e) {
         console.log(e.message)
         res.sendStatus(500) && next(e)
@@ -69,7 +89,7 @@ const postCheckout = async(req, res, next) => {
     }
 }
 
-const getOrders = async(req, res) => {
+const getOrders = async(req, res, next) => {
     try {
         const orders = await storeDb.readOrders(req.customer_id)
         
@@ -88,7 +108,7 @@ const getOrders = async(req, res) => {
     }
 }
 
-const getOrderByID = async(req, res) => {
+const getOrderByID = async(req, res, next) => {
     const orderId = req.params.orderid
 
     try {
@@ -151,9 +171,27 @@ const getReviews = async (req, res, next) => {
 
 const postReview = async (req, res, next) => {
     try {
-        const { rating, description, productId} = req.body
 
-        //TODO: perform validation => XSS
+        req.checkBody('description','description is required').notEmpty()
+        req.checkBody('rating','rating is required').notEmpty().isInt()
+        req.checkBody('productId','productID is required').notEmpty().isInt()
+
+        const validationResults = req.validationErrors()
+        
+        if(validationResults)
+        {
+            console.log("errors were found:")
+            console.log(validationResults);
+            let err = new TypedError('register error', 400, 'missing_field', {
+                errors: validationResults,
+            })
+            return next(err)
+        }
+
+        req.sanitizeBody('description').escape().trim();
+
+        const { rating, description, productId} = req.body  
+
         const newModel = new models.Review({
             rating: rating,
             description: description,
@@ -180,37 +218,62 @@ const postReview = async (req, res, next) => {
 }
 
 const postPayment = async (req, res, next) => {
+    console.log(req.headers)
     try {
-        //process payment for orderId
-        const { orderId } = req.body.order_id.orderId;
+        const orderId = req.body.order_id;
 
         const order = await storeDb.readOrder(req.customer_id, orderId)
 
         if(order){
             if(!order.paid) {
                 const amount = order.total_price + order.shipping_costs
-                const { id } = req.body
 
-                console.log(amount + " " + id)
+                console.log(amount)
 
                 try {
-                    const payment = await stripe.paymentIntents.create({
-                        amount: amount * 100,
-                        currency: "EUR",
-                        description: "BRANTAYES.BE",
-                        payment_method: id,
-                        confirm: true,
+                    let lineitems = new Array();
+                    let productIds = [];
+                    order.Orderlines.forEach((orderline) => {
+                        for(let i = 0; i < orderline.dataValues.quantity; i++) {
+                            productIds.push(orderline.dataValues.product_id)
+                        }
                     })
 
+                    const result = await lookForProducts(productIds).then(foundProducts => {
+                        foundProducts.forEach(product => {
+                            let data = {
+                                price_data: {
+                                    currency: 'eur',
+                                    product_data: {
+                                        name: product.dataValues.name,
+                                    },
+                                    unit_amount: product.dataValues.retail_price * 100,
+                                },
+                                quantity: 1,
+                            }
+                            lineitems.push(data);
+                        })
+                    }).catch((err) => {
+                        console.log(err)
+                    })
+                    
+                    console.log("creating session object")
+                    const session = await stripe.checkout.sessions.create({
+                        payment_method_types: ['card'],
+                        line_items: lineitems,
+                        mode: 'payment',
+                        success_url: req.headers.referer.split('/')[0] + '//' + req.headers.referer.split('/')[2] + '/ordersuccess',
+                        cancel_url: req.headers.referer.split('/')[0] + '//' + req.headers.referer.split('/')[2] + '/ordercancel',
+                    });
+                    console.log("updating order")
+                  
                     //update Order paid status to true
-                    const result = await storeDb.updateOrderPaidStatus(orderId, true)
-
-                    res.status(200).send({
-                        message: "payment successful",
-                        success: true
-                    })
+                    const updateOrder = await storeDb.updateOrderPaidStatus(orderId, true)
+                    console.log("sending back session id")
+                    res.json({ id: session.id });
                 }
                 catch(error) {
+                    console.log(error)
                     res.status(500).send({
                         message: "payment failed",
                         success: false
@@ -239,6 +302,21 @@ const postPayment = async (req, res, next) => {
     }
 }
 
+async function lookForProducts(productIds) {
+    let products = [];
+
+    for(let productId of productIds) {
+        try {
+            let found = await storeDb.readProduct(productId);
+            products.push(found);
+        }
+        catch(e) {
+            console.log(e);
+        }
+    }
+    return products;
+}
+
 exports.getProducts = getProducts
 exports.getProductbyID = getProductbyID
 exports.postCheckout = postCheckout
@@ -248,3 +326,4 @@ exports.getCategories = getCategories
 exports.getReviews = getReviews
 exports.postReview = postReview
 exports.postPayment = postPayment
+exports.getProductCount = getProductCount
