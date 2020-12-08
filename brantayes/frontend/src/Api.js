@@ -174,6 +174,21 @@ class Api {
       }, 500);
     })
   }
+
+  getBlogPosts() {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        axios.get(url + '/blog').then((response) => {
+          resolve(response.length === 0 ? null : response.data.posts)
+        }).catch((err) => {
+          reject(err)
+        })
+      }, 500);
+    })
+  }
+
+
+
 }
 
 export default new Api();

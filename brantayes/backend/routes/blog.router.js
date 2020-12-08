@@ -1,13 +1,12 @@
 const express = require('express')
 const router = express.Router()
 const { blogController } = require('../controllers')
-const ensureAuthenticated = require('../modules/ensureAuthenticated')
+const { userController } = require('../controllers')
 
 router.get('/', blogController.getPosts)
 router.get('/:postId', blogController.getPost)
 
-//TODO ensureAuthenticated
-router.post('/create', blogController.putPost)
-router.get('/delete/:postId', blogController.removePost)
+router.post('/create', userController.verifyToken, blogController.putPost)
+router.get('/delete/:postId',userController.verifyToken, blogController.removePost)
 
 module.exports = router
