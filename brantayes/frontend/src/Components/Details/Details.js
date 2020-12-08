@@ -146,13 +146,18 @@ class ConnectedDetails extends Component {
               >
                 Price: &euro; {this.state.item.retail_price}
               </div>
-              {this.state.item.popular > 3 && (
-                <div style={{ fontSize: 14, marginTop: 5, color: "#228B22" }}>
-                  (Popular product)
-                </div>
-              )}
+              {this.state.item.stock_quantity > 0 ? (
+                  <div style={{ fontSize: 14, marginTop: 5, color: "#228B22" }}>
+                    In stock
+                  </div>
+                ) : (
+                  <div style={{ fontSize: 14, marginTop: 5, color: "#F0290E" }}>
+                    Out of stock
+                  </div>
+                )
+              }
 
-              <Typography id="discrete-slider" gutterBottom>
+              <Typography id="discrete-slider" gutterBottom style={{marginTop: 5}}>
                 Size
               </Typography>
               <Slider

@@ -62,6 +62,15 @@ const createOrderlines = async(orderlines, OrderPlaced) => {
             discount: element.discount,
             product_id: element.product_id
         })
+
+        //update product quantity
+        if(prod.stock_quantity - element.quantity >= 0) {
+            prod.stock_quantity = prod.stock_quantity - element.quantity;
+        }
+        else {
+            prod.stock_quantity = 0;
+        }
+        prod.save();
     }
     return totalprice;
 }
