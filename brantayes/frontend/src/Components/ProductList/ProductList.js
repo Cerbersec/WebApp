@@ -16,6 +16,7 @@ class ProductList extends Component {
     this.state = {
       loading: false,
       totalItemsCount: null,
+      itemsCount: null,
       items: []
     };
     this.updateQueryStr = this.updateQueryStr.bind(this);
@@ -34,7 +35,8 @@ class ProductList extends Component {
     this.setState({
         items: response.data,
         loading: false,
-        totalItemsCount: pcount
+        totalItemsCount: pcount,
+        itemsCount: response.data.length
       });
   }
 
@@ -80,6 +82,7 @@ class ProductList extends Component {
           parsedQueryStr={parsedQueryStr}
           updateQueryStr={this.updateQueryStr}
           totalItemsCount={this.state.totalItemsCount}
+          itemsCount={this.state.itemsCount}
         />
 
         <div style={{ flex: 1 }}>
