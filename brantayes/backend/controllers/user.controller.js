@@ -215,7 +215,7 @@ const verifyToken = async (req, res, next) => {
 }
 
 const getCustomerByID = async(req, res, next) => {
-    const customerId = req.params.customerId
+    const customerId = req.customer_id
     try {
         const customer = await userDb.readUserById(customerId)
 
@@ -239,3 +239,4 @@ exports.login = login
 exports.logout = logout
 //exports.isLoggedIn = isLoggedIn
 exports.verifyToken = verifyToken
+exports.getCustomerByID = getCustomerByID

@@ -38,13 +38,13 @@ class Account extends Component
         this.fetchCustomers();
     }
 
-    async fetchOrders() {
+    async fetchOrder() {
         this.setState({loading: true})
         let response = await Api.getOrders()
         this.setState({orders: response, loading: false})
     }
 
-    async fetchCustomers() {
+    async fetchCustomer() {
         this.setState({loading: true})
         let response = await Api.getCustomerByID()
         this.setState({customers: response, loading: false})
