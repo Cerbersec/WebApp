@@ -31,7 +31,6 @@ const getProducts = async(req, res, next) => {
 
 const getProductCountByCategory = async(req, res, next) => {
     const category = req.body.category
-    console.log(category)
     try {
         const productcount = await storeDb.countProductsByCategory(category)
 
