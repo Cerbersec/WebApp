@@ -9,6 +9,10 @@ const readProduct = async (productId) => {
     return models.Product.findOne({ where: { product_id: productId } })
 }
 
+const countProducts = async () => {
+    return models.Product.count()
+}
+
 const createOrder = async (orderlines, userid) => {
     const shipping_costs = 12;
 
@@ -117,3 +121,4 @@ exports.readCategories = readCategories
 exports.readReviews = readReviews
 exports.createReview = createReview
 exports.updateOrderPaidStatus = updateOrderPaidStatus
+exports.countProducts = countProducts

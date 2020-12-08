@@ -28,6 +28,25 @@ const getProducts = async(req, res, next) => {
     }
 }
 
+const getProductCount = async(req, res, next) => {
+    try {
+        const productcount = await storeDb.countProducts()
+
+        if(!productcount) {
+            res.status(404).json({
+                message: "no products in database"
+            })
+        }
+
+        res.status(200).json({
+            productcount: productcount
+        })
+    } catch(e) {
+        console.log(e.message)
+        res.sendStatus(500) && next(e)
+    }
+}
+
 const getProductbyID = async(req, res, next) => {
     const productId = req.params.productId
     try {
@@ -307,3 +326,4 @@ exports.getCategories = getCategories
 exports.getReviews = getReviews
 exports.postReview = postReview
 exports.postPayment = postPayment
+exports.getProductCount = getProductCount
