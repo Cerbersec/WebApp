@@ -28,6 +28,7 @@ class Account extends Component
         this.state = {
             orders: [],
             customer: null,
+            //address: null,
             loading: false
         };
     }
@@ -36,6 +37,7 @@ class Account extends Component
     componentDidMount() {
         this.fetchOrders();
         this.fetchCustomer();
+        //this.fetchCustomerAddress();
     }
 
     async fetchOrders() {
@@ -48,6 +50,12 @@ class Account extends Component
         this.setState({loading: true})
         let response = await Api.getCustomerByID()
         this.setState({customer: response.customer, loading: false})
+    }
+
+    async fetchCustomerAddress() {
+        this.setState({loading: true})
+        let response = await Api.getAddressByCustomerID()
+        this.setState({address: response, loading: false})
     }
 
     render()
@@ -64,69 +72,47 @@ class Account extends Component
 
             <div className="AccountPage">
                 <h1>My Brantayes account</h1>
+                <br></br>
                 <h2>Account information</h2>
-                    <Table>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell style={{fontWeight:"bold"}}>Personal info</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            <TableRow>
-                                <TableCell>Name:</TableCell>
-                                <TableCell>first name</TableCell>
-                                <TableCell>last name</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Username:</TableCell>
-                                <TableCell> {this.state.customer.username} </TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Password:</TableCell>
-                                <TableCell><Button>Change</Button></TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Gender:</TableCell>
-                                <TableCell>gender</TableCell>
-                            </TableRow>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>Personal info</h5>
+                        <form class="personal_info">
+                            <label>Name: </label>
+                            <input value={this.state.customer.first_name + " " + this.state.customer.last_name} ></input><br></br>
+                            <label>Username: </label>
+                            <input value={this.state.customer.username}></input><br></br>
+                            <label>Password: </label>
+                            <input value={this.state.customer.password}></input><br></br>
+                            <label>Gender: </label>
+                            <input value={this.state.customer.gender}></input><br></br>
+                            <button type="button" class="btn btn-primary" onclick="unlockPersonalSection();">Edit</button>
+                        </form>
+                    </div>
 
-                        {/* {this.state.customers.map(customer => {
-                            return <TableRow key={customer.customer_id}>
-                                <TableCell>Username</TableCell>
-                                <TableCell> {customer.username} </TableCell>
-                            </TableRow>
-                        })} */}
-                        </TableBody>
+                    <div class="col-md-6">
+                        <h5>Contact info</h5>
+                        <form class="contact_info">
+                            <label>E-mail: </label>
+                            <input value={this.state.customer.email_address} ></input><br></br>
+                            <label>Phone: </label>
+                            <input value={this.state.customer.phone}></input><br></br>
+                            <label>Address: </label>
+                            <input value="put address here"></input><br></br>
+                            <label>City: </label>
+                            <input value={this.state.customer.gender}></input><br></br>
+                            <button type="button" class="btn btn-primary" onclick="unlockConctactSection();">Edit</button>
+                        </form>
+                    </div>
+                </div>
+                                
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
 
-                        <TableHead>
-                            <TableRow>
-                                <TableCell style={{fontWeight:"bold"}}>Contact info</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            <TableRow>
-                                <TableCell>E-mail:</TableCell>
-                                <TableCell>email</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Phone:</TableCell>
-                                <TableCell>phone number</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Address:</TableCell>
-                                <TableCell>street name</TableCell>
-                                <TableCell>street number</TableCell>
-                                <TableCell>bus number</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>City:</TableCell>
-                                <TableCell>postal code</TableCell>
-                                <TableCell>city</TableCell>
-                                <TableCell>country</TableCell>
-                            </TableRow>
-                        </TableBody>
-                    </Table>
-                    <br></br>
                 <div className="Order History"> 
                     <h2>Order history</h2>
                     <Table>
@@ -156,6 +142,11 @@ class Account extends Component
             </div>
         )
     }
+
+    // function unlockPersonalSection() {
+    //     var soap = document.getElementsByClassName("personal_info");
+    //     soap.attr({'disabled': 'enabled'});
+    // };
 }
 
 export default withRouter(connect(mapStateToProps)(Account));
