@@ -2,6 +2,8 @@ import React, {Component} from "react";
 import "./Blog.css";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Card from "@material-ui/core/Card";
+import CardActionArea from "@material-ui/core/CardActionArea";
+import CardContent from "@material-ui/core/CardContent";
 import Api from "../../Api";
 
 class Blog extends Component{
@@ -40,9 +42,18 @@ class Blog extends Component{
         <h1>Brantayes Blog</h1>
         <div className="BlogContainer">
         {this.state.posts.map(post => {
-          return <Card style={{ width: 500, height: 120, margin: 10, display: "inline-block"}}>
+          return <Card style={{ width: 500, height: 125, margin: 10, display: "inline-block"}}>
             <div style={{ margin: 10}} className="BlogPost">
+            <CardActionArea 
+          onClick={() => {
+            console.log("Click");
+            console.log(post.post_id);
+            this.props.history.push("/blogpost/" + post.post_id);
+          }}
+          >
+            <CardContent>
             <h5>{post.title}</h5>
+            </CardContent></CardActionArea>
             {new Date(post.post_date).toDateString()}
             <br></br>
             posted by Brantayes

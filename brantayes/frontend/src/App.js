@@ -20,6 +20,7 @@ import contact from "./Components/Contact/Contact.js";
 import support from "./Components/Support/Support.js";
 import TermsOfPayment from "./Components/TermsOfPayment/TermsOfPayment.js";
 import blog from "./Components/Blog/Blog.js";
+import blogpost from "./Components/BlogPost/BlogPost.js";
 import { history } from "./helpers/history";
 import { clearMessage } from "./Redux/Actions";
 import { connect } from "react-redux";
@@ -80,6 +81,7 @@ class App extends Component {
               <Route path="/contact" component={contact}/>
               <Route path="/support" component={support}/>
               <Route path="/blog" component={blog}/>
+              <Route path="/blogpost/:id" component={blogpost}/>
               <Route path="/account" component={Account}/>
               <Route path="/payment" component={TermsOfPayment}/>
               <Route path="/ordersuccess" component={OrderSuccess}/>

@@ -208,6 +208,18 @@ class Api {
     })
   }
 
+  getBlogPostByID(id) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        axios.get(url + '/blog/' + parseInt(id, 10)).then((response) => {
+          resolve(response.length === 0 ? null : response.data);
+        }).catch((err) => {
+          reject(err)
+        })
+      }, 500);
+    })
+  }
+
   getCustomerByID () {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
