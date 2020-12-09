@@ -95,6 +95,7 @@ class ConnectedDetails extends Component {
     
     console.log(resultaat);
     this.fetchReviews(this.props.match.params.id);
+    this.state.review = '';
   }
 
   render() {
@@ -236,9 +237,10 @@ class ConnectedDetails extends Component {
             return <Item key={x.product_id} item={x} />;
           })}
 
-        <div/>
+        
       </div>
-      <div className="col-md-3">
+      <div/>
+      <div>
           <div
             style={{
               marginTop: 20,
@@ -252,6 +254,7 @@ class ConnectedDetails extends Component {
           <BeautyStars
           value={this.state.rating}
           onChange={rating => this.setState({ rating })}
+          activeColor={'#ffe32a'}
           />
           <div>
             <TextField 
@@ -271,6 +274,7 @@ class ConnectedDetails extends Component {
             onClick={this.submitReview}>
               submit
           </Button>
+          <div>
         {this.state.reviews.length > 0 && (
           this.state.reviews.map(review => {
           //do stuff here voor elke review
@@ -280,6 +284,7 @@ class ConnectedDetails extends Component {
         {!this.state.reviews.length > 0 && (
           <div>No Reviews available</div>
         )}
+        </div>
       </div>
     </div>
     );

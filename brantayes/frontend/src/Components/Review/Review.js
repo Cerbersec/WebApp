@@ -1,19 +1,26 @@
 import React, { Component } from "react";
 import Card from "@material-ui/core/Card";
+import BeautyStars from 'beauty-stars';
 
 
 class Review extends Component {
- 
+    constructor(props) {
+        super(props);
+        this.state = {
+          rating: 1,
+
+        };
+    }
     render() {
         return (
 
         <Card style={{ width: 500, height: 200, margin: 10, display: "inline-block" }}>
             <div
                 style={{
-                marginLeft: 5,
+                marginLeft: 10,
                 fontWeight: "bold",
-                marginRight: 270,
-                marginTop: 5,
+                marginRight: 260,
+                marginTop: 10,
                 display: "inline-block" 
                 }}
             >
@@ -21,7 +28,14 @@ class Review extends Component {
             </div>
 
             <div style={{ display: "inline-block", marginRight: 20,}}>{this.props.item.review_date}</div>
-            <div style={{ display: "inline-block"}}>{this.props.item.rating}/5</div>
+            <div style={{ display: "inline-block", marginRight: 20}}>{this.props.item.rating}/5 </div>
+            <div style={{ display: "inline-block"}}>
+            <BeautyStars
+            value={this.state.rating}
+            maxStars={this.state.rating}
+            size={24}
+            activeColor={'#ffe32a'}
+            /> </div>
             <div style={{marginLeft: 5, marginTop: 5}}>{this.props.item.description} </div>
 
         </Card>
