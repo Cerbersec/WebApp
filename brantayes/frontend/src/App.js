@@ -86,6 +86,7 @@ class App extends Component {
               <Route path="/payment" component={TermsOfPayment}/>
               <Route path="/ordersuccess/:session_id" component={OrderSuccess}/>
               <Route path="/ordercancel" component={OrderCancel}/>
+              <Route path="/details" component={Details}/>
               <Route
                 component={() => (
                   <div style={{ padding: 20 }}>Page not found</div>

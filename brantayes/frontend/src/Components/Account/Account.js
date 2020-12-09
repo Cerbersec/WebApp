@@ -86,14 +86,12 @@ class Account extends Component
                                 <TableCell>gender</TableCell>
                             </TableRow>
 
-                        {/* {this.state.customers.map(customer => { return
-                            <TableRow key={customer.customer_id}>
+                        {this.state.customers.map(customer => {
+                            return <TableRow key={customer.customer_id}>
                                 <TableCell>Username</TableCell>
                                 <TableCell> {customer.username} </TableCell>
-                                <TableCell>Password</TableCell>
-                                <TableCell> <Button>Change</Button> </TableCell>
                             </TableRow>
-                        })} */}
+                        })}
                         </TableBody>
 
                         <TableHead>
@@ -124,7 +122,8 @@ class Account extends Component
                             </TableRow>
                         </TableBody>
                     </Table>
-                <div className="Order History">    
+                    <br></br>
+                <div className="Order History"> 
                     <h2>Order history</h2>
                     <Table>
                         <TableHead>
