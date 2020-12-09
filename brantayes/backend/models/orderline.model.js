@@ -16,6 +16,14 @@ module.exports = function(sequelize, Sequelize) {
         discount: {
             type: Sequelize.INTEGER,
             allowNull: true
+        },
+        color: {
+            type: Sequelize.STRING(255),
+            allowNull: true
+        },
+        size: {
+            type: Sequelize.INTEGER,
+            allowNull: false
         }
     },
     {

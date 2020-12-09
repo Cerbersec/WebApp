@@ -96,7 +96,8 @@ const createOrderlines = async(orderlines, OrderPlaced) => {
             quantity: element.quantity,
             subtotal_price: subtotal,
             discount: element.discount,
-            product_id: element.product_id
+            product_id: element.product_id,
+            size: element.selectedSize,
         })
 
         //update product quantity
