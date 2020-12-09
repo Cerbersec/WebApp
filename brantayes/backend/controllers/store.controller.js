@@ -243,7 +243,7 @@ const postPayment = async (req, res, next) => {
                         payment_method_types: ['card'],
                         line_items: lineitems,
                         mode: 'payment',
-                        success_url: req.headers.referer.split('/')[0] + '//' + req.headers.referer.split('/')[2] + '/ordersuccess',
+                        success_url: req.headers.referer.split('/')[0] + '//' + req.headers.referer.split('/')[2] + '/ordersuccess?session_id={CHECKOUT_SESSION_ID}',
                         cancel_url: req.headers.referer.split('/')[0] + '//' + req.headers.referer.split('/')[2] + '/ordercancel',
                     });
                     console.log("updating order")
