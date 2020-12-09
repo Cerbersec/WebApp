@@ -221,7 +221,7 @@ const getCustomerByID = async(req, res, next) => {
 
         if(customer == null) {
             return res.status(404).json({
-                message: 'product could not be found'
+                message: 'customer could not be found'
             })
         }
         return res.status(200).json({
@@ -234,9 +234,29 @@ const getCustomerByID = async(req, res, next) => {
     }
 }
 
+const getAddressByCustomerID = async(req, res, next) => {
+    const customerId = req.customer_id
+    try {
+        const address = await userDb.readUserAddress(customerId)
+
+        if(address == null) {
+            return res.status(404).json({
+                message: 'address could not be found'
+            })
+        }
+        return res.status(200).json({
+            address: address
+        })
+    } catch(e) {
+        console.log(e.message)
+        res.sendStatus(500) && next(e)
+    }
+}
+
 exports.register = register
 exports.login = login
 exports.logout = logout
 //exports.isLoggedIn = isLoggedIn
 exports.verifyToken = verifyToken
 exports.getCustomerByID = getCustomerByID
+exports.getAddressByCustomerID = getAddressByCustomerID

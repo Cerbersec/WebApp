@@ -57,7 +57,12 @@ const readUserById = (id) => {
     return models.Customer.findOne({ where: { customer_id: id } })
 }
 
+const readUserAddress = (id) => {
+    return models.Address.findOne({ where: { customer_id: id } })
+}
+
 exports.readUsers = readUsers
 exports.readUser = readUser
 exports.createUser = createUser
 exports.readUserById = readUserById
+exports.readUserAddress = readUserAddress
