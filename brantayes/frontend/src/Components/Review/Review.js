@@ -4,13 +4,7 @@ import BeautyStars from 'beauty-stars';
 
 
 class Review extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-          rating: 1,
 
-        };
-    }
     render() {
         return (
 
@@ -34,6 +28,7 @@ class Review extends Component {
             value={this.state.rating}
             maxStars={this.state.rating}
             size={24}
+            rating={1}
             activeColor={'#ffe32a'}
             /> </div>
             <div style={{marginLeft: 5, marginTop: 5}}>{this.props.item.description} </div>
