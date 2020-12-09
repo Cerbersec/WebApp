@@ -3,7 +3,7 @@ const url = "" //set target URL to manually override express.js routing
 
 //setup csrf token
 axios.get(url + '/csrf-token').then((response) => {
-  axios.defaults.headers.post['X-CSRF-TOKEN'] = response.data.csrfToken;
+  //axios.defaults.headers.post['X-CSRF-TOKEN'] = response.data.csrfToken;
   console.log(response.data)
 })
 
@@ -71,7 +71,7 @@ class Api {
           }
 
           //axios API call
-          axios.post(url + "/store/products/", data).then((response) => { 
+          axios.post(url + "/store/products", data).then((response) => { 
           let products = response.data.products
 
           let data = products.filter(item => {
