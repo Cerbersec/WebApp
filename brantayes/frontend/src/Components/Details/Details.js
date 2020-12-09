@@ -109,7 +109,7 @@ class ConnectedDetails extends Component {
 
     return (     
       <div className="row" style={{ padding: 10, margin: 0 }}>
-        <div className="col-md-7">
+        <div className="col-md-6">
           <div
             style={{
               marginBottom: 20,
@@ -236,22 +236,31 @@ class ConnectedDetails extends Component {
           {this.state.relatedItems.slice(0, 3).map(x => {
             return <Item key={x.product_id} item={x} />;
           })}
-
-        
       </div>
-      <div/>
-      <div>
-          <div
-            style={{
-              marginTop: 20,
-              marginBottom: 10,
-              fontSize: 22
-            }}
-          >
-            Reviews
-          </div>
-          
-          <BeautyStars
+      <div className="col-md-6">
+        <div
+          style={{
+            marginTop: 20,
+            marginBottom: 10,
+            fontSize: 22
+          }}
+        >
+          Reviews
+        </div>
+        
+        <div>
+          {this.state.reviews.length > 0 && (
+            this.state.reviews.map(review => {
+            //do stuff here voor elke review
+              return <Review key={review.review_id} item={review}/>
+            })
+          )}
+          {!this.state.reviews.length > 0 && (
+            <div>No Reviews available</div>
+          )}
+        </div>
+
+        <BeautyStars
           value={this.state.rating}
           onChange={rating => this.setState({ rating })}
           activeColor={'#ffe32a'}
@@ -260,6 +269,8 @@ class ConnectedDetails extends Component {
             <TextField 
               label="Type your review here"
               multiline
+              style={{ width: 600, marginTop: 10, backgroundColor: "white" }}
+              variant="outlined"
               rows={4}
               value={this.state.review}
               placeholder="review"
@@ -274,17 +285,6 @@ class ConnectedDetails extends Component {
             onClick={this.submitReview}>
               submit
           </Button>
-          <div>
-        {this.state.reviews.length > 0 && (
-          this.state.reviews.map(review => {
-          //do stuff here voor elke review
-            return <Review key={review.review_id} item={review}/>
-          })
-        )}
-        {!this.state.reviews.length > 0 && (
-          <div>No Reviews available</div>
-        )}
-        </div>
       </div>
     </div>
     );
