@@ -38,7 +38,7 @@ class OrderSuccess extends Component
                     <h1>Order successful</h1>
                     <p>Thank you for your order {this.state.response.email}!</p>
                     <p>Order no. {this.state.response.invoice}</p>
-                    <p>Amount: {this.state.response.amount}</p>
+                    <p>Amount: &euro; {this.state.response.amount}</p>
                 </div>
             </div>          
         )
