@@ -73,7 +73,8 @@ module.exports = function(sequelize, Sequelize) {
             foreignKey: {
                 name: 'category_id',
                 allowNull: false
-            }
+            },
+            as: 'category'
         })
     }
 

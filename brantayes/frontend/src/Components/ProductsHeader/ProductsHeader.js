@@ -14,7 +14,7 @@ class ProductsHeader extends Component {
   };
 
   render() {
-    let { parsedQueryStr, totalItemsCount, updateQueryStr } = this.props;
+    let { parsedQueryStr, totalItemsCount, updateQueryStr, itemsCount } = this.props;
 
     // Lot of values come from the query string.
     let usePriceFilter = parsedQueryStr.usePriceFilter === "true";
@@ -27,9 +27,9 @@ class ProductsHeader extends Component {
     let subtitle = (
       <div>
         <span style={{ fontSize: 12, color: "gray" }}>
-          {totalItemsCount +
+          {itemsCount +
             " result" +
-            (totalItemsCount === 1 ? " " : "s ") +
+            (itemsCount === 1 ? " " : "s ") +
             (keyword ? "for " : "")}
         </span>
         {keyword && (

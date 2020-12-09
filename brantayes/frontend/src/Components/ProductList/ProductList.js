@@ -16,6 +16,7 @@ class ProductList extends Component {
     this.state = {
       loading: false,
       totalItemsCount: null,
+      itemsCount: null,
       items: []
     };
     this.updateQueryStr = this.updateQueryStr.bind(this);
@@ -29,10 +30,13 @@ class ProductList extends Component {
 
     let response = await Api.searchItems(qsAsObject);
 
+    let pcount = await Api.getProductCount(qsAsObject.category);
+
     this.setState({
         items: response.data,
         loading: false,
-        totalItemsCount: response.totalLength
+        totalItemsCount: pcount,
+        itemsCount: response.data.length
       });
   }
 
@@ -78,6 +82,7 @@ class ProductList extends Component {
           parsedQueryStr={parsedQueryStr}
           updateQueryStr={this.updateQueryStr}
           totalItemsCount={this.state.totalItemsCount}
+          itemsCount={this.state.itemsCount}
         />
 
         <div style={{ flex: 1 }}>

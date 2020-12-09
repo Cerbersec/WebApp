@@ -53,9 +53,13 @@ const csrfProtection = csurf({
         maxAge: 3600 //1h
     }
 })
-app.use(csrfProtection)
-app.get('/csrf-token', (req, res) => {
-    res.json({ csrfToken: req.csrfToken() })
+//app.use(csrfProtection)
+app.use(csurf({ cookie: true }))
+app.get('/csrf-token', (req, res, next) => {
+    const token =  req.csrfToken()
+    res.cookie("XSRF-TOKEN", token)
+    res.json({ csrfToken: token })
+    return next()
 })
 
 // routers

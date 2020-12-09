@@ -6,7 +6,8 @@ const { userController } = require('../controllers')
 router.get('/', express.static('../frontend/public'))
 
 router.get('/store/productinfo/:productId', storeController.getProductbyID)
-router.get('/store/products/:page', storeController.getProducts)
+router.post('/store/products', storeController.getProducts)
+router.post('/store/productcount', storeController.getProductCountByCategory)
 
 router.get('/store/reviews/:productid', storeController.getReviews)
 router.post('/store/reviews/create', userController.verifyToken, storeController.postReview)

@@ -1,12 +1,42 @@
 // CRUD: create, read, update, delete
 const models = require('../models')
 
-const readProducts = async (pageLimit,pageOffset) => {
-    return models.Product.findAll({ offset: pageOffset, limit: pageLimit, include: models.Category})
+const readProducts = async (pageLimit,pageOffset, category) => {
+    if(category !== "All categories") {
+        return models.Product.findAll({
+            where: {'$category.category_name$': category},
+            offset: pageOffset,
+            limit: pageLimit,
+            include: [{
+                model: models.Category,
+                as: 'category'
+            }]
+        })
+    }
+    else {
+        return models.Product.findAll({
+            offset: pageOffset,
+            limit: pageLimit,
+            include: [{
+                model: models.Category,
+                as: 'category'
+            }]
+        })
+    }
 }
 
 const readProduct = async (productId) => {
     return models.Product.findOne({ where: { product_id: productId } })
+}
+
+const countProductsByCategory = async (category) => {
+    if(category !== "All categories") {
+        const result = await models.Category.findOne({ where: { category_name: category} })
+        return models.Product.count({ where: { category_id: result.category_id } })
+    }
+    else {
+        return models.Product.count()
+    }
 }
 
 const createOrder = async (orderlines, userid) => {
@@ -117,3 +147,4 @@ exports.readCategories = readCategories
 exports.readReviews = readReviews
 exports.createReview = createReview
 exports.updateOrderPaidStatus = updateOrderPaidStatus
+exports.countProductsByCategory = countProductsByCategory

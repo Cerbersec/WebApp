@@ -3,7 +3,7 @@ const url = "" //set target URL to manually override express.js routing
 
 //setup csrf token
 axios.get(url + '/csrf-token').then((response) => {
-  axios.defaults.headers.post['X-CSRF-TOKEN'] = response.data.csrfToken;
+  //axios.defaults.headers.post['X-CSRF-TOKEN'] = response.data.csrfToken;
   console.log(response.data)
 })
 
@@ -33,6 +33,22 @@ class Api {
     return items;
   }
 
+  getProductCount(category) {
+    if(!category) {
+      category = "All categories"
+    }
+    const data = {
+      category: category
+    }
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        axios.post(url + "/store/productcount", data).then((response) => { 
+          resolve(response.lenght === 0 ? null : response.data.productcount)
+        })
+      }, 500);
+    });
+  }
+
   searchItems({
     category = "All categories",//popular
     term = "",
@@ -49,8 +65,13 @@ class Api {
       return new Promise((resolve, reject) => {
         setTimeout(() => {
 
+          const data = {
+            page: page,
+            category: category
+          }
+
           //axios API call
-          axios.get(url + "/store/products/" + page).then((response) => { 
+          axios.post(url + "/store/products", data).then((response) => { 
           let products = response.data.products
 
           let data = products.filter(item => {
@@ -66,7 +87,7 @@ class Api {
               return item.popular;
             }
 
-            if (category !== "All categories" && category !== item.Category.category_name) {
+            if (category !== "All categories" && category !== item.category.category_name) {
               return false;
             }
 
@@ -179,6 +200,18 @@ class Api {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         axios.get(url + '/blog').then((response) => {
+          resolve(response.length === 0 ? null : response.data.posts)
+        }).catch((err) => {
+          reject(err)
+        })
+      }, 500);
+    })
+  }
+
+  getCustomerByID () {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        axios.get(url + '/details').then((response) => {
           resolve(response.length === 0 ? null : response.data.posts)
         }).catch((err) => {
           reject(err)

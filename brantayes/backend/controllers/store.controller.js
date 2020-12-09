@@ -6,12 +6,13 @@ const stripe = require("stripe")(config.STRIPE_SECRET_TEST);
 const TypedError = require('../modules/ErrorHandler')
 
 const getProducts = async(req, res, next) => {
-    const pageNo = req.params.page
+    const pageNo = req.body.page
+    const category = req.body.category
     const resultsPerPage = 10
     const searchOffset = (pageNo -1) * resultsPerPage
 
     try {
-        const products = await storeDb.readProducts(resultsPerPage + 1,searchOffset)
+        const products = await storeDb.readProducts(resultsPerPage + 1,searchOffset, category)
         
         if (products.length == 0) {
             return res.status(404).json({
@@ -22,6 +23,26 @@ const getProducts = async(req, res, next) => {
             products: products
         })
 
+    } catch(e) {
+        console.log(e.message)
+        res.sendStatus(500) && next(e)
+    }
+}
+
+const getProductCountByCategory = async(req, res, next) => {
+    const category = req.body.category
+    try {
+        const productcount = await storeDb.countProductsByCategory(category)
+
+        if(!productcount) {
+            res.status(404).json({
+                message: "no products in database"
+            })
+        }
+
+        res.status(200).json({
+            productcount: productcount
+        })
     } catch(e) {
         console.log(e.message)
         res.sendStatus(500) && next(e)
@@ -307,3 +328,4 @@ exports.getCategories = getCategories
 exports.getReviews = getReviews
 exports.postReview = postReview
 exports.postPayment = postPayment
+exports.getProductCountByCategory = getProductCountByCategory
