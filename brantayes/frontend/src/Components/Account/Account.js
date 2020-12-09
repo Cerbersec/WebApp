@@ -48,7 +48,7 @@ class Account extends Component
     async fetchCustomer() {
         this.setState({loading: true})
         let response = await Api.getCustomerByID()
-        this.setState({customers: response, loading: false})
+        this.setState({customer: response, loading: false})
     }
 
     render()
