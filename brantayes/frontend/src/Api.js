@@ -220,11 +220,11 @@ class Api {
     })
   }
 
-  getCustomerByID () {
+  getCustomerByID() {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         axios.get(url + '/details').then((response) => {
-          resolve(response.length === 0 ? null : response.data.posts)
+          resolve(response.length === 0 ? null : response.data)
         }).catch((err) => {
           reject(err)
         })

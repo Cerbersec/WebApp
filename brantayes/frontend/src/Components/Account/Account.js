@@ -27,7 +27,7 @@ class Account extends Component
 
         this.state = {
             orders: [],
-            customers: [],
+            customer: null,
             loading: false
         };
     }
@@ -56,6 +56,10 @@ class Account extends Component
             return <CircularProgress className="circular" />;
         }
 
+        if (this.customer === null) {
+            return <CircularProgress className="circular" />;
+        }
+
         return (
 
             <div className="AccountPage">
@@ -75,7 +79,7 @@ class Account extends Component
                             </TableRow>
                             <TableRow>
                                 <TableCell>Username:</TableCell>
-                                <TableCell>username</TableCell>
+                                <TableCell> {this.state.customer.username} </TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell>Password:</TableCell>
@@ -86,12 +90,12 @@ class Account extends Component
                                 <TableCell>gender</TableCell>
                             </TableRow>
 
-                        {this.state.customers.map(customer => {
+                        {/* {this.state.customers.map(customer => {
                             return <TableRow key={customer.customer_id}>
                                 <TableCell>Username</TableCell>
                                 <TableCell> {customer.username} </TableCell>
                             </TableRow>
-                        })}
+                        })} */}
                         </TableBody>
 
                         <TableHead>
