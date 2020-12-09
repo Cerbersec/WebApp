@@ -226,6 +226,7 @@ const postPayment = async (req, res, next) => {
 
         const order = await storeDb.readOrder(req.customer_id, orderId)
 
+
         if(order){
             if(!order.paid) {
                 const amount = order.total_price + order.shipping_costs
@@ -255,6 +256,20 @@ const postPayment = async (req, res, next) => {
                             }
                             lineitems.push(data);
                         })
+
+                    const shippingLine = {
+                        price_data: {
+                            currency: 'eur',
+                            product_data: {
+                                name: "shipping",
+                            },
+                            unit_amount: order.shipping_costs * 100,
+                        },
+                        quantity: 1,
+                        }
+            
+                    lineitems.push(shippingLine);
+
                     }).catch((err) => {
                         console.log(err)
                     })
