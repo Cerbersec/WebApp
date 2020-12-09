@@ -232,8 +232,17 @@ class Api {
     })
   }
 
-
-
+  getSuccess(session_id) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        axios.post(url + '/store/createsuccess?session_id=' + session_id).then((response) => {
+          resolve(response.length === 0 ? null : response.data)
+        }).catch((err) => {
+          reject(err)
+        })
+      }, 500);
+    })
+  }
 }
 
 export default new Api();

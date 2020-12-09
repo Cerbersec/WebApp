@@ -110,10 +110,3 @@ models.sequelize.sync({ force: false }).then(function() {
         console.log('HTTPS Server is running on port: 443')
     })
 })
-
-//stripe custom succes page
-app.post('/createCheckout', async (req, res) => {
-    const session = await stripe.checkout.sessions.retrieve(req.query.session_id);
-    const customer = await stripe.customers.retrieve(session.customer);
-    res.send(`<html><body><h1>Thanks for your order, ${customer.name}!</h1></body></html>`);
-});

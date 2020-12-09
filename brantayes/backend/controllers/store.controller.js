@@ -304,6 +304,24 @@ const postPayment = async (req, res, next) => {
     }
 }
 
+const postSuccess = async(req, res, next) => {
+    try {
+        const session = await stripe.checkout.sessions.retrieve(req.query.session_id);
+        const customer = await stripe.customers.retrieve(session.customer);
+        console.log(session)
+        console.log(customer)
+
+        res.send({
+            email: customer.email,
+            invoice: customer.invoice_prefix,
+            amount: session.amount_total / 100,
+        });
+    } catch(e) {
+        console.log(e.message)
+        res.sendStatus(500) && next(e)
+    }
+}
+
 async function lookForProducts(productIds) {
     let products = [];
 
@@ -329,3 +347,4 @@ exports.getReviews = getReviews
 exports.postReview = postReview
 exports.postPayment = postPayment
 exports.getProductCountByCategory = getProductCountByCategory
+exports.postSuccess = postSuccess
