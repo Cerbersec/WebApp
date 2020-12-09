@@ -84,7 +84,7 @@ class App extends Component {
               <Route path="/blogpost/:id" component={blogpost}/>
               <Route path="/account" component={Account}/>
               <Route path="/payment" component={TermsOfPayment}/>
-              <Route path="/ordersuccess" component={OrderSuccess}/>
+              <Route path="/ordersuccess/:session_id" component={OrderSuccess}/>
               <Route path="/ordercancel" component={OrderCancel}/>
               <Route
                 component={() => (

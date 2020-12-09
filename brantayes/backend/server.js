@@ -1,4 +1,5 @@
 const express = require('express')
+
 const compression = require('compression')
 const createError = require('http-errors')
 const path = require('path')
@@ -11,6 +12,7 @@ const http = require('http')
 const https = require('https')
 const fs = require('fs')
 const csurf = require('csurf')
+const stripe = require("stripe")("sk_test_51HsWiuEGWfldFJu6UkDgdRQSxHuK48Oif08qkzSphVLY9221ABALif0CkgmZkxv4xTfwAilmEqadNIZkO7c6KidM00jnFy4KWc");
 
 if(process.env.NODE_ENV !== 'production') {
     require('dotenv').config()
@@ -109,3 +111,9 @@ models.sequelize.sync({ force: false }).then(function() {
     })
 })
 
+//stripe custom succes page
+app.post('/createCheckout', async (req, res) => {
+    const session = await stripe.checkout.sessions.retrieve(req.query.session_id);
+    const customer = await stripe.customers.retrieve(session.customer);
+    res.send(`<html><body><h1>Thanks for your order, ${customer.name}!</h1></body></html>`);
+});
