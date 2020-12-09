@@ -52,7 +52,7 @@ const createOrder = async (orderlines, userid) => {
 
     const totalprice = await (createOrderlines(orderlines, OrderPlaced))
 
-    if(totalprice > 100)
+    if(totalprice >= 100)
     {
         OrderPlaced.shipping_costs = 0;
         console.log("shipping costs waived!")

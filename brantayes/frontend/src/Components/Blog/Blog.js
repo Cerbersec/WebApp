@@ -46,8 +46,6 @@ class Blog extends Component{
             <div style={{ margin: 10}} className="BlogPost">
             <CardActionArea 
           onClick={() => {
-            console.log("Click");
-            console.log(post.post_id);
             this.props.history.push("/blogpost/" + post.post_id);
           }}
           >

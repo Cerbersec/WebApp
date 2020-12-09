@@ -63,6 +63,8 @@ class ConnectedDetails extends Component {
         relatedItems: relatedItems.data.filter(x => x.product_id !== item.product_id),
         itemLoading: false,
       });
+      this.state.item.selectedSize = parseInt(this.state.item.size.split('-')[0]);
+      console.log("startsize: " + this.state.item.selectedSize);
     }
   }
 
@@ -171,7 +173,9 @@ class ConnectedDetails extends Component {
                 min={parseInt(this.state.item.size.split('-')[0])}
                 max={parseInt(this.state.item.size.split('-')[1])}
                 style={{width: 160}}
-              />
+                onChange={(event, newValue) => {
+                  this.state.item.selectedSize = newValue;
+                  }}/>
 
               <TextField
                 type="number"
@@ -191,7 +195,7 @@ class ConnectedDetails extends Component {
                   this.props.dispatch(
                     addItemInCart({
                       ...this.state.item,
-                      quantity: this.state.quantity
+                      quantity: this.state.quantity,
                     })
                   );
                 }}

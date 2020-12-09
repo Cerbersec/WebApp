@@ -108,6 +108,7 @@ class ConnectedOrder extends Component {
                   <TableCell>Picture</TableCell>
                   <TableCell>Item name</TableCell>
                   <TableCell>Price</TableCell>
+                  <TableCell>Size</TableCell>
                   <TableCell>Quantity</TableCell>
                 </TableRow>
               </TableHead>
@@ -123,6 +124,7 @@ class ConnectedOrder extends Component {
                       </TableCell>
                       <TableCell>{item.name}</TableCell>
                       <TableCell>{item.retail_price}</TableCell>
+                      <TableCell>{item.selectedSize}</TableCell>
                       <TableCell>{item.quantity}</TableCell>
                     </TableRow>
                   );
