@@ -36,6 +36,7 @@ class Account extends Component
     componentDidMount() {
         this.fetchOrders();
         this.fetchCustomer();
+        console.log(this.state)
     }
 
     async fetchOrders() {
@@ -56,7 +57,7 @@ class Account extends Component
             return <CircularProgress className="circular" />;
         }
 
-        if (this.customer === null) {
+        if (!this.state.customer) {
             return <CircularProgress className="circular" />;
         }
 
