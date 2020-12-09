@@ -95,7 +95,7 @@ class ConnectedDetails extends Component {
     
     console.log(resultaat);
     this.fetchReviews(this.props.match.params.id);
-    this.state.review = '';
+    this.setState({ review: '' })
   }
 
   render() {
