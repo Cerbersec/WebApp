@@ -10,6 +10,8 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import Button from "@material-ui/core/Button";
 import "./Account.css";
+import Select from "@material-ui/core/Select";
+import MenuItem from '@material-ui/core/MenuItem';
 
 const mapStateToProps = state => {
     const { user } = state;
@@ -81,13 +83,21 @@ class Account extends Component
                         <h5>Personal info</h5>
                         <form class="personal_info" action="">
                             <label>Name: </label>
-                            <input type="text" id="name" value={this.state.customer.first_name + " " + this.state.customer.last_name} ></input><br></br>
+                            <input type="text" id="name" placeholder={this.state.customer.first_name + " " + this.state.customer.last_name} ></input><br></br>
                             <label>Username: </label>
-                            <input type="text" value={this.state.customer.username}></input><br></br>
-                            <label>Password: </label>
-                            <input type="password" value={this.state.customer.password}></input><br></br>
-                            <label>Gender: </label>
-                            <input type="text" value={this.state.customer.gender}></input><br></br>
+                            <input type="text" placeholder={this.state.customer.username}></input><br></br>
+                            {/* <label>Password: </label>
+                            <input type="password" value={this.state.customer.password}></input><br></br> */}
+                            {/* <label>Gender: </label>
+                            <input type="text" value={this.state.customer.gender}></input><br></br> */}
+                            <div class="row">
+                                <label>Gender: </label>
+                                <Select value={this.state.customer.gender}>
+                                    <MenuItem value={"M"}>Male</MenuItem>
+                                    <MenuItem value={"F"}>Female</MenuItem>
+                                    <MenuItem value={"X"}>Other</MenuItem>
+                                </Select>
+                            </div>
                             <button type="button" class="btn btn-primary" onclick="unlockPersonalSection()">Edit</button>
                         </form>
                     </div>
@@ -96,16 +106,16 @@ class Account extends Component
                         <h5>Contact info</h5>
                         <form class="contact_info">
                             <label>E-mail: </label>
-                            <input type="email" value={this.state.customer.email_address} ></input><br></br>
+                            <input type="email" placeholder={this.state.customer.email_address} ></input><br></br>
                             <label>Phone: </label>
-                            <input value={this.state.customer.phone}></input><br></br>
+                            <input placeholder={this.state.customer.phone}></input><br></br>
                             <label for="address">Address: </label>
-                            <input type="text" value={this.state.customer.Addresses[0].street_name + " " + 
+                            <input type="text" placeholder={this.state.customer.Addresses[0].street_name + " " + 
                                 this.state.customer.Addresses[0].street_nr + ", bus " +
                                 this.state.customer.Addresses[0].bus_nr}>
                             </input><br></br>
                             <label>City: </label>
-                            <input value={this.state.customer.Addresses[0].postal_code + " " + 
+                            <input placeholder={this.state.customer.Addresses[0].postal_code + " " + 
                                 this.state.customer.Addresses[0].city + ", " +
                                 this.state.customer.Addresses[0].country}
                             ></input><br></br>
