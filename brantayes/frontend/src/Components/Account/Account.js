@@ -50,13 +50,14 @@ class Account extends Component
         this.setState({loading: true})
         let response = await Api.getCustomerByID()
         this.setState({customer: response.customer, loading: false})
+        console.log(response)
     }
 
-    async fetchCustomerAddress() {
-        this.setState({loading: true})
-        let response = await Api.getAddressByCustomerID()
-        this.setState({address: response, loading: false})
-    }
+    // async fetchCustomerAddress() {
+    //     this.setState({loading: true})
+    //     let response = await Api.getAddressByCustomerID()
+    //     this.setState({address: response, loading: false})
+    // }
 
     render()
     {
@@ -77,15 +78,15 @@ class Account extends Component
                 <div class="row">
                     <div class="col-md-6">
                         <h5>Personal info</h5>
-                        <form class="personal_info">
+                        <form class="personal_info" action="">
                             <label>Name: </label>
-                            <input value={this.state.customer.first_name + " " + this.state.customer.last_name} ></input><br></br>
+                            <input type="text" id="name" value={this.state.customer.first_name + " " + this.state.customer.last_name} ></input><br></br>
                             <label>Username: </label>
-                            <input value={this.state.customer.username}></input><br></br>
+                            <input type="text" value={this.state.customer.username}></input><br></br>
                             <label>Password: </label>
-                            <input value={this.state.customer.password}></input><br></br>
+                            <input type="password" value={this.state.customer.password}></input><br></br>
                             <label>Gender: </label>
-                            <input value={this.state.customer.gender}></input><br></br>
+                            <input type="text" value={this.state.customer.gender}></input><br></br>
                             <button type="button" class="btn btn-primary" onclick="unlockPersonalSection();">Edit</button>
                         </form>
                     </div>
@@ -98,17 +99,14 @@ class Account extends Component
                             <label>Phone: </label>
                             <input value={this.state.customer.phone}></input><br></br>
                             <label>Address: </label>
-                            <input value="put address here"></input><br></br>
+                            <input value={this.state.customer.street_name}></input><br></br>
                             <label>City: </label>
-                            <input value={this.state.customer.gender}></input><br></br>
+                            <input value="code - city - country"></input><br></br>
                             <button type="button" class="btn btn-primary" onclick="unlockConctactSection();">Edit</button>
                         </form>
                     </div>
                 </div>
                                 
-                <br></br>
-                <br></br>
-                <br></br>
                 <br></br>
                 <br></br>
                 <br></br>

@@ -92,10 +92,15 @@ class ConnectedOrder extends Component {
   }
 
   render() {
+    let shippingCosts = 12;
     
     let totalPrice = this.props.checkedOutItems.reduce((accumulator, item) => {
-      return accumulator + item.retail_price * item.quantity;
+      const result = accumulator + item.retail_price * item.quantity;
+      if (result >= 100){shippingCosts = 0;}
+      return result;
     }, 0);
+
+    
 
     return (
       <div>
@@ -123,7 +128,7 @@ class ConnectedOrder extends Component {
                         ></img>
                       </TableCell>
                       <TableCell>{item.name}</TableCell>
-                      <TableCell>{item.retail_price}</TableCell>
+                      <TableCell>&euro; {item.retail_price}</TableCell>
                       <TableCell>{item.selectedSize}</TableCell>
                       <TableCell>{item.quantity}</TableCell>
                     </TableRow>
@@ -140,7 +145,9 @@ class ConnectedOrder extends Component {
                 fontSize: 22
               }}
             >
-              Total price: &euro; {totalPrice}
+              Shipping costs: &euro; {shippingCosts}
+              <br></br>
+              Total price: &euro; {(totalPrice + shippingCosts)}
             </div>
             <Button
               color="primary"
