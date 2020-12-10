@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import "./Support.css";
 import EmailIcon from '@material-ui/icons/Email';
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
 
 
 class Support extends Component 
@@ -17,8 +19,8 @@ class Support extends Component
             let val = event.target.value;
             this.setState({[nam]: val});
         }
-        mySubmitHandler = (event) => {
-            event.preventDefault();
+        sendSupport = () => {
+
             var alpha = this.state.email; 
             var beta = this.state.message;
             if (alpha.trim() === "") {
@@ -32,6 +34,8 @@ class Support extends Component
                         }
                         else{
                             alert("You are submitting " + beta);
+                            this.setState({ message: '' })
+                            this.setState({ email: '' })
                         }
                     }
                     else{
@@ -73,15 +77,39 @@ class Support extends Component
                     <br></br><br></br>
                     <div>
                     <h4>Message us directly:</h4>
-                    <form onSubmit={this.mySubmitHandler}>
+
                         <p>Your e-mailaddress:</p>
-                    <input type="text" name='email' onChange={this.myChangeHandler} />
+                        <TextField 
+                        label="Type your e-mail here"
+                        multiline
+                        style={{ width: 600, marginTop: 10, backgroundColor: "white" }}
+                        variant="outlined"
+                        value={this.state.email}
+                        placeholder="your e-mail"
+                        onChange={e => {
+                            this.setState({ email : e.target.value });
+                        }}/>
                     <br></br><br></br>
                     <p>Your message:</p>
-                    <textarea name='message' maxlength="250"  placeholder="Tell us your problem" onChange={this.myChangeHandler}></textarea>
+                    <TextField 
+                        label="Type your message here"
+                        multiline
+                        style={{ width: 600, marginTop: 10, backgroundColor: "white" }}
+                        variant="outlined"
+                        rows={4}
+                        value={this.state.message}
+                        placeholder="your message"
+                        onChange={e => {
+                            this.setState({ message : e.target.value });
+                        }}/>
                     <br></br>
-                    <button input type='submit'>Send</button>
-                    </form>
+                    <Button
+                        style={{ marginTop: 20, width: 200 }}
+                        variant="outlined"
+                        color="primary"
+                        onClick={this.sendSupport}>
+                        submit
+                    </Button>
                 </div>
             </div>
             </div>
