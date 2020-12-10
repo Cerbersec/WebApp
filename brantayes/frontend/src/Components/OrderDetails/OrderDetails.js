@@ -27,6 +27,7 @@ class OrderDetails extends Component{
           this.setState({order: order});
         }
         console.log(this.state.order);
+        console.log(this.state.order.Orderlines);
 
         this.setState({loading: false});
       }
@@ -41,15 +42,16 @@ class OrderDetails extends Component{
   
       return(
         <div>
-            <h2>Order No: {this.state.order.order_id}</h2>
+            <h2 style={{marginTop: 20}}>Order ID: {this.state.order.order_id}</h2>
             <div>
-                order date: {new Date(this.state.order.order_date).toDateString()}
-                <br></br>
-            <h5>products:</h5>
+                Order date: {new Date(this.state.order.order_date).toDateString()}
+                <br />
+            <h5 style={{marginTop: 15}}>Product(s) you ordered:</h5>
             <Table>
                 <TableHead>
                     <TableRow>
                         <TableCell style={{fontWeight:"bold"}}>Product</TableCell>
+                        <TableCell style={{fontWeight:"bold"}}>Picture</TableCell>
                         <TableCell style={{fontWeight:"bold"}}>Size</TableCell>
                         <TableCell style={{fontWeight:"bold"}}>Quantity</TableCell>
                         <TableCell style={{fontWeight:"bold"}}>Subtotal</TableCell>
@@ -58,7 +60,9 @@ class OrderDetails extends Component{
                 <TableBody>
                     {this.state.order.Orderlines.map(line => {
                         return <TableRow key={line.product_id}>
-                            <TableCell> {line.product_id} </TableCell>
+                            <TableCell> {line.Product.name} </TableCell>
+                            <TableCell><img src={line.Product.image_url} alt="" height={35}></img>
+                            </TableCell>
                             <TableCell> {line.size} </TableCell>
                             <TableCell> {line.quantity} </TableCell>
                             <TableCell> &euro; {line.subtotal_price} </TableCell>

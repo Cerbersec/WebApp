@@ -117,7 +117,7 @@ const readOrders = (userid) => {
 }
 
 const readOrder = (userId,orderId) => {
-    const order = models.Order.findOne({ where: { customer_id: userId, order_id: orderId }, include: models.Orderline })
+    const order = models.Order.findOne({ where: { customer_id: userId, order_id: orderId }, include: [{model: models.Orderline, include : models.Product }]})
     return order
 }
 
