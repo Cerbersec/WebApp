@@ -3,12 +3,15 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import Header from "./Components/Header/Header.js";
 import ProductList from "./Components/ProductList/ProductList";
-import { withRouter, Router, Switch, Route } from "react-router-dom";
+import { withRouter, Switch, Route } from "react-router-dom";
 import Menu from "./Components/Menu/Menu";
 import CartDialog from "./Components/CartDialog/CartDialog";
 import Details from "./Components/Details/Details";
 import Order from "./Components/Order/Order";
 import Login from "./Components/Login/Login";
+import Account from "./Components/Account/Account";
+import OrderSuccess from "./Components/OrderSuccess/OrderSuccess";
+import OrderCancel from "./Components/OrderCancel/OrderCancel";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
 import Footer from "./Components/Footer/Footer";
 import PrivacyPolicy from "./Components/PrivacyRegulation/PrivacyRegulation.js";
@@ -17,6 +20,8 @@ import contact from "./Components/Contact/Contact.js";
 import support from "./Components/Support/Support.js";
 import TermsOfPayment from "./Components/TermsOfPayment/TermsOfPayment.js";
 import blog from "./Components/Blog/Blog.js";
+import blogpost from "./Components/BlogPost/BlogPost.js";
+import OrderDetails from "./Components/OrderDetails/OrderDetails.js";
 import { history } from "./helpers/history";
 import { clearMessage } from "./Redux/Actions";
 import { connect } from "react-redux";
@@ -25,7 +30,6 @@ import { connect } from "react-redux";
 import { MuiThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import theme from './theme'
-import Account from "./Components/Account/Account";
 /* END */
 
 const mapStateToProps = state => {
@@ -59,8 +63,6 @@ class App extends Component {
   }
 
   render() {
-    const { currentUser } = this.state;
-
     return (
       <MuiThemeProvider theme={theme}>
         <CssBaseline />
@@ -80,8 +82,12 @@ class App extends Component {
               <Route path="/contact" component={contact}/>
               <Route path="/support" component={support}/>
               <Route path="/blog" component={blog}/>
+              <Route path="/blogpost/:id" component={blogpost}/>
               <Route path="/account" component={Account}/>
               <Route path="/payment" component={TermsOfPayment}/>
+              <Route path="/ordersuccess/:session_id" component={OrderSuccess}/>
+              <Route path="/ordercancel" component={OrderCancel}/>
+              <Route path="/orderdetails/:id" component={OrderDetails}/>
               <Route
                 component={() => (
                   <div style={{ padding: 20 }}>Page not found</div>

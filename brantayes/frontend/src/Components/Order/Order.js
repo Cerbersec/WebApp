@@ -9,8 +9,8 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import { setCheckedOutItems, setCartItems} from "../../Redux/Actions";
 import Api from "../../Api";
-import StripeCheckout from "react-stripe-checkout";
-import StripeContainer from "../../Stripe/stripeContainer";
+import { loadStripe } from "@stripe/stripe-js";
+const stripePromise = loadStripe('pk_test_51HsWiuEGWfldFJu67udyAjf2iYKc101tgkLEbRbxwt5pdQbCOWNCWXDwLgMC9xfzP7yCrHsbAu5G4n38Z3Bf3wdL00sNTFagh3');
 
 const mapStateToProps = state => {
   return {
@@ -28,13 +28,11 @@ class ConnectedOrder extends Component {
     this.state = {
       orderId: '',
       loading: false,
-      successful: false
+      successful: false,
     }
   }
 
-  async handleSubmit() {
-    this.setState({loading: true, successful: false})
-
+  async createOrder() {
     const orderdata = {
       orderlines: this.props.checkedOutItems
     }
@@ -42,25 +40,67 @@ class ConnectedOrder extends Component {
     if(orderdata.orderlines) {
       let result = await Api.checkout(orderdata);
 
-      if(result) {
-        this.setState({orderId: result.order_id, loading: false, successful: true})
+      if(result) {      
         this.props.dispatch(setCheckedOutItems([]));
         this.props.dispatch(setCartItems([]));
+        this.setState({orderId: result.order_id, loading: false, successful: true})
+        return true;
       }
       else {
         this.setState({loading: false, successful: false})
       }
     }
     else {
-      this.setState({loading: false})
+        this.setState({loading: false})
+    }
+  }
+
+  async handleStripe() {
+    //get stripe instance
+    const stripe = await stripePromise;
+
+    // call backend to create checkout session
+    const data = {
+      order_id: this.state.orderId,
+    }
+    const session = await Api.pay(data);
+
+    if(this.state.successful && session) {
+      console.log(session.data.id)
+      //redirect
+      const redirect = await stripe.redirectToCheckout({
+        sessionId: session.data.id,
+      })
+
+      //error handling
+      if(redirect.data.error) {
+        console.log(redirect.data.error)
+      }
+    }
+    else {
+      console.log("no session")
+    }
+  }
+
+  async handleSubmit() {
+    this.setState({loading: true, successful: false})
+    const result = await this.createOrder()
+
+    if(result) {
+      const payment = await this.handleStripe()
     }
   }
 
   render() {
+    let shippingCosts = 12;
     
     let totalPrice = this.props.checkedOutItems.reduce((accumulator, item) => {
-      return accumulator + item.retail_price * item.quantity;
+      const result = accumulator + item.retail_price * item.quantity;
+      if (result >= 100){shippingCosts = 0;}
+      return result;
     }, 0);
+
+    
 
     return (
       <div>
@@ -73,6 +113,7 @@ class ConnectedOrder extends Component {
                   <TableCell>Picture</TableCell>
                   <TableCell>Item name</TableCell>
                   <TableCell>Price</TableCell>
+                  <TableCell>Size</TableCell>
                   <TableCell>Quantity</TableCell>
                 </TableRow>
               </TableHead>
@@ -87,7 +128,8 @@ class ConnectedOrder extends Component {
                         ></img>
                       </TableCell>
                       <TableCell>{item.name}</TableCell>
-                      <TableCell>{item.retail_price}</TableCell>
+                      <TableCell>&euro; {item.retail_price}</TableCell>
+                      <TableCell>{item.selectedSize}</TableCell>
                       <TableCell>{item.quantity}</TableCell>
                     </TableRow>
                   );
@@ -103,7 +145,9 @@ class ConnectedOrder extends Component {
                 fontSize: 22
               }}
             >
-              Total price: &euro; {totalPrice}
+              Shipping costs: &euro; {shippingCosts}
+              <br></br>
+              Total price: &euro; {(totalPrice + shippingCosts)}
             </div>
             <Button
               color="primary"
@@ -126,9 +170,6 @@ class ConnectedOrder extends Component {
               Discard
             </Button>        
           </div>
-        )}
-        {this.state.successful && (
-          <StripeContainer orderId={this.state.orderId}/>
         )}
       </div>
     );

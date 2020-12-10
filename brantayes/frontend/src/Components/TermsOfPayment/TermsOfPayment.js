@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "./TermsOfPayment.css";
-import EmailIcon from '@material-ui/icons/Email';
 
 
 class TermsOfPayment extends Component 

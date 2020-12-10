@@ -12,6 +12,15 @@ import { Link } from "react-router-dom";
 
 const CartRow = props => {
   let { item } = props;
+
+  const minVal = parseInt(item.size.split('-')[0]);
+  const maxVal = parseInt(item.size.split('-')[1]);
+
+  if(typeof(item.selectedSize) === 'undefined')
+  {
+    item.selectedSize = minVal;
+  }
+
   return (
     <TableRow>
       <TableCell>
@@ -31,7 +40,21 @@ const CartRow = props => {
             height={35}
             ></img>
           </TableCell>
-      <TableCell>{item.retail_price + " €"}</TableCell>
+      <TableCell style={{ padding: 12 }}>{"€ " + item.retail_price}</TableCell>
+      <TableCell>
+        <TextField
+          type="number"
+          InputProps={{ inputProps: { min: minVal, max: maxVal } }}
+          style={{ width: 40 }}
+          value={item.selectedSize}
+          onChangeCommited={e => {
+            let size = parseInt(e.target.value, 10);
+            props.dispatch(
+              //change shoe size
+            );
+          }}
+        />
+      </TableCell>
       <TableCell>
         <TextField
           type="number"
@@ -53,7 +76,6 @@ const CartRow = props => {
         <Button
           color="primary"
           onClick={() => {
-            //props.dispatch(deleteCartItem(item.product_id));
             props.dispatch(deleteCartItem(item.product_id));
           }}
         >

@@ -1,13 +1,8 @@
 import React, {Component} from "react";
-import { withRouter, Redirect } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
 import Select from "@material-ui/core/Select";
-import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import Api from "../../Api";
 import { register } from "../../Redux/actions/auth";
 import { connect } from "react-redux";
 
@@ -57,7 +52,7 @@ const vpassword = (value) => {
 
 let p = ""
 const vconfirmpassword = (value) => {
-  if (value != p) {
+  if (value !== p) {
     return (
       <div className="alert alert-danger" role="alert">
         Password does not match.
@@ -310,7 +305,6 @@ class Register extends Component{
                           type="password"
                           className="form-control"
                           value={this.state.password}
-                          type="password"
                           placeholder="Password"
                           onChange={e => {
                             this.setState({ password: e.target.value });
@@ -323,7 +317,6 @@ class Register extends Component{
                           type="password"
                           className="form-control"
                           value={this.state.confirmpassword}
-                          type="password"
                           placeholder="Confirm password"
                           onChange={e => {
                             this.setState({ confirmpassword: e.target.value });

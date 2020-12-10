@@ -3,7 +3,7 @@ const url = "" //set target URL to manually override express.js routing
 
 //setup csrf token
 axios.get(url + '/csrf-token').then((response) => {
-  axios.defaults.headers.post['X-CSRF-TOKEN'] = response.data.csrfToken;
+  //axios.defaults.headers.post['X-CSRF-TOKEN'] = response.data.csrfToken;
   console.log(response.data)
 })
 
@@ -33,6 +33,22 @@ class Api {
     return items;
   }
 
+  getProductCount(category) {
+    if(!category) {
+      category = "All categories"
+    }
+    const data = {
+      category: category
+    }
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        axios.post(url + "/store/productcount", data).then((response) => { 
+          resolve(response.lenght === 0 ? null : response.data.productcount)
+        })
+      }, 500);
+    });
+  }
+
   searchItems({
     category = "All categories",//popular
     term = "",
@@ -49,15 +65,20 @@ class Api {
       return new Promise((resolve, reject) => {
         setTimeout(() => {
 
+          const data = {
+            page: page,
+            category: category
+          }
+
           //axios API call
-          axios.get(url + "/store/products/" + page).then((response) => { 
+          axios.post(url + "/store/products", data).then((response) => { 
           let products = response.data.products
 
           let data = products.filter(item => {
             
             if (
               usePriceFilter &&
-              (item.price < minPrice || item.price > maxPrice)
+              (item.retail_price < minPrice || item.retail_price > maxPrice)
             ) {
               return false;
             }
@@ -66,7 +87,7 @@ class Api {
               return item.popular;
             }
 
-            if (category !== "All categories" && category !== item.Category.category_name) {
+            if (category !== "All categories" && category !== item.category.category_name) {
               return false;
             }
 
@@ -112,44 +133,6 @@ class Api {
   pay(data) {
     return axios.post(url + "/store/payment", data)
   }
- 
-  /*
-  login(data) {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        axios.post(url + "/account/login", data).then((response) => {
-          resolve(response.status !== 200 ? null : response.status)
-        })
-        .catch((err) => {
-          if (err.response.data.type === "invalid_field"){
-            resolve("E-mail is not in correct format")
-          }
-          else if (err.response.data.type === "missing_field")
-          {
-            resolve("E-mail or password can't be empty!")
-          }
-          else if (err.response.status === 401)
-          {
-            resolve("Invalid credentials")
-          }
-          else {
-            resolve("Something went wrong, try again!")
-          }
-        })
-      }, 500);
-    });
-  }
-
-  logout() {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        axios.get(url + "/account/logout").then((response) => {
-          resolve(response.status !== 200? "something went wrong" : "successfully logged out")
-        })
-      }, 500);
-    })
-  }
-  */
 
   login(data) {
     return axios
@@ -206,6 +189,54 @@ class Api {
       setTimeout(() => {
         axios.get(url + '/orders').then((response) => {
           resolve(response.lenght === 0 ? null : response.data.orders)
+        }).catch((err) => {
+          reject(err)
+        })
+      }, 500);
+    })
+  }
+
+  getBlogPosts() {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        axios.get(url + '/blog').then((response) => {
+          resolve(response.length === 0 ? null : response.data.posts)
+        }).catch((err) => {
+          reject(err)
+        })
+      }, 500);
+    })
+  }
+
+  getBlogPostByID(id) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        axios.get(url + '/blog/' + parseInt(id, 10)).then((response) => {
+          resolve(response.length === 0 ? null : response.data);
+        }).catch((err) => {
+          reject(err)
+        })
+      }, 500);
+    })
+  }
+
+  getCustomerByID() {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        axios.get(url + '/account/details').then((response) => {
+          resolve(response.length === 0 ? null : response.data)
+        }).catch((err) => {
+          reject(err)
+        })
+      }, 500);
+    })
+  }
+
+  getSuccess(session_id) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        axios.post(url + '/store/createsuccess?session_id=' + session_id).then((response) => {
+          resolve(response.length === 0 ? null : response.data)
         }).catch((err) => {
           reject(err)
         })

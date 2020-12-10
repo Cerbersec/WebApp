@@ -1,4 +1,5 @@
 const express = require('express')
+
 const compression = require('compression')
 const createError = require('http-errors')
 const path = require('path')
@@ -11,6 +12,7 @@ const http = require('http')
 const https = require('https')
 const fs = require('fs')
 const csurf = require('csurf')
+const stripe = require("stripe")("sk_test_51HsWiuEGWfldFJu6UkDgdRQSxHuK48Oif08qkzSphVLY9221ABALif0CkgmZkxv4xTfwAilmEqadNIZkO7c6KidM00jnFy4KWc");
 
 if(process.env.NODE_ENV !== 'production') {
     require('dotenv').config()
@@ -53,9 +55,13 @@ const csrfProtection = csurf({
         maxAge: 3600 //1h
     }
 })
-app.use(csrfProtection)
-app.get('/csrf-token', (req, res) => {
-    res.json({ csrfToken: req.csrfToken() })
+//app.use(csrfProtection)
+app.use(csurf({ cookie: true }))
+app.get('/csrf-token', (req, res, next) => {
+    const token =  req.csrfToken()
+    res.cookie("XSRF-TOKEN", token)
+    res.json({ csrfToken: token })
+    return next()
 })
 
 // routers
@@ -104,4 +110,3 @@ models.sequelize.sync({ force: false }).then(function() {
         console.log('HTTPS Server is running on port: 443')
     })
 })
-

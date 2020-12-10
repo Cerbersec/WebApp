@@ -1,0 +1,9 @@
+.PostDetails{
+    margin-bottom: 20px;
+}
+
+.PostContent{
+    width: 750px;
+    white-space: pre-wrap;
+    padding-bottom: 50px;
+}

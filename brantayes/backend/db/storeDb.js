@@ -1,12 +1,42 @@
 // CRUD: create, read, update, delete
 const models = require('../models')
 
-const readProducts = async (pageLimit,pageOffset) => {
-    return models.Product.findAll({ offset: pageOffset, limit: pageLimit, include: models.Category})
+const readProducts = async (pageLimit,pageOffset, category) => {
+    if(category !== "All categories") {
+        return models.Product.findAll({
+            where: {'$category.category_name$': category},
+            offset: pageOffset,
+            limit: pageLimit,
+            include: [{
+                model: models.Category,
+                as: 'category'
+            }]
+        })
+    }
+    else {
+        return models.Product.findAll({
+            offset: pageOffset,
+            limit: pageLimit,
+            include: [{
+                model: models.Category,
+                as: 'category'
+            }]
+        })
+    }
 }
 
-const readProduct = (productId) => {
+const readProduct = async (productId) => {
     return models.Product.findOne({ where: { product_id: productId } })
+}
+
+const countProductsByCategory = async (category) => {
+    if(category !== "All categories") {
+        const result = await models.Category.findOne({ where: { category_name: category} })
+        return models.Product.count({ where: { category_id: result.category_id } })
+    }
+    else {
+        return models.Product.count()
+    }
 }
 
 const createOrder = async (orderlines, userid) => {
@@ -21,7 +51,13 @@ const createOrder = async (orderlines, userid) => {
     })
 
     const totalprice = await (createOrderlines(orderlines, OrderPlaced))
- 
+
+    if(totalprice >= 100)
+    {
+        OrderPlaced.shipping_costs = 0;
+        console.log("shipping costs waived!")
+    }
+
     OrderPlaced.total_price = totalprice
     OrderPlaced.save().then((order) => {console.log(order)})
 
@@ -55,13 +91,23 @@ const createOrderlines = async(orderlines, OrderPlaced) => {
         subtotal = prod.retail_price * element.quantity
         totalprice = totalprice + subtotal
         element.discount = 0;
-        
+
         OrderPlaced.createOrderline({
             quantity: element.quantity,
             subtotal_price: subtotal,
             discount: element.discount,
-            product_id: element.product_id
+            product_id: element.product_id,
+            size: element.selectedSize,
         })
+
+        //update product quantity
+        if(prod.stock_quantity - element.quantity >= 0) {
+            prod.stock_quantity = prod.stock_quantity - element.quantity;
+        }
+        else {
+            prod.stock_quantity = 0;
+        }
+        prod.save();
     }
     return totalprice;
 }
@@ -108,3 +154,4 @@ exports.readCategories = readCategories
 exports.readReviews = readReviews
 exports.createReview = createReview
 exports.updateOrderPaidStatus = updateOrderPaidStatus
+exports.countProductsByCategory = countProductsByCategory

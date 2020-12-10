@@ -9,6 +9,12 @@ import { connect } from "react-redux";
 import TextField from "@material-ui/core/TextField";
 import BeautyStars from 'beauty-stars';
 import Review from "../Review/Review.js";
+import Slider from "@material-ui/core/Slider";
+import Typography from "@material-ui/core/Typography";
+
+const valuetext = (value) => {
+  return `${value}EU`;
+}
 
 class ConnectedDetails extends Component {
  
@@ -57,6 +63,8 @@ class ConnectedDetails extends Component {
         relatedItems: relatedItems.data.filter(x => x.product_id !== item.product_id),
         itemLoading: false,
       });
+      this.state.item.selectedSize = parseInt(this.state.item.size.split('-')[0]);
+      console.log("startsize: " + this.state.item.selectedSize);
     }
   }
 
@@ -89,6 +97,7 @@ class ConnectedDetails extends Component {
     
     console.log(resultaat);
     this.fetchReviews(this.props.match.params.id);
+    this.setState({ review: '' })
   }
 
   render() {
@@ -101,13 +110,15 @@ class ConnectedDetails extends Component {
     }
 
     return (     
-      <div className="row" style={{ padding: 10 }}>
+      <div className="row" style={{ padding: 10, margin: 0 }}>
         <div className="col-md-6">
           <div
             style={{
               marginBottom: 20,
               marginTop: 10,
-              fontSize: 22
+              fontSize: 22,
+              fontWeight: 700,
+              textTransform: "uppercase",
             }}
           >
             {this.state.item.name}
@@ -138,11 +149,33 @@ class ConnectedDetails extends Component {
               >
                 Price: &euro; {this.state.item.retail_price}
               </div>
-              {this.state.item.popular > 3 && (
-                <div style={{ fontSize: 14, marginTop: 5, color: "#228B22" }}>
-                  (Popular product)
-                </div>
-              )}
+              {this.state.item.stock_quantity > 0 ? (
+                  <div style={{ fontSize: 14, marginTop: 5, color: "#228B22" }}>
+                    In stock
+                  </div>
+                ) : (
+                  <div style={{ fontSize: 14, marginTop: 5, color: "#F0290E" }}>
+                    Out of stock
+                  </div>
+                )
+              }
+
+              <Typography id="discrete-slider" gutterBottom style={{marginTop: 5}}>
+                Size
+              </Typography>
+              <Slider
+                defaultValue={parseInt(this.state.item.size.split('-')[0])}
+                getAriaValueText={valuetext}
+                aria-labelledby="discrete-slider"
+                valueLabelDisplay="auto"
+                step={1}
+                marks
+                min={parseInt(this.state.item.size.split('-')[0])}
+                max={parseInt(this.state.item.size.split('-')[1])}
+                style={{width: 160}}
+                onChange={(event, newValue) => {
+                  this.state.item.selectedSize = newValue;
+                  }}/>
 
               <TextField
                 type="number"
@@ -162,7 +195,7 @@ class ConnectedDetails extends Component {
                   this.props.dispatch(
                     addItemInCart({
                       ...this.state.item,
-                      quantity: this.state.quantity
+                      quantity: this.state.quantity,
                     })
                   );
                 }}
@@ -207,28 +240,41 @@ class ConnectedDetails extends Component {
           {this.state.relatedItems.slice(0, 3).map(x => {
             return <Item key={x.product_id} item={x} />;
           })}
-
-        <div/>
       </div>
       <div className="col-md-6">
-          <div
-            style={{
-              marginTop: 20,
-              marginBottom: 10,
-              fontSize: 22
-            }}
-          >
-            Reviews
-          </div>
-          
-          <BeautyStars
+        <div
+          style={{
+            marginTop: 20,
+            marginBottom: 10,
+            fontSize: 22
+          }}
+        >
+          Reviews
+        </div>
+        
+        <div>
+          {this.state.reviews.length > 0 && (
+            this.state.reviews.map(review => {
+            //do stuff here voor elke review
+              return <Review key={review.review_id} item={review}/>
+            })
+          )}
+          {!this.state.reviews.length > 0 && (
+            <div>No Reviews available</div>
+          )}
+        </div>
+
+        <BeautyStars
           value={this.state.rating}
           onChange={rating => this.setState({ rating })}
+          activeColor={'#ffe32a'}
           />
           <div>
             <TextField 
               label="Type your review here"
               multiline
+              style={{ width: 600, marginTop: 10, backgroundColor: "white" }}
+              variant="outlined"
               rows={4}
               value={this.state.review}
               placeholder="review"
@@ -243,19 +289,6 @@ class ConnectedDetails extends Component {
             onClick={this.submitReview}>
               submit
           </Button>
-{/*
-          <div/>
-      </div>
-<div className="col-md-6">*/}
-        {this.state.reviews.length > 0 && (
-          this.state.reviews.map(review => {
-          //do stuff here voor elke review
-            return <Review key={review.review_id} item={review}/>
-          })
-        )}
-        {!this.state.reviews.length > 0 && (
-          <div>No Reviews available</div>
-        )}
       </div>
     </div>
     );
