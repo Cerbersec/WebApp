@@ -21,8 +21,6 @@ class BlogPost extends Component{
         
         if(post) {
           this.setState({post: post});
-
-          console.log(this.state.post);
         }
 
         this.setState({loading: false})
