@@ -330,6 +330,8 @@ const postSuccess = async(req, res, next) => {
             email: customer.email,
             invoice: customer.invoice_prefix,
             amount: session.amount_total / 100,
+            
+
         });
     } catch(e) {
         console.log(e.message)
