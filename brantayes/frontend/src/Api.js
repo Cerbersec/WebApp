@@ -196,6 +196,18 @@ class Api {
     })
   }
 
+  getOrderByID(orderID) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        axios.get(url + '/orders/' + orderID).then((response) => {
+          resolve(response.lenght === 0 ? null : response.data.order)
+        }).catch((err) => {
+          reject(err)
+        })
+      }, 500);
+    })
+  }
+
   getBlogPosts() {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
