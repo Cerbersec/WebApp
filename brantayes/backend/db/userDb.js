@@ -54,10 +54,10 @@ const readUser = (email_address) => {
 }
 
 const readUserById = (id) => {
-    return models.Customer.findOne({ where: { customer_id: id },
-    include: {
-        model: models.Address
-    }})
+    return models.Customer.findOne({ 
+        where: { customer_id: id },
+        include: models.Address
+    })
 }
 
 const readUserAddress = (id) => {
