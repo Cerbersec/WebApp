@@ -1,0 +1,13 @@
+.OrderSuccess {
+  margin: auto;
+
+  width: 60%;
+
+  padding: 10px;
+  margin-left: 550px;
+  margin-top: 80px;
+}
+
+.Column {
+  align-items: center;
+}
