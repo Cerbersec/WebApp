@@ -4,7 +4,8 @@ import TableRow from "@material-ui/core/TableRow";
 import {
   showCartDlg,
   deleteCartItem,
-  updateCartItemQnt
+  updateCartItemQnt,
+  updateCartItemSize
 } from "../../Redux/Actions";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
@@ -47,10 +48,13 @@ const CartRow = props => {
           InputProps={{ inputProps: { min: minVal, max: maxVal } }}
           style={{ width: 40 }}
           value={item.selectedSize}
-          onChangeCommited={e => {
+          onChange={e => {
             let size = parseInt(e.target.value, 10);
             props.dispatch(
-              //change shoe size
+              updateCartItemSize({
+                id: item.product_id,
+                size
+              })
             );
           }}
         />

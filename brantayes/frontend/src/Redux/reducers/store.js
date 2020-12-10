@@ -86,6 +86,26 @@ const rootReducer = (state = initialState, action) => {
       // If we couldn't find such item, do nothing.
       return state;
     }
+
+    case CONSTANTS.UPDATE_CART_ITEM_SIZE: {
+      let index = state.cartItems.findIndex(x => x.product_id === payload.id);
+
+      // User wants to update size of existing item.
+      if (index !== -1) {
+        let cloneCartItems = [...state.cartItems];
+        cloneCartItems[index] = {
+          ...cloneCartItems[index],
+          selectedSize: payload.size
+        };
+
+        return { ...state, cartItems: cloneCartItems };
+      }
+
+      // If we couldn't find such item, do nothing.
+      
+      return state;
+    }
+
     case CONSTANTS.SET_MESSAGE:
       return { message: payload };
 
