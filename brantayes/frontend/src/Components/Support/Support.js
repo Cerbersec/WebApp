@@ -59,10 +59,10 @@ class Support extends Component
                     PostNL aims to deliver your order within 1 working day. 99% of our orders are delivered within 1 working day. The remaining 1% is unfortunately delayed. Of course we find this very annoying, but unfortunately we have no influence on this. If your order has not been delivered one day after the expected delivery date, please contact us!
                     <br></br><br></br>
                     <h4>Change or cancel your order?</h4>
-                    Would you like to change or cancel your order? Too bad. Not an option :)
+                    Please mail to our support inbox!
                     <br></br><br></br>
                     <h4>Exchange or return your order?</h4>
-                    Would you like to exchange or return your order? Too bad. Not an option :)
+                    Please mail to our support inbox!
                     <br></br><br></br>
                 </div>
                 <div className="Column">
