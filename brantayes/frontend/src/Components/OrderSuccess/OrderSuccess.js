@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import Api from "../../Api";
-//import "./OrderSuccess.css";
+import './OrderSuccess.css';
 
 
 class OrderSuccess extends Component 
@@ -33,7 +33,7 @@ class OrderSuccess extends Component
 
         
         return (
-            <div className="Order success">
+            <div class="OrderSuccess">
                 <div className="Column">
                     <h1>Order successful</h1>
                     <p>Thank you for your order {this.state.response.email}!</p>
