@@ -1,13 +1,19 @@
-.OrderSuccess {
-  margin: auto;
+#OrderSuccess {
+  margin: 0px;
+  font-family: Helvetica, sans-serif;
 
-  width: 60%;
-
-  padding: 10px;
-  margin-left: 550px;
-  margin-top: 80px;
+  text-align: center;
 }
 
-.Column {
-  align-items: center;
+#Column {
+  color: #999;
+  text-transform: uppercase;
+  font-size: 36px;
+  font-weight: bold;
+  padding-top: 200px;
+  margin-left: -60px;
+  position: fixed;
+  width: 100%;
+  bottom: 45%;
+  display: block;
 }

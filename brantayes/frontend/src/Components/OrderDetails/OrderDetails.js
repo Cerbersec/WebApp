@@ -42,11 +42,11 @@ class OrderDetails extends Component{
   
       return(
         <div>
-            <h2>Order No: {this.state.order.order_id}</h2>
+            <h2 style={{marginTop: 20}}>Order ID: {this.state.order.order_id}</h2>
             <div>
-                order date: {new Date(this.state.order.order_date).toDateString()}
-                <br></br>
-            <h5>products:</h5>
+                Order date: {new Date(this.state.order.order_date).toDateString()}
+                <br />
+            <h5 style={{marginTop: 15}}>Product(s) you ordered:</h5>
             <Table>
                 <TableHead>
                     <TableRow>
