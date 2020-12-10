@@ -9,6 +9,7 @@ import Api from "../../Api";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import Button from "@material-ui/core/Button";
+import "./Account.css";
 
 const mapStateToProps = state => {
     const { user } = state;
@@ -57,7 +58,7 @@ class Account extends Component
     //     this.setState({loading: true})
     //     let response = await Api.getAddressByCustomerID()
     //     this.setState({address: response, loading: false})
-    // }
+    // }  
 
     render()
     {
@@ -76,7 +77,7 @@ class Account extends Component
                 <br></br>
                 <h2>Account information</h2>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-6 personal-info">
                         <h5>Personal info</h5>
                         <form class="personal_info" action="">
                             <label>Name: </label>
@@ -87,25 +88,39 @@ class Account extends Component
                             <input type="password" value={this.state.customer.password}></input><br></br>
                             <label>Gender: </label>
                             <input type="text" value={this.state.customer.gender}></input><br></br>
-                            <button type="button" class="btn btn-primary" onclick="unlockPersonalSection();">Edit</button>
+                            <button type="button" class="btn btn-primary" onclick="unlockPersonalSection()">Edit</button>
                         </form>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-6 contact-info">
                         <h5>Contact info</h5>
                         <form class="contact_info">
                             <label>E-mail: </label>
-                            <input value={this.state.customer.email_address} ></input><br></br>
+                            <input type="email" value={this.state.customer.email_address} ></input><br></br>
                             <label>Phone: </label>
                             <input value={this.state.customer.phone}></input><br></br>
-                            <label>Address: </label>
-                            <input value={this.state.customer.street_name}></input><br></br>
+                            <label for="address">Address: </label>
+                            <input type="text" value={this.state.customer.Addresses[0].street_name + " " + 
+                                this.state.customer.Addresses[0].street_nr + ", bus " +
+                                this.state.customer.Addresses[0].bus_nr}>
+                            </input><br></br>
                             <label>City: </label>
-                            <input value="code - city - country"></input><br></br>
-                            <button type="button" class="btn btn-primary" onclick="unlockConctactSection();">Edit</button>
+                            <input value={this.state.customer.Addresses[0].postal_code + " " + 
+                                this.state.customer.Addresses[0].city + ", " +
+                                this.state.customer.Addresses[0].country}
+                            ></input><br></br>
+                            <button type="button" class="btn btn-primary" onclick="unlockConctactSection()">Edit</button>
                         </form>
                     </div>
                 </div>
+
+                {/* <script>
+                function unlockPersonalSection() {
+                    // var soap = document.getElementsByClassName("personal_info");
+                    // soap.attr({'disabled': 'enabled'});
+                    window.alert("does this even work?")
+                }
+                </script> */}
                                 
                 <br></br>
                 <br></br>
@@ -141,11 +156,6 @@ class Account extends Component
             </div>
         )
     }
-
-    // function unlockPersonalSection() {
-    //     var soap = document.getElementsByClassName("personal_info");
-    //     soap.attr({'disabled': 'enabled'});
-    // };
 }
 
 export default withRouter(connect(mapStateToProps)(Account));

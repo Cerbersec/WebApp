@@ -1,0 +1,9 @@
+/* #textBox{ z-index:1000; } */
+
+.personal-info {
+    z-index: 1000 !important;
+}
+
+.contact-info {
+    z-index: 1000 !important;
+}
