@@ -21,6 +21,7 @@ import support from "./Components/Support/Support.js";
 import TermsOfPayment from "./Components/TermsOfPayment/TermsOfPayment.js";
 import blog from "./Components/Blog/Blog.js";
 import blogpost from "./Components/BlogPost/BlogPost.js";
+import OrderDetails from "./Components/OrderDetails/OrderDetails.js";
 import { history } from "./helpers/history";
 import { clearMessage } from "./Redux/Actions";
 import { connect } from "react-redux";
@@ -86,6 +87,7 @@ class App extends Component {
               <Route path="/payment" component={TermsOfPayment}/>
               <Route path="/ordersuccess/:session_id" component={OrderSuccess}/>
               <Route path="/ordercancel" component={OrderCancel}/>
+              <Route path="/orderdetails/:id" component={OrderDetails}/>
               <Route
                 component={() => (
                   <div style={{ padding: 20 }}>Page not found</div>

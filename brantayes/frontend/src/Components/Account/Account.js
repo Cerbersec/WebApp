@@ -130,7 +130,8 @@ class Account extends Component
                                 <TableCell> &euro; {order.total_price} </TableCell>
                                 <TableCell> &euro; {order.shipping_costs} </TableCell>
                                 <TableCell> {new Date(order.order_date).toLocaleString('nl-BE')/*.toISOString().split('T')[0]*/} </TableCell>
-                                <TableCell> {order.paid ? <Button variant="outlined" color="primary" style={{width:"160px"}}> View details</Button>
+                                <TableCell> {order.paid ? <Button variant="outlined" color="primary" style={{width:"160px"}} 
+                                onClick={() => {this.props.history.push("/orderdetails/" + order.order_id);}}> View details</Button>
                                             : <Button variant="outlined" color="primary" style={{width:"160px"}}> Checkout </Button> } </TableCell>
                             </TableRow>
                         })}
