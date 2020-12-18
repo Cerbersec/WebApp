@@ -37,7 +37,7 @@ class OrderSuccess extends Component
                     <p style={{marginBottom: 0}}>Order successful   <DoneOutline style={{color: "green",fontSize: 50, marginBottom: 15}}/></p>
                     <p style={{marginBottom: 50}}>Thank you!</p>
                     
-                    <p style={{fontSize: 20}}>More information has been sent to <span style={{color:"#009eff"}}>{this.state.response.email}</span> with order number '<span style={{color:"#009eff"}}>{this.state.response.invoice}</span>'</p>
+                    <p style={{fontSize: 20}}>More information has been sent to <span style={{color:"#009eff"}}>{this.state.response.email}</span> with invoice number '<span style={{color:"#009eff"}}>{this.state.response.invoice}</span>'</p>
                     <p style={{fontSize: 20}}>Order amount:<span style={{color:"#009eff"}}> &euro; {this.state.response.amount}</span></p>
                 </div>
             </div>          

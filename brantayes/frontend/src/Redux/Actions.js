@@ -20,6 +20,12 @@ export const updateCartItemQnt = obj => ({
   type: CONSTANTS.UPDATE_CART_ITEM_QUANTITY,
   payload: obj
 });
+
+export const updateCartItemSize = obj => ({
+  type: CONSTANTS.UPDATE_CART_ITEM_SIZE,
+  payload: obj
+});
+
 export const setCheckedOutItems = items => ({
   type: CONSTANTS.SET_CHECKEDOUT_ITEMS,
   payload: items

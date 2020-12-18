@@ -92,7 +92,7 @@ class Account extends Component
                             <input type="text" value={this.state.customer.gender}></input><br></br> */}
                             <div class="row">
                                 <label>Gender: </label>
-                                <Select placeholder={this.state.customer.gender}>
+                                <Select value={this.state.customer.gender}>
                                     <MenuItem value={"M"}>Male</MenuItem>
                                     <MenuItem value={"F"}>Female</MenuItem>
                                     <MenuItem value={"X"}>Other</MenuItem>
