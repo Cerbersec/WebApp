@@ -87,10 +87,14 @@ const rootReducer = (state = initialState, action) => {
       return state;
     }
     case CONSTANTS.SET_MESSAGE:
-      return { message: payload };
+      return { 
+        ...state,
+        message: payload };
 
     case CONSTANTS.CLEAR_MESSAGE:
-      return { message: "" };
+      return { 
+        ...state,
+        message: "" };
 
     case CONSTANTS.REGISTER_SUCCESS:
       return {
