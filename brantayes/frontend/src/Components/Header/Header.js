@@ -1,25 +1,72 @@
 import React, { Component } from "react";
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
-import "./Header.css";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-import Badge from "@material-ui/core/Badge";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
 import { withRouter, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { showCartDlg, toggleMenu } from "../../Redux/Actions";
-import cartImage from "../../Images/brantayes.png";
-import Api from "../../Api";
-import Person from "@material-ui/icons/PersonOutline";
-import Avatar from "@material-ui/core/Avatar";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import Select from "@material-ui/core/Select";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
 import { logout } from "../../Redux/actions/auth";
+import "./Header.css";
+import cartImage from "../../Images/brantayes.png";
+import { IconButton, Badge, TextField, Button, Avatar, Menu, MenuItem, Select, AppBar, Toolbar, InputAdornment, Grid, InputBase } from "@material-ui/core";
+import { Search as SearchIcon, Settings as SettingsIcon, ShoppingCart as ShoppingCartIcon, Menu as MenuIcon, PersonOutline as Person, PlayCircleFilledWhite, PersonOutline, MoreVert as MoreIcon, Close as LogoutIcon }  from "@material-ui/icons";
+import Api from "../../Api";
+import { fade, withStyles } from "@material-ui/core/styles";
 
+const styles = theme => ({
+  grow: {
+    flexGrow: 1,
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  search: {
+    flexGrow: 2,
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: fade(theme.palette.common.white, 0.15),
+    '&:hover': {
+      backgroundColor: fade(theme.palette.common.white, 0.25),
+    },
+    marginRight: theme.spacing(2),
+    marginLeft: 0,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing(3),
+      width: 'auto',
+    },
+  },
+  searchIcon: {
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  inputRoot: {
+    color: 'inherit',
+  },
+  inputInput: {
+    padding: theme.spacing(1, 1, 1, 0),
+    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('md')]: {
+      width: '20ch',
+    },
+  },
+  sectionDesktop: {
+    display: 'none',
+    [theme.breakpoints.up('md')]: {
+      display: 'flex',
+    },
+  },
+  sectionMobile: {
+    display: 'flex',
+    [theme.breakpoints.up('md')]: {
+      display: 'none',
+    },
+  },
+});
 
 const mapStateToProps = state => {
   const { user } = state;
@@ -38,13 +85,16 @@ class Header extends Component {
   constructor(props) {
     super(props);
   
-    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleLogout = this.handleLogout.bind(this)
+    this.handleMobileMenuClose = this.handleMobileMenuClose.bind(this)
+    this.handleMobileMenuOpen = this.handleMobileMenuOpen.bind(this)
 
     this.state = {
       searchTerm: "",
       anchorEl: null,
       categories: [],
-      categoryFilterValue: ""
+      categoryFilterValue: "",
+      mobileMoreAnchorEl: null,
     }
   }
 
@@ -72,7 +122,7 @@ class Header extends Component {
     })
   }
 
-  handleSubmit(e) {
+  handleLogout(e) {
     e.preventDefault();
     this.setState({ anchorEl: null });
 
@@ -80,132 +130,141 @@ class Header extends Component {
     this.props.history.push("/")
   }
 
+  handleMobileMenuClose = () => {
+    this.setState({ mobileMoreAnchorEl: null })
+  }
+
+  handleMobileMenuOpen = (event) => {
+    this.setState({ mobileMoreAnchorEl: event.currentTarget })
+  }
+
   render() {
+    const { classes } = this.props;
 
     let { anchorEl } = this.state;
+    const mobileMenuId = 'primary-search-account-menu-mobile';
 
     return (
-      <AppBar
-        position="static"
-        color="primary"
-        style={{ padding: 0, marginBottom: 10 }}
-      >
-        <Toolbar>
-          <div className="left-part">
-            <IconButton
-              color="secondary"
-              onClick={() => {
-                this.props.dispatch(toggleMenu());
-              }}
-            >
-              <MenuIcon size="medium" />
-            </IconButton>
+        <div className={classes.grow}>
+          <AppBar position="static" color="primary">
+            <Toolbar>
+              <IconButton edge="start" className={classes.menuButton} color="secondary" onClick={() => {this.props.dispatch(toggleMenu())}}>
+                <MenuIcon size="medium" />
+              </IconButton>
 
-            <Link to="/"><img src={cartImage} alt={"Logo"} style={{width: 120, height: 90, marginLeft: 10 }} /></Link>
+              <img src={cartImage} alt="Logo" width="8%" onClick={() => {this.props.history.push("/")}}/>
 
-            <TextField
-              style={{ marginLeft: 30, width: 250, marginBottom: 15, color:"white" }}
-              inputProps = {{ style: { color: 'white' } }}
-              InputLabelProps = {{ style: { color: 'white' } }}
-              label="Search products"
-              value={this.state.searchTerm}
-              onChange={e => {
-                this.setState({ searchTerm: e.target.value });
-              }}         
-            />
+              <div className={classes.search}>
+                <div className={classes.searchIcon}>
+                  <SearchIcon />
+                </div>
+                <InputBase
+                  placeholder="Search products"
+                  classes={{root: classes.inputRoot, input: classes.inputInput}}
+                  inputProps={{ 'aria-label': 'search' }}
+                  onChange={e => {this.setState({ searchTerm: e.target.value })}}
+                  onKeyPress={e => {if(e.key === 'Enter') { this.props.history.push("/?category=" + this.state.categoryFilterValue + "&term=" + this.state.searchTerm); }}}
+                />
+              </div>
+              <div className={classes.grow}/>
+              <div className={classes.sectionDesktop}>
+                <IconButton aria-label="account settings" color="secondary" onClick={() => {this.props.history.push("/account")}}>
+                  <PersonOutline />
+                </IconButton>
 
-            <Select
-              style={{ maxWidth: 200, marginLeft: 20, color:"white" }}
-              value={this.state.categoryFilterValue}
-              MenuProps={{
-                style: {
-                  maxHeight: 500
-                }
-              }}
-              onChange={e => {
-                this.setState({ categoryFilterValue: e.target.value });
-              }}
-            >
-              {this.state.categories}
-            </Select>
+                <IconButton
+                  aria-label="shopping cart"
+                  color="secondary"
+                  onClick={() => { this.props.dispatch(showCartDlg(true)) }}
+                >
+                  <Badge badgeContent={this.props.nrOfItemsInCard} color="primary">
+                    <ShoppingCartIcon />
+                  </Badge>
+              </IconButton>
 
-            <Button
-              color="secondary"
-              variant="outlined"
-              style={{marginLeft: 20}}
-              onClick={() => {
-                this.props.history.push(
-                  "/?category=" +
-                    this.state.categoryFilterValue +
-                    "&term=" +
-                    this.state.searchTerm
-                );
-              }}
-            >
-              {" "}
-              Search
-            </Button>
-          </div>
-          <div className="right-part">
-            {!this.props.isLoggedIn ? (
-              <Button
-                color="secondary"
-                variant="outlined"
-                style={{ marginRight: 20 }}
-                
-                onClick={() => {
-                  this.props.history.push("/login");
-                }}
-              >
-                Log in
-              </Button>
-            ) : (
-              <Avatar
-                onClick={event => {
-                  this.setState({ anchorEl: event.currentTarget });
-                }}
-                style={{ backgroundColor: "#3f51b5", marginRight: 10 }}
-              >
-                <Person />
-              </Avatar>
-            )}
-            <IconButton
-              aria-label="Cart"
-              color="secondary"
-              onClick={() => {
-                this.props.dispatch(showCartDlg(true));
-              }}
-            >
-              <Badge badgeContent={this.props.nrOfItemsInCard} color="primary">
-                <ShoppingCartIcon />
-              </Badge>
-            </IconButton>
+                {!this.props.isLoggedIn ? (
+                  <Button
+                    edge="end"
+                    color="secondary"
+                    variant="outlined"             
+                    onClick={() => { this.props.history.push("/login")}}
+                  >
+                    Login
+                  </Button>
+                ) : (
+                  <Button
+                    edge="end"
+                    color="secondary"
+                    variant="outlined"             
+                    onClick={this.handleLogout}
+                  >
+                    Logout
+                  </Button>
+                )}
+              </div>
+              <div className={classes.sectionMobile}>
+                <IconButton aria-label="show more" aria-controls="primary-search-account-menu-mobile" aria-haspopup="true" onClick={(e) => this.handleMobileMenuOpen(e)} color="inherit">
+                  <MoreIcon />
+                </IconButton>
+              </div>
+            </Toolbar>
+          </AppBar>
+          {this.state.mobileMoreAnchorEl && (
             <Menu
-              anchorEl={anchorEl}
-              open={Boolean(anchorEl)}
-              onClose={() => {
-                this.setState({ anchorEl: null });
-              }}
+              anchorEl={this.state.mobileMoreAnchorEl}
+              anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+              id={mobileMenuId}
+              keepMounted
+              transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+              open={Boolean(this.state.mobileMoreAnchorEl)}
+              onClose={this.handleMobileMenuClose}
             >
-              <MenuItem
-                onClick={() => {
-                  this.setState({ anchorEl: null});
-                  this.props.history.push("/account")
-                }}
-              >
-                My account
+              <MenuItem onClick={() => {this.props.history.push("/account")}}>
+                <IconButton aria-label="account settings" color="primary">
+                    <PersonOutline />
+                </IconButton>
+                Account settings
               </MenuItem>
-              <MenuItem
-                onClick={this.handleSubmit}
-              >
-                Logout
-              </MenuItem>      
-            </Menu>
-          </div>
-        </Toolbar>
-      </AppBar>
+              <MenuItem onClick={() => { this.props.dispatch(showCartDlg(true)) }}>
+                <IconButton
+                  aria-label="shopping cart"
+                  color="primary" 
+                >
+                  <Badge badgeContent={this.props.nrOfItemsInCard} color="primary">
+                    <ShoppingCartIcon />
+                  </Badge>
+              </IconButton>
+              Shopping Cart
+              </MenuItem>
+    
+              {!this.props.isLoggedIn ? (
+                  <MenuItem onClick={() => { this.props.history.push("/login")}}>
+                    <IconButton
+                      aria-label="login"
+                      color="primary"
+                    >
+                      <Person />
+                    </IconButton>
+                  Login
+                </MenuItem>
+              ) : (
+                <MenuItem onClick={this.handleLogout}>
+                  <IconButton
+                    aria-label="logout"
+                    color="primary"
+                  >
+                    <LogoutIcon />
+                  </IconButton>
+                  Logout
+                </MenuItem>
+              )}
+          </Menu>
+          )}
+        </div>
     );
   }
 }
 
-export default withRouter(connect(mapStateToProps)(Header));
+export default withStyles(styles, { withTheme: true })(
+  connect(mapStateToProps)(withRouter(Header))
+)
