@@ -157,8 +157,8 @@ class Header extends Component {
     const mobileMenuId = 'primary-search-account-menu-mobile';
 
     return (
-        <div className={classes.grow}>
-          <AppBar position="static" color="primary">
+        <div>
+          <AppBar position="static" color="primary" style={{ marginBottom: 10 }}>
             <Toolbar>
               <IconButton edge="start" className={classes.menuButton} color="secondary" onClick={() => {this.props.dispatch(toggleMenu())}}>
                 <MenuIcon size="medium" />
@@ -210,7 +210,7 @@ class Header extends Component {
                   <Button
                     edge="end"
                     color="secondary"
-                    variant="outlined"             
+                    variant="text"          
                     onClick={() => { this.props.history.push("/login")}}
                   >
                     Login
@@ -219,7 +219,7 @@ class Header extends Component {
                   <Button
                     edge="end"
                     color="secondary"
-                    variant="outlined"             
+                    variant="text"
                     onClick={this.handleLogout}
                   >
                     Logout
@@ -243,12 +243,14 @@ class Header extends Component {
               open={Boolean(this.state.mobileMoreAnchorEl)}
               onClose={this.handleMobileMenuClose}
             >
-              <MenuItem onClick={() => {this.props.history.push("/account")}}>
-                <IconButton aria-label="account settings" color="primary">
-                    <PersonOutline />
-                </IconButton>
-                Account settings
-              </MenuItem>
+              {this.state.isLoggedIn && (
+                <MenuItem onClick={() => {this.props.history.push("/account")}}>
+                  <IconButton aria-label="account settings" color="primary">
+                      <PersonOutline />
+                  </IconButton>
+                  Account settings
+                </MenuItem>
+              )}
               <MenuItem onClick={() => { this.props.dispatch(showCartDlg(true)) }}>
                 <IconButton
                   aria-label="shopping cart"
