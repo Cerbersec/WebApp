@@ -9,7 +9,7 @@ import { withRouter } from "react-router-dom";
 
 const Paging = props => {
   let { parsedQueryStr } = props;
-  let itemsPerPage = parseInt(parsedQueryStr.itemsPerPage) || 10;
+  let itemsPerPage = parseInt(parsedQueryStr.itemsPerPage) || 100;
   let page = parseInt(parsedQueryStr.page) || 1;
   let totalPages = Math.ceil(props.totalItemsCount / itemsPerPage);
 

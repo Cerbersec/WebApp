@@ -8,7 +8,8 @@ const TypedError = require('../modules/ErrorHandler')
 const getProducts = async(req, res, next) => {
     const pageNo = req.body.page
     const category = req.body.category
-    const resultsPerPage = 10
+    const resultsPerPage = 100
+    //const resultsPerPage = req.body.itemsPerPage
     const searchOffset = (pageNo -1) * resultsPerPage
 
     try {

@@ -53,7 +53,7 @@ class Api {
     category = "All categories",//popular
     term = "",
     sortValue = "lh",
-    itemsPerPage = 10,
+    itemsPerPage = 100,
     usePriceFilter = "false",
     minPrice = 0,
     maxPrice = 1000,
@@ -67,7 +67,8 @@ class Api {
 
           const data = {
             page: page,
-            category: category
+            category: category,
+            itemsPerpage: itemsPerPage,
           }
 
           //axios API call
