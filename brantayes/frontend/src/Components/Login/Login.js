@@ -105,7 +105,7 @@ class ConnectedLogin extends Component {
 
   render() {
 
-    const { from } = this.props.location.state || { from: { pathname: "/" } };
+    const { from } = this.props.location.state || { from: { pathname: "/store" } };
     const { message } = this.props;
 
     // If user was authenticated, redirect her to where she came from.
