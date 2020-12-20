@@ -55,7 +55,7 @@ class ConnectedMenu extends Component {
           return {
             name: category.name,
             id: i,
-            url: "/?category=" + category.name,
+            url: "?category=" + category.name,
           }
         }),     
       },
@@ -66,7 +66,7 @@ class ConnectedMenu extends Component {
             return {
                 name: category.name,
                 id: i,
-                url: "/?category=" + category.name,
+                url: "?category=" + category.name,
             }
         })
       }
