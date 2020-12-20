@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import { withRouter, Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { showCartDlg, toggleMenu } from "../../Redux/Actions";
 import { logout } from "../../Redux/actions/auth";
 import "./Header.css";
 import cartImage from "../../Images/brantayes.png";
-import { IconButton, Badge, TextField, Button, Avatar, Menu, MenuItem, Select, AppBar, Toolbar, InputAdornment, Grid, InputBase } from "@material-ui/core";
-import { Search as SearchIcon, Settings as SettingsIcon, ShoppingCart as ShoppingCartIcon, Menu as MenuIcon, PersonOutline as Person, PlayCircleFilledWhite, PersonOutline, MoreVert as MoreIcon, Close as LogoutIcon }  from "@material-ui/icons";
+import { IconButton, Badge, Button, Menu, MenuItem, Select, AppBar, Toolbar, InputBase } from "@material-ui/core";
+import { Search as SearchIcon, ShoppingCart as ShoppingCartIcon, Menu as MenuIcon, PersonOutline as Person, PersonOutline, MoreVert as MoreIcon, Close as LogoutIcon }  from "@material-ui/icons";
 import Api from "../../Api";
 import { fade, withStyles } from "@material-ui/core/styles";
 
@@ -44,6 +44,7 @@ const styles = theme => ({
   },
   inputRoot: {
     color: 'inherit',
+    width: '80%',
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
@@ -52,6 +53,17 @@ const styles = theme => ({
     width: '100%',
     [theme.breakpoints.up('md')]: {
       width: '20ch',
+    },
+  },
+  categories: {
+    float: 'right',
+    height: '100%',
+    color: 'white',
+    marginTop: 2,
+    backgroundColor: 'transparent',
+    '&:hover': {
+      backgroundColor: 'transparent',
+      outline: 'none',
     },
   },
   sectionDesktop: {
@@ -165,12 +177,24 @@ class Header extends Component {
                   onChange={e => {this.setState({ searchTerm: e.target.value })}}
                   onKeyPress={e => {if(e.key === 'Enter') { this.props.history.push("/?category=" + this.state.categoryFilterValue + "&term=" + this.state.searchTerm); }}}
                 />
+
+                <Select
+                  disableUnderline
+                  className={classes.categories}
+                  value={this.state.categoryFilterValue}
+                  onChange={e => {this.setState({ categoryFilterValue: e.target.value });}}
+                >
+                  {this.state.categories}
+                </Select>
               </div>
+
               <div className={classes.grow}/>
               <div className={classes.sectionDesktop}>
-                <IconButton aria-label="account settings" color="secondary" onClick={() => {this.props.history.push("/account")}}>
-                  <PersonOutline />
-                </IconButton>
+                {this.state.isLoggedIn && (
+                  <IconButton aria-label="account settings" color="secondary" onClick={() => {this.props.history.push("/account")}}>
+                    <PersonOutline />
+                  </IconButton>
+                )}
 
                 <IconButton
                   aria-label="shopping cart"
