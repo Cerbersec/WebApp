@@ -25,6 +25,7 @@ import OrderDetails from "./Components/OrderDetails/OrderDetails.js";
 import { history } from "./helpers/history";
 import { clearMessage } from "./Redux/Actions";
 import { connect } from "react-redux";
+import Home from "./Components/Home/Home";
 
 /* THEME */
 import { MuiThemeProvider } from '@material-ui/core/styles'
@@ -67,13 +68,18 @@ class App extends Component {
       <MuiThemeProvider theme={theme}>
         <CssBaseline />
       <div className="app">
-        <Header />
+        {this.props.history.location.pathname !== '/' && (
+          <Header />
+        )}
         <div className="app-body">
-          <Menu />
+          {this.props.history.location.pathname !== '/' && (
+            <Menu />
+          )}
           <div className="content">
             <CartDialog />
             <Switch>
-              <Route path="/" exact component={ProductList} />
+              <Route path="/" exact component={Home} />
+              <Route path="/store" exact component={ProductList} />
               <Route path="/details/:id" component={Details} />
               <Route path="/login" component={Login} />
               <Route path="/privacy" component={PrivacyPolicy}/>
