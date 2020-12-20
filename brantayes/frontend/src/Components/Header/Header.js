@@ -141,7 +141,7 @@ class Header extends Component {
     this.setState({ anchorEl: null });
 
     this.props.dispatch(logout())
-    this.props.history.push("/")
+    this.props.history.push("/store")
   }
 
   handleMobileMenuClose = () => {
@@ -166,7 +166,7 @@ class Header extends Component {
                 <MenuIcon size="medium" />
               </IconButton>
 
-              <img src={cartImage} alt="Logo" width="8%" onClick={() => {this.props.history.push("/")}}/>
+              <img src={cartImage} alt="Logo" width="8%" onClick={() => {this.props.history.push("/store")}}/>
 
               <div className={classes.search}>
                 <div className={classes.searchIcon}>
