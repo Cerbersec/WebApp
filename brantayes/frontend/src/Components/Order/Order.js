@@ -164,7 +164,8 @@ class ConnectedOrder extends Component {
               style={{ margin: 5, marginTop: 30 }}         
               onClick={() => {
                 this.props.dispatch(setCheckedOutItems([]));
-                this.props.dispatch(setCartItems([]));            
+                this.props.dispatch(setCartItems([]));
+                this.props.history.push("/store")
               }}
             >
               Discard
