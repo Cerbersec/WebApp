@@ -115,22 +115,24 @@ class Header extends Component {
   }
 
   async fetchCategories() {
-    const categories = await Api.getCategories()
+    //const categories = await Api.getCategories()
     //manually add All categories option
-    categories.unshift({
-      category_name: "All categories"
-    })
-    const categoryOptions = categories.map(x => {
+    // categories.unshift({
+    //   category_name: "All categories"
+    // })
+    const categories = [{name: "All categories"}, {name: "Men"}, {name: "Women"}, {name: "Children"}, {name: "Preschool"}, {name: "Toddler"}, {name: "Belts"}, {name: "Socks"},{name: "Other"}]
+
+    const categoryOptions = categories.map(category => {
       return (
-        <MenuItem key={x.category_name} value={x.category_name}>
-          {x.category_name}
+        <MenuItem key={category.name} value={category.name}>
+          {category.name}
         </MenuItem>
       );
     });
 
     this.setState({
       categories: categoryOptions,
-      categoryFilterValue: categories[0].category_name
+      categoryFilterValue: categories[0].name
     })
   }
 
