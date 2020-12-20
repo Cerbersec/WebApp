@@ -4,8 +4,7 @@ import queryString from "query-string";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import Api from "../../Api"
-import ExpandLess from "@material-ui/icons/ExpandLess";
-import ExpandMore from "@material-ui/icons/ExpandMore";
+import { ExpandLess, ExpandMore, ChevronRight } from "@material-ui/icons";
 import Icon from "@material-ui/core/Icon";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -24,9 +23,9 @@ class ConnectedMenu extends Component {
     super(props);
 
     this.state = {
-      // initially item with id 1 is expanded
       expandedMenuItems: {
-        2: true
+        2: true,
+        3: true,
       },
       dataForTheMenu: []
     };
@@ -39,26 +38,37 @@ class ConnectedMenu extends Component {
   }
 
   async fetchCategories() {
-    const categories = await Api.getCategories()
-    categories.unshift({
-      category_name: "All categories",
-      icon: "list"
-    })
+    //const categories = await Api.getCategories()
+
+    // categories.unshift({
+    //   category_name: "All categories",
+    //   icon: "list"
+    // })
 
     const dataForTheMenu = [
       { name: "Home", url: "/", icon: "home", id: 0 },
-      { name: "Blog", url: "/blog", icon: "sms", id: 1 },
+      { name: "Blog", url: "/blog", icon: "forum", id: 1 },
       {
-        name: "Product categories",
+        name: "Shoes",
         id: 2,
-        children: categories.map((x, i) => {
+        children: [{name: "Men"}, {name: "Women"}, {name: "Children"}, {name: "Preschool"}, {name: "Toddler"}].map((category, i) => {
           return {
-            name: x.category_name,
+            name: category.name,
             id: i,
-            url: "/?category=" + x.category_name,
-            icon: x.icon || "group"
+            url: "/?category=" + category.name,
           }
         }),     
+      },
+      {
+        name: "Accessories",
+        id: 3,
+        children: [{name: "Belts"}, {name: "Socks"},{name: "Other"}].map((category, i) => {
+            return {
+                name: category.name,
+                id: i,
+                url: "/?category=" + category.name,
+            }
+        })
       }
     ]
 
@@ -102,7 +112,11 @@ class ConnectedMenu extends Component {
               >
                 <ListItem dense button>
                   <ListItemIcon>
+                    {x.icon ? (
                     <Icon>{x.icon}</Icon>
+                    ) : (
+                        <ChevronRight />
+                    )}
                   </ListItemIcon>
                   <ListItemText
                     disableTypography
