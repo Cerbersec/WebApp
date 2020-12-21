@@ -32,7 +32,7 @@ class ConnectedCartDialog extends Component {
             this.props.dispatch(showCartDlg(false));
           }}
         >
-          <AppBar position="static" style={{ backgroundColor: "#3863aa" }}>
+          <AppBar position="static" color="primary">
             <Toolbar>
               <ShoppingCartIcon
                 fontSize="large"
