@@ -1,0 +1,100 @@
+#item * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  #item {
+    min-height: 25vh;
+    margin: 1rem 0;
+    /* height: 25vh; */
+    display: inline-flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    perspective: 1000px;
+  }
+
+  #item .container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #item .card {
+    transform-style: preserve-3d;
+    /* min-height: 25vh; */
+    min-height: 250px;
+    min-width: 170px;
+    max-width: 10vw;
+    border-radius: 5px;
+    padding: 0rem .1rem;
+    margin: .2rem;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2), 0px 0px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  #item .sneaker {
+    min-height: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #item .sneaker img {
+    margin: 1.1rem 1.5rem;
+    height: 5rem;
+    min-height: 5rem;
+    z-index: 2;
+    transition: all 0.75s ease-out;
+  }
+
+  #item .circle {
+    /* width: 15rem; */
+    /* height: 15rem; */
+    /* background: linear-gradient( 
+      to right,
+      rgba(245, 70, 66, 0.75),
+      rgba(8, 83, 156, 0.75)
+    ); */
+    position: absolute;
+    /* border-radius: 50%; */
+    z-index: 1;
+  }
+
+  #item .info {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+  }
+  
+  #item .info h1 {
+    font-weight: bold;
+    font-size: .9rem;
+    transition: all 0.75s ease-out;
+    /* max-width: 8vw; */
+  }
+  #item .info h3 {
+    font-size: .8rem;
+    padding: .5rem 0rem;
+    color: #585858;
+    font-weight: lighter;
+    transition: all 0.75s ease-out;
+  }
+  #item .purchase {
+    /* margin-top: 1.5rem; */
+    position: absolute;
+    bottom: 2rem;
+    transition: all 0.75s ease-out;
+  }
+  #item .purchase .button {
+    width: 100%;
+    min-width: 7rem;
+    padding: .4rem 0;
+    /* background: #1976d2; */
+    /* border: none; */
+    /* color: white; */
+    cursor: pointer;
+    /* border-radius: 5px; */
+    font-weight: bolder;
+    z-index: 3;
+  }

@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import IconButton from "@material-ui/core/IconButton";
-import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { addItemInCart } from "../../Redux/Actions";
-import { withRouter } from "react-router-dom";
+import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
+
+import IconButton from "@material-ui/core/IconButton";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
@@ -12,9 +13,88 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Tooltip from "@material-ui/core/Tooltip";
 import Button from "@material-ui/core/Button";
 
+import "./Item.css";
+
 class ConnectedItem extends Component {
+    constructor(props) {
+        super(props)
+
+        this.handleMouseEnter = this.handleMouseEnter.bind(this)
+        this.handleMouseLeave = this.handleMouseLeave.bind(this)
+        this.handleOnClick = this.handleOnClick.bind(this)
+        this.handleAddToCart = this.handleAddToCart.bind(this)
+    }
+
+    componentDidMount() {
+    }
+
+    handleMouseEnter = (e) => {
+        //variables
+        const card = e.currentTarget
+        const title = card.querySelector(".title");
+        const sneaker = card.querySelector(".sneaker img");
+        const purchase = card.querySelector(".purchase");
+        const description = card.querySelector(".info h3");
+        //movement
+        card.style.transition = "none";
+        //Popout
+        //title.style.transform = "translateZ(150px)";
+        sneaker.style.transform = "translateZ(100px) rotateZ(-10deg)";
+        //description.style.transform = "translateZ(125px)";
+        //purchase.style.transform = "translateZ(20px)";
+    }
+
+    handleMouseLeave = (e) => {
+        //variables
+        const card = e.currentTarget
+        const title = card.querySelector(".title");
+        const sneaker = card.querySelector(".sneaker img");
+        const purchase = card.querySelector(".purchase");
+        const description = card.querySelector(".info h3");
+        //movement
+        card.style.transition = "all 0.5s ease";
+        card.style.transform = `rotateY(0deg) rotateX(0deg)`;
+        //Popback
+        title.style.transform = "translateZ(0px)";
+        sneaker.style.transform = "translateZ(0px) rotateZ(0deg)";
+        description.style.transform = "translateZ(0px)";
+        purchase.style.transform = "translateZ(0px)";
+    }
+
+    handleOnClick = (e) => {
+      this.props.history.push("/details/" + this.props.item.product_id)
+    }
+
+    handleAddToCart = (e) => {
+      e.stopPropagation();
+      this.props.dispatch(
+        addItemInCart({ ...this.props.item, quantity: 1 })
+      );
+    }
+
   render() {
     return (
+        <div id="item">
+            <div className="container">
+                <div className="card" onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave} onClick={this.handleOnClick}>
+                    <div className="sneaker">
+                        <div className="circle"></div>
+                        <img src={this.props.item.image_url} alt="item image"/>
+                    </div>
+                    <div className="info">
+                        <div>
+                            <h1 className="title">{this.props.item.name}</h1>
+                            <h3></h3>
+                        </div>
+                        <div className="purchase">
+                            <Button className="button" variant="outlined" color="primary" onClick={this.handleAddToCart}> <AddShoppingCartIcon /> &euro; {this.props.item.retail_price}</Button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    /*
       <Card
         style={{ width: 200, height: 270, margin: 10, display: "inline-block" }}
       >
@@ -25,7 +105,6 @@ class ConnectedItem extends Component {
         >
           <CardMedia
             style={{ height: 140 }}
-            //TODO: fix imageurl
             image={this.props.item.image_url}
           />
           <CardContent style={{ height: 50 }}>
@@ -49,16 +128,6 @@ class ConnectedItem extends Component {
         <CardActions
           style={{ display: "flex", alignItems: "center", height: 45 }}
         >
-          {/*<Button
-            size="small"
-            style={{ marginRight: 50, marginLeft: 10, marginTop: 40}}
-            onClick={() => {
-              this.props.history.push("/details/" + this.props.item.product_id);
-            }}
-          >
-            {" "}
-            Details
-          </Button>*/}
           <Tooltip title="Add to cart">
             <IconButton
               size="small"
@@ -77,6 +146,7 @@ class ConnectedItem extends Component {
           </Tooltip>
         </CardActions>
       </Card>
+      */
     );
   }
 }
