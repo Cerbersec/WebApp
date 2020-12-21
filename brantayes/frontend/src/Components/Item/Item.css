@@ -7,7 +7,6 @@
   #item {
     min-height: 25vh;
     margin: 1rem 0;
-    /* height: 25vh; */
     display: inline-flex;
     align-items: flex-start;
     justify-content: flex-start;
@@ -23,10 +22,10 @@
 
   #item .card {
     transform-style: preserve-3d;
-    /* min-height: 25vh; */
     min-height: 250px;
     min-width: 170px;
-    max-width: 10vw;
+    /* max-width: 10vw; */
+    max-width: 170px;
     border-radius: 5px;
     padding: 0rem .1rem;
     margin: .2rem;
@@ -48,15 +47,7 @@
   }
 
   #item .circle {
-    /* width: 15rem; */
-    /* height: 15rem; */
-    /* background: linear-gradient( 
-      to right,
-      rgba(245, 70, 66, 0.75),
-      rgba(8, 83, 156, 0.75)
-    ); */
     position: absolute;
-    /* border-radius: 50%; */
     z-index: 1;
   }
 
@@ -71,7 +62,6 @@
     font-weight: bold;
     font-size: .9rem;
     transition: all 0.75s ease-out;
-    /* max-width: 8vw; */
   }
   #item .info h3 {
     font-size: .8rem;
@@ -81,7 +71,6 @@
     transition: all 0.75s ease-out;
   }
   #item .purchase {
-    /* margin-top: 1.5rem; */
     position: absolute;
     bottom: 2rem;
     transition: all 0.75s ease-out;
@@ -90,11 +79,7 @@
     width: 100%;
     min-width: 7rem;
     padding: .4rem 0;
-    /* background: #1976d2; */
-    /* border: none; */
-    /* color: white; */
     cursor: pointer;
-    /* border-radius: 5px; */
     font-weight: bolder;
     z-index: 3;
   }

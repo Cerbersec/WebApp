@@ -31,34 +31,20 @@ class ConnectedItem extends Component {
     handleMouseEnter = (e) => {
         //variables
         const card = e.currentTarget
-        const title = card.querySelector(".title");
         const sneaker = card.querySelector(".sneaker img");
-        const purchase = card.querySelector(".purchase");
-        const description = card.querySelector(".info h3");
         //movement
-        card.style.transition = "none";
-        //Popout
-        //title.style.transform = "translateZ(150px)";
+        sneaker.style.transitionDuration = "1s";
+        sneaker.style.transitionDelay = ".3s";
         sneaker.style.transform = "translateZ(100px) rotateZ(-10deg)";
-        //description.style.transform = "translateZ(125px)";
-        //purchase.style.transform = "translateZ(20px)";
     }
 
     handleMouseLeave = (e) => {
         //variables
         const card = e.currentTarget
-        const title = card.querySelector(".title");
         const sneaker = card.querySelector(".sneaker img");
-        const purchase = card.querySelector(".purchase");
-        const description = card.querySelector(".info h3");
         //movement
-        card.style.transition = "all 0.5s ease";
-        card.style.transform = `rotateY(0deg) rotateX(0deg)`;
-        //Popback
-        title.style.transform = "translateZ(0px)";
+        sneaker.style.transitionDuration = "1s";
         sneaker.style.transform = "translateZ(0px) rotateZ(0deg)";
-        description.style.transform = "translateZ(0px)";
-        purchase.style.transform = "translateZ(0px)";
     }
 
     handleOnClick = (e) => {
