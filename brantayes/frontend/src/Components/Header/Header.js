@@ -177,7 +177,7 @@ class Header extends Component {
                   classes={{root: classes.inputRoot, input: classes.inputInput}}
                   inputProps={{ 'aria-label': 'search' }}
                   onChange={e => {this.setState({ searchTerm: e.target.value })}}
-                  onKeyPress={e => {if(e.key === 'Enter') { this.props.history.push("?category=" + this.state.categoryFilterValue + "&term=" + this.state.searchTerm); }}}
+                  onKeyPress={e => {if(e.key === 'Enter') { this.props.history.push("/store?category=" + this.state.categoryFilterValue + "&term=" + this.state.searchTerm); }}}
                 />
 
                 <Select
