@@ -271,7 +271,8 @@ class Register extends Component{
                       </div>
                       <div className="col">
                         <Select
-                        className="form-control"
+                          className="form-control"
+                          disableUnderline
                           value={this.state.gender}
                           displayEmpty
                           onChange={e => {
