@@ -1,9 +1,21 @@
-/* #textBox{ z-index:1000; } */
-
-.personal-info {
-    z-index: 1000 !important;
+#accountpage {
+    padding-right: .5vw;
 }
 
-.contact-info {
-    z-index: 1000 !important;
+#accountpage .form-control {
+    margin-bottom: .5vw;
+}
+
+#accountpage fieldset {
+    padding-top: .5vw;
+}
+
+#accountpage .form-btn {
+    margin-left: 1.5vw;
+    margin-bottom: 1vw;
+}
+
+.border {
+    border: .1vw solid rgb(189, 189, 189);
+    border-radius: .5vw;
 }
