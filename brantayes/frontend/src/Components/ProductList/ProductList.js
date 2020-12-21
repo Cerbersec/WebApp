@@ -47,7 +47,7 @@ class ProductList extends Component {
   updateQueryStr(newValues) {
     let current = queryString.parse(this.props.location.search);
     this.props.history.push(
-      "/?" + queryString.stringify({ ...current, ...newValues })
+      "?" + queryString.stringify({ ...current, ...newValues })
     );
   }
 
