@@ -1,10 +1,11 @@
 import { createMuiTheme } from '@material-ui/core/styles';
-import { blue } from '@material-ui/core/colors';
+import { blue, blueGrey} from '@material-ui/core/colors';
 
 const theme = createMuiTheme({
     palette: {
         primary: {
-            main: blue[700],
+            // main: blue[700],
+            main: blueGrey[900],
             contrastText: '#fff',
         },
         secondary: {
