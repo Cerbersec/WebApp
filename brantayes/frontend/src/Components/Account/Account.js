@@ -69,13 +69,13 @@ class Account extends Component
                             <fieldset disabled={this.state.fieldsetDisabled}>
                                 <div className="row">
                                     <div className="col-md-6">
-                                        <input className="form-control" type="text" value={this.state.customer.first_name} />
-                                        <input className="form-control" type="text" value={this.state.customer.username} />
-                                        <input className="form-control" type="text" value={this.state.customer.phone} />
+                                        <input className="form-control" type="text" defaultValue={this.state.customer.first_name} />
+                                        <input className="form-control" type="text" defaultValue={this.state.customer.username} />
+                                        <input className="form-control" type="text" defaultValue={this.state.customer.phone} />
                                     </div>
                                     <div className="col-md-6">
-                                        <input className="form-control" type="text" value={this.state.customer.last_name} />
-                                        <input className="form-control" type="email" value={this.state.customer.email_address} disabled/>
+                                        <input className="form-control" type="text" defaultValue={this.state.customer.last_name} />
+                                        <input className="form-control" type="email" defaultValue={this.state.customer.email_address} disabled/>
                                         <Select className="form-control" disableUnderline disabled={this.state.fieldsetDisabled}>
                                             <MenuItem value={"M"}>Male</MenuItem>
                                             <MenuItem value={"F"}>Female</MenuItem>
@@ -92,14 +92,14 @@ class Account extends Component
                             <fieldset disabled={this.state.fieldsetDisabled}>
                                 <div className="row">
                                     <div className="col-md-6">                               
-                                        <input className="form-control" type="text" value={this.state.customer.Addresses[0].street_name} />
-                                        <input className="form-control" type="text" value={this.state.customer.Addresses[0].postal_code} />
-                                        <input className="form-control" type="text" value={this.state.customer.Addresses[0].city} />
+                                        <input className="form-control" type="text" defaultValue={this.state.customer.Addresses[0].street_name} />
+                                        <input className="form-control" type="text" defaultValue={this.state.customer.Addresses[0].postal_code} />
+                                        <input className="form-control" type="text" defaultValue={this.state.customer.Addresses[0].city} />
                                     </div>
                                     <div className="col-md-6">
-                                        <input className="form-control" type="text" value={this.state.customer.Addresses[0].street_nr} />
-                                        <input className="form-control" type="text" value={this.state.customer.Addresses[0].bus_nr} />
-                                        <input className="form-control" type="text" value={this.state.customer.Addresses[0].country} />
+                                        <input className="form-control" type="text" defaultValue={this.state.customer.Addresses[0].street_nr} />
+                                        <input className="form-control" type="text" defaultValue={this.state.customer.Addresses[0].bus_nr} />
+                                        <input className="form-control" type="text" defaultValue={this.state.customer.Addresses[0].country} />
                                     </div> 
                                 </div>
                             </fieldset>
