@@ -70,11 +70,12 @@ class Account extends Component
                                 <div className="row">
                                     <div className="col-md-6">
                                         <input className="form-control" type="text" value={this.state.customer.first_name} />
-                                        <input className="form-control" type="text" value={this.state.customer.last_name} />
+                                        <input className="form-control" type="text" value={this.state.customer.username} />
                                         <input className="form-control" type="text" value={this.state.customer.phone} />
                                     </div>
                                     <div className="col-md-6">
-                                        <input className="form-control" type="text" value={this.state.customer.username} />
+                                        <input className="form-control" type="text" value={this.state.customer.last_name} />
+                                        <input className="form-control" type="email" value={this.state.customer.email_address} disabled/>
                                         <Select className="form-control" disableUnderline disabled={this.state.fieldsetDisabled}>
                                             <MenuItem value={"M"}>Male</MenuItem>
                                             <MenuItem value={"F"}>Female</MenuItem>
