@@ -192,7 +192,7 @@ class Header extends Component {
 
               <div className={classes.grow}/>
               <div className={classes.sectionDesktop}>
-                {this.state.isLoggedIn && (
+                {this.props.isLoggedIn && (
                   <IconButton aria-label="account settings" color="secondary" onClick={() => {this.props.history.push("/account")}}>
                     <PersonOutline />
                   </IconButton>
@@ -245,7 +245,7 @@ class Header extends Component {
               open={Boolean(this.state.mobileMoreAnchorEl)}
               onClose={this.handleMobileMenuClose}
             >
-              {this.state.isLoggedIn && (
+              {this.props.isLoggedIn && (
                 <MenuItem onClick={() => {this.props.history.push("/account")}}>
                   <IconButton aria-label="account settings" color="primary">
                       <PersonOutline />
