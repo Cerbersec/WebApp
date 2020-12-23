@@ -85,7 +85,7 @@ class ProductList extends Component {
           itemsCount={this.state.itemsCount}
         />
 
-        <div style={{ flex: 1 }}>
+        <div style={{ flex: 1, paddingLeft: 10}}>
           {this.state.items.map(item => {
             return <Item key={item.product_id} item={item} />;//item.product_id = unique key to iterate
           })}
