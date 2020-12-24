@@ -8,12 +8,13 @@ const TypedError = require('../modules/ErrorHandler')
 const getProducts = async(req, res, next) => {
     const pageNo = req.body.page
     const category = req.body.category
+    const type = req.body.type
     const resultsPerPage = 100
     //const resultsPerPage = req.body.itemsPerPage
     const searchOffset = (pageNo -1) * resultsPerPage
 
     try {
-        const products = await storeDb.readProducts(resultsPerPage + 1,searchOffset, category)
+        const products = await storeDb.readProducts(resultsPerPage + 1,searchOffset, category, type)
         
         if (products.length == 0) {
             return res.status(404).json({

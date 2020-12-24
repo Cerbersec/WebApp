@@ -1,18 +1,47 @@
 // CRUD: create, read, update, delete
 const models = require('../models')
 
-const readProducts = async (pageLimit,pageOffset, category) => {
+const readProducts = async (pageLimit,pageOffset, category, type) => {
+    //return products in specific cateory
     if(category !== "All categories") {
-        return models.Product.findAll({
-            where: {'$category.category_name$': category},
-            offset: pageOffset,
-            limit: pageLimit,
-            include: [{
-                model: models.Category,
-                as: 'category'
-            }]
-        })
+        //return all shoes in category
+        if(type == "All " + category + " shoes") {
+            return models.Product.findAll({
+                where: {'$category.category_name$': category, '$category.product_group$': "Shoes"},
+                offset: pageOffset,
+                limit: pageLimit,
+                include: [{
+                    model: models.Category,
+                    as: 'category'
+                }]
+            })
+        }
+        //return all accessories in category
+        else if(type == "All " + category + " accessories") {
+            return models.Product.findAll({
+                where: {'$category.category_name$': category, '$category.product_group$': "Accessories"},
+                offset: pageOffset,
+                limit: pageLimit,
+                include: [{
+                    model: models.Category,
+                    as: 'category'
+                }]
+            })
+        }
+        //return type of product in category
+        else {
+            return models.Product.findAll({
+                where: {'$category.category_name$': category, type: type},
+                offset: pageOffset,
+                limit: pageLimit,
+                include: [{
+                    model: models.Category,
+                    as: 'category'
+                }]
+            })
+        }       
     }
+    //return all products
     else {
         return models.Product.findAll({
             offset: pageOffset,
