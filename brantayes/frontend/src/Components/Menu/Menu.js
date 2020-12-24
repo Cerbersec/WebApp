@@ -67,7 +67,7 @@ class ConnectedMenu extends Component {
             id: "shoes" + category.name,
             url: "/store?category=" + category.name,
             children:
-            [{name: "All " + category.name.toLowerCase() + " shoes", id: "shoes" + category.name + "all", url: "/store?category=" + category.name + "&type=All " + category.name + " shoes"}].concat(
+            [{name: "All " + category.name.toLowerCase() + " shoes", id: "shoes" + category.name + "all", url: "/store?category=" + category.name + "&type=All " + category.name.toLowerCase() + " shoes"}].concat(
             category.product_types.map((type) => {
               return {
                 name: type.name,
@@ -86,7 +86,7 @@ class ConnectedMenu extends Component {
             name: category.name,
             id: "accessories" + category.name,
             url: "/store?category=" + category.name,
-            children: [{name: "All " + category.name.toLowerCase() + " accessories", id: "accessories" + category.name + "all", url: "/store?category=" + category.name + "&type=All " + category.name + " accessories"}].concat(
+            children: [{name: "All " + category.name.toLowerCase() + " accessories", id: "accessories" + category.name + "all", url: "/store?category=" + category.name + "&type=All " + category.name.toLowerCase() + " accessories"}].concat(
             category.product_types.map((type) => {
               return {
                   name: type.name,

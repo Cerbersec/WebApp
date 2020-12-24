@@ -5,7 +5,7 @@ const readProducts = async (pageLimit,pageOffset, category, type) => {
     //return products in specific cateory
     if(category !== "All categories") {
         //return all shoes in category
-        if(type == "All " + category + " shoes") {
+        if(type == "All " + category.toLowerCase() + " shoes") {
             return models.Product.findAll({
                 where: {'$category.category_name$': category, '$category.product_group$': "Shoes"},
                 offset: pageOffset,
@@ -17,7 +17,7 @@ const readProducts = async (pageLimit,pageOffset, category, type) => {
             })
         }
         //return all accessories in category
-        else if(type == "All " + category + " accessories") {
+        else if(type == "All " + category.toLowerCase() + " accessories") {
             return models.Product.findAll({
                 where: {'$category.category_name$': category, '$category.product_group$': "Accessories"},
                 offset: pageOffset,
