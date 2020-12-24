@@ -7,6 +7,7 @@ import Select from "@material-ui/core/Select";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import { withRouter } from "react-router-dom";
+import { ChevronRight} from "@material-ui/icons";
 
 class ProductsHeader extends Component {
   state = {
@@ -23,6 +24,7 @@ class ProductsHeader extends Component {
     let sortValue = parsedQueryStr.sortValue || "lh";
     let keyword = parsedQueryStr.term;
     let category = parsedQueryStr.category;
+    let type = parsedQueryStr.type;
 
     let subtitle = (
       <div>
@@ -50,7 +52,7 @@ class ProductsHeader extends Component {
       <div>
         <div style={{ padding: 10, display: "flex", alignItems: "center" }}>
           <div style={{ flex: 1, fontSize: 24 }}>
-            <div>{category ? category : "All Products"}</div>
+            <div>{category ? category : "All Products"}{type ? <ChevronRight /> : ""}{type ? type : ""}</div>
             {subtitle}
           </div>
 
