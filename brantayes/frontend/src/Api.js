@@ -50,7 +50,8 @@ class Api {
   }
 
   searchItems({
-    category = "All categories",//popular
+    category = "All categories",
+    type = "All types",
     term = "",
     sortValue = "lh",
     itemsPerPage = 100,
@@ -68,6 +69,7 @@ class Api {
           const data = {
             page: page,
             category: category,
+            type: type,
             itemsPerpage: itemsPerPage,
           }
 
@@ -88,6 +90,7 @@ class Api {
               return item.popular;
             }
 
+            //TODO: check item filtering for category
             if (category !== "All categories" && category !== item.category.category_name) {
               return false;
             }
