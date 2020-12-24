@@ -4,7 +4,7 @@ import queryString from "query-string";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import Api from "../../Api"
-import { ExpandLess, ExpandMore, ChevronRight } from "@material-ui/icons";
+import { ExpandLess, ExpandMore, ChevronRight, ContactSupportOutlined } from "@material-ui/icons";
 import Icon from "@material-ui/core/Icon";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -45,29 +45,75 @@ class ConnectedMenu extends Component {
     //   icon: "list"
     // })
 
+    // const dataForTheMenu = [
+    //   { name: "Home", url: "/store", icon: "home", id: 0 },
+    //   { name: "Blog", url: "/blog", icon: "forum", id: 1 },
+    //   {
+    //     name: "Shoes",
+    //     id: 2,
+    //     children: [{name: "Men"}, {name: "Women"}, {name: "Children"}, {name: "Preschool"}, {name: "Toddler"}].map((category, i) => {
+    //       return {
+    //         name: category.name,
+    //         id: i,
+    //         url: "/store?category=" + category.name,
+    //       }
+    //     }),     
+    //   },
+    //   {
+    //     name: "Accessories",
+    //     id: 3,
+    //     children: [{name: "Belts"}, {name: "Socks"},{name: "Other"}].map((category, i) => {
+    //         return {
+    //             name: category.name,
+    //             id: i,
+    //             url: "/store?category=" + category.name,
+    //         }
+    //     })
+    //   }
+    // ]
+
     const dataForTheMenu = [
+      //product => type
+      //type => category = gender/age
       { name: "Home", url: "/store", icon: "home", id: 0 },
       { name: "Blog", url: "/blog", icon: "forum", id: 1 },
       {
         name: "Shoes",
         id: 2,
-        children: [{name: "Men"}, {name: "Women"}, {name: "Children"}, {name: "Preschool"}, {name: "Toddler"}].map((category, i) => {
+        children: [{name: "Men", product_types: [{name: "Sneakers"}, {name: "Wandelschoenen"}, {name: "Geklede schoenen"}, {name: "Hoge schoenen"}, {name: "Sportschoenen"}, {name: "Voetbalschoenen"}]}, {name: "Women", product_types: []}, {name: "Boys", product_types: []}, {name: "Girls", product_types: []}, {name: "Other", product_types: []}].map((category, i) => {
           return {
             name: category.name,
-            id: i,
+            id: "shoes" + category.name,
             url: "/store?category=" + category.name,
+            children:
+            [{name: "All " + category.name.toLowerCase() + " shoes", id: "shoes" + category.name + "all", url: "/store?category=" + category.name + "&type=All " + category.name + " shoes"}].concat(
+            category.product_types.map((type) => {
+              return {
+                name: type.name,
+                id: "shoes" + category.name + type.name,
+                url: "/store?category=" + category.name + "&type=" + type.name,
+              }
+            }))
           }
         }),     
       },
       {
         name: "Accessories",
         id: 3,
-        children: [{name: "Belts"}, {name: "Socks"},{name: "Other"}].map((category, i) => {
-            return {
-                name: category.name,
-                id: i,
-                url: "/store?category=" + category.name,
-            }
+        children: [{name: "Men", product_types: [{name: "Socks"}, {name: "Other"}]}, {name: "Women", product_types: [{name: "Belts"}, {name: "Socks"}, {name: "Other"}]}].map((category) => {
+          return {
+            name: category.name,
+            id: "accessories" + category.name,
+            url: "/store?category=" + category.name,
+            children: [{name: "All " + category.name.toLowerCase() + " accessories", id: "accessories" + category.name + "all", url: "/store?category=" + category.name + "&type=All " + category.name + " accessories"}].concat(
+            category.product_types.map((type) => {
+              return {
+                  name: type.name,
+                  id: "accessories" + category.name + type.name,
+                  url: "/store?category=" + category.name + "&type=" + type.name,
+              }
+          }))
+          }
         })
       }
     ]
@@ -79,10 +125,10 @@ class ConnectedMenu extends Component {
 
   // This method determines from URL whether to highlight a menu item or not
   isMenuItemActive(item, location) {
-    if (location.pathname === "/" && location.search) {
+    if (location.pathname === "/store" && location.search) {
       let queryStringParsed = queryString.parse(location.search);
 
-      return item.name === queryStringParsed.category;
+      return item.name === queryStringParsed.type;
     }
 
     return item.url === location.pathname;
@@ -129,9 +175,10 @@ class ConnectedMenu extends Component {
             return (
               <Fragment key={x.id}>
                 <ListItem
+                  style={this.state.expandedMenuItems[x.id]? {backgroundColor: "lightgrey"} : {backgroundColor: "inherit"}}
                   button
                   dense
-                  onClick={() => {
+                  onClick={(e) => {
                     // Update in state which menu items are expanded.
                     this.setState(ps => {
                       return {
@@ -154,6 +201,7 @@ class ConnectedMenu extends Component {
                   in={this.state.expandedMenuItems[x.id]}
                   timeout="auto"
                   unmountOnExit
+                  style={{paddingLeft: 5}}
                 >
                   {this.renderMenu(x.children)}
                 </Collapse>
