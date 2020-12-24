@@ -48,6 +48,10 @@ module.exports = function(sequelize, Sequelize) {
         image_url: {
             type: Sequelize.TEXT,
             allowNull: true
+        },
+        type: {
+            type: Sequelize.STRING(50),
+            allowNull: false
         }
     },
     {
