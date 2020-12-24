@@ -109,7 +109,7 @@ class ConnectedMenu extends Component {
     if (location.pathname === "/store" && location.search) {
       let queryStringParsed = queryString.parse(location.search);
 
-      return item.name === queryStringParsed.type;
+      return item.url === location.pathname + location.search;
     }
 
     return item.url === location.pathname;
