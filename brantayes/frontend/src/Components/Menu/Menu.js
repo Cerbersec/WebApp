@@ -45,32 +45,13 @@ class ConnectedMenu extends Component {
     //   icon: "list"
     // })
 
-    // const dataForTheMenu = [
-    //   { name: "Home", url: "/store", icon: "home", id: 0 },
-    //   { name: "Blog", url: "/blog", icon: "forum", id: 1 },
-    //   {
-    //     name: "Shoes",
-    //     id: 2,
-    //     children: [{name: "Men"}, {name: "Women"}, {name: "Children"}, {name: "Preschool"}, {name: "Toddler"}].map((category, i) => {
-    //       return {
-    //         name: category.name,
-    //         id: i,
-    //         url: "/store?category=" + category.name,
-    //       }
-    //     }),     
-    //   },
-    //   {
-    //     name: "Accessories",
-    //     id: 3,
-    //     children: [{name: "Belts"}, {name: "Socks"},{name: "Other"}].map((category, i) => {
-    //         return {
-    //             name: category.name,
-    //             id: i,
-    //             url: "/store?category=" + category.name,
-    //         }
-    //     })
-    //   }
-    // ]
+    const shoes_men_product_types = [{name: "Sneakers"}, {name: "Boots"}, {name: "Chelsea boots"}, {name: "Short boots"}, {name: "Flat ankle boots"}, {name: "Knee boots"}, {name: "Hiking boots"}, {name: "Football boots"}, {name: "Rain boots"}, {name: "Dress shoes"}, {name: "Loafers"}, {name: "Slip-on sneakers"}, {name: "Low shoes"}, {name: "Mocassins"}]
+    const shoes_women_product_types = [{name: "Knee boots"}, {name: "Boots"}, {name: "Chelsea boots"}, {name: "Short boots"}, {name: "Flat ankle boots"}, {name: "Hiking boots"}, {name: "Football boots"}, {name: "Rain boots"}, {name: "Ballerinas"}, {name: "Loafers"}, {name: "Slip-on sneakers"}, {name: "Lace-up shoes"}]
+    const shoes_boys_product_types = [{name: "Sneakers"}, {name: "Boots"}, {name: "Hiking boots"}, {name: "Football boots"}, {name: "High shoes"}, {name: "Low shows"}, {name: "Baby slippers"}, {name: "Baby shoes"}, {name: "Baby sneakers"}]
+    const shoes_girl_product_types = [{name: "Sneakers"}, {name: "Boots"}, {name: "Chelsea boots"}, {name: "Hiking boots"}, {name: "Football boots"}, {name: "High shoes"}, {name: "Low shoes"}, {name: "Baby slippers"}, {name: "Baby shoes"}, {name: "Baby sneakers"}, {name: "Baby boots"}]
+    
+    const accessories_men_product_types = [{name: "Shoe care"}, {name: "Socks"}, {name: "Ankle socks"}, {name: "Soles"}]
+    const accessories_women_product_types = [{name: "Shoe care"}, {name: "Socks"}, {name: "Soles"}, {name: "Belts"}]
 
     const dataForTheMenu = [
       //product => type
@@ -80,7 +61,7 @@ class ConnectedMenu extends Component {
       {
         name: "Shoes",
         id: 2,
-        children: [{name: "Men", product_types: [{name: "Sneakers"}, {name: "Wandelschoenen"}, {name: "Geklede schoenen"}, {name: "Hoge schoenen"}, {name: "Sportschoenen"}, {name: "Voetbalschoenen"}]}, {name: "Women", product_types: []}, {name: "Boys", product_types: []}, {name: "Girls", product_types: []}, {name: "Other", product_types: []}].map((category, i) => {
+        children: [{name: "Men", product_types: shoes_men_product_types}, {name: "Women", product_types: shoes_women_product_types}, {name: "Boys", product_types: shoes_boys_product_types}, {name: "Girls", product_types: shoes_girl_product_types}, {name: "Other", product_types: [{name: "Sneakers"}]}].map((category, i) => {
           return {
             name: category.name,
             id: "shoes" + category.name,
@@ -100,7 +81,7 @@ class ConnectedMenu extends Component {
       {
         name: "Accessories",
         id: 3,
-        children: [{name: "Men", product_types: [{name: "Socks"}, {name: "Other"}]}, {name: "Women", product_types: [{name: "Belts"}, {name: "Socks"}, {name: "Other"}]}].map((category) => {
+        children: [{name: "Men", product_types: accessories_men_product_types}, {name: "Women", product_types: accessories_women_product_types}].map((category) => {
           return {
             name: category.name,
             id: "accessories" + category.name,
