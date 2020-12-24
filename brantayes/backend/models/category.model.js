@@ -9,14 +9,10 @@ module.exports = function(sequelize, Sequelize) {
             type: Sequelize.STRING(50),
             allowNull: false
         },
-        gender: {
-            type: Sequelize.CHAR(1),
-            allowNull: true
+        product_group: {
+            type: Sequelize.STRING(50),
+            allowNull: false
         },
-        category_age: {
-            type: Sequelize.STRING(8),
-            allowNull: true
-        }
     },
     {
         underscored: true
