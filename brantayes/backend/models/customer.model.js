@@ -60,6 +60,12 @@ module.exports = function(sequelize, Sequelize) {
                 name: 'customer_id'
             }
         })
+
+        Customer.belongsToMany(models.Role, {
+            through: "user_roles",
+            foreignKey: "user_id",
+            otherKey: "role_id"
+        })
     }
 
     return Customer

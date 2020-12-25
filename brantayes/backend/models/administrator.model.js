@@ -26,6 +26,12 @@ module.exports = function(sequelize, Sequelize) {
                 name: 'admin_id'
             }
         })
+
+        Administrator.belongsToMany(models.Role, {
+            through: "user_roles",
+            foreignKey: "user_id",
+            otherKey: "role_id",
+        })
     }
 
     return Administrator
