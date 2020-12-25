@@ -107,14 +107,25 @@ class Account extends Component
                     </div>
                 </div>
                 <div className="row">
+                    {this.state.fieldsetDisabled ? (
                     <Button
                         className="form-btn"
                         variant="outlined"
                         color="primary"
                         onClick={() => this.setState({ fieldsetDisabled: !this.state.fieldsetDisabled})} //TODO: handle form submit
                     >
-                        {this.state.fieldsetDisabled ? ("Edit") : ("Save")}
+                        Edit
                     </Button>
+                    ) : (
+                    <Button
+                        className="form-btn"
+                        variant="outlined"
+                        color="primary"
+                        onClick={() => this.setState({ fieldsetDisabled: !this.state.fieldsetDisabled})} //TODO: handle form submit
+                    >
+                        Save
+                    </Button>
+                    )}
                 </div>
 
                 <h2>Order history</h2>
