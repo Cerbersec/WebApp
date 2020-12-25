@@ -3,6 +3,6 @@ const router = express.Router()
 const { userController } = require('../controllers')
 const { authJwt } = require('../middleware/authJwt')
 
-router.get('/details', authJwt.verifyToken, userController.getCustomerByID)
+router.get('/details', authJwt.verifyToken, userController.getUserByID)
 
 module.exports = router
