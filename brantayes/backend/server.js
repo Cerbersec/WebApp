@@ -57,15 +57,18 @@ app.get('/csrf-token', (req, res, next) => {
 const storeRouter = require('./routes/store.router')
 const userRouter = require('./routes/user.router')
 const blogRouter = require('./routes/blog.router')
+const authRouter = require('./routes/auth.router')
 
 // set static dir
 app.use(express.static(path.join(__dirname, '..', 'frontend', 'build')))
 app.use(express.static(path.join(__dirname, '..', 'frontend', 'public')))
 
 //endpoints
-app.use('/', storeRouter)
-app.use('/account', userRouter)
-app.use('/blog', blogRouter)
+const prefix = "/api/v1"
+app.use(prefix + '/store', storeRouter)
+app.use(prefix + '/account', userRouter)
+app.use(prefix + '/blog', blogRouter)
+app.use(prefix + "/auth", authRouter)
 
 //react routing
 app.use((req, res, next) => {
