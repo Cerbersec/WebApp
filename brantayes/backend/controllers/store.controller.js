@@ -75,7 +75,7 @@ const postCheckout = async(req, res, next) => {
     try {
         const { orderlines } = req.body
 
-        const placedOrder = await storeDb.createOrder(orderlines, req.customer_id)
+        const placedOrder = await storeDb.createOrder(orderlines, req.user_id)
         
         if(placedOrder != null) {
             return res.status(200).json({
@@ -95,7 +95,7 @@ const postCheckout = async(req, res, next) => {
 
 const getOrders = async(req, res, next) => {
     try {
-        const orders = await storeDb.readOrders(req.customer_id)
+        const orders = await storeDb.readOrders(req.user_id)
         
         if (orders == null) {
             return res.status(404).json({
@@ -116,7 +116,7 @@ const getOrderByID = async(req, res, next) => {
     const orderId = req.params.orderid
 
     try {
-        const order = await storeDb.readOrder(req.customer_id, orderId)
+        const order = await storeDb.readOrder(req.user_id, orderId)
 
         if (order == null) {
             return res.status(404).json({
@@ -201,7 +201,7 @@ const postReview = async (req, res, next) => {
             description: description,
             review_date: new Date(),
             product_id: productId,
-            customer_id: req.customer_id
+            customer_id: req.user_id
         })
 
         const review = await storeDb.createReview(newModel)
@@ -226,7 +226,7 @@ const postPayment = async (req, res, next) => {
     try {
         const orderId = req.body.order_id;
 
-        const order = await storeDb.readOrder(req.customer_id, orderId)
+        const order = await storeDb.readOrder(req.user_id, orderId)
 
 
         if(order){
@@ -332,8 +332,6 @@ const postSuccess = async(req, res, next) => {
             email: customer.email,
             invoice: customer.invoice_prefix,
             amount: session.amount_total / 100,
-            
-
         });
     } catch(e) {
         console.log(e.message)
