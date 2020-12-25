@@ -50,7 +50,7 @@ const register = async(req, res, next) => {
         //hash password
         const hashedpassword = await bcrypt.hash(password, 10)
 
-        var newCustomer = new models.Customer({
+        var newUser = new models.User({
             first_name: first_name,
             last_name: last_name,
             email_address: email_address,
@@ -70,7 +70,7 @@ const register = async(req, res, next) => {
         })
 
         //create new user
-        const [ user, created ] = await userDb.createUser(newCustomer, newAddress)
+        const [ userCreated, created ] = await userDb.createUser(newUser, newAddress)
 
         if(created) {
             res.status(200).send({
@@ -115,14 +115,14 @@ const login = async (req, res, next) => {
             return next(err)
         }
    
-        const result = await userDb.readUser(email_address) //result = Model, null
+        const result = await userDb.readUserByEmail(email_address) //result = Model, null
 
         if( !result || !(await bcrypt.compare(password, result.password)) ) {
             res.status(401).send({
             message: 'Email or Password is incorrect'
             })
         } else {
-            const id = result.customer_id;
+            const id = result.user_id;
 
             const token = jwt.sign({ id },
             config.jwt_secret,
@@ -139,7 +139,7 @@ const login = async (req, res, next) => {
    
             res.cookie('jwt', token, cookieOptions );
             res.status(200).send({
-                id: result.customer_id,
+                id: result.user_id,
                 username: result.username,
                 email: result.email_address,
             })
@@ -166,7 +166,7 @@ const isLoggedIn = async (req, res, next) => {
                 return next();
             }
    
-            req.user = result.customer_id;
+            req.user = result.user_id;
 
             console.log("user is: " + req.user)//DEBUG
 
@@ -186,67 +186,20 @@ const logout = async (req, res) => {
     res.sendStatus(200)
 }
 
-const verifyToken = async (req, res, next) => {
-    const token = req.cookies.jwt
-
-    if(!token) {
-        return res.status(403).send({
-            message: "No token provided!"
-        })
-    }
-
+const getUserByID = async(req, res, next) => {
+    const user_id = req.user_id
     try {
-        jwt.verify(token, config.jwt_secret, (err, decoded) => {
-            if(err) {
-                return res.status(401).send({
-                    message: "Unauthorized!"
-                })
-            }
-            req.customer_id = decoded.id
-            next()
-        })
-    }
-    catch(error) {
-        console.log(error)
-        res.status(500).send({
-            message: "Something went wrong!"
-        })
-    }
-}
+        const user = await userDb.readUserById(user_id)
 
-const getCustomerByID = async(req, res, next) => {
-    const customerId = req.customer_id
-    try {
-        const customer = await userDb.readUserById(customerId)
-
-        if(customer == null) {
+        if(user == null) {
             return res.status(404).json({
-                message: 'customer could not be found'
+                message: 'user could not be found'
             })
         }
         return res.status(200).json({
-            customer: customer
+            user: user
         })
 
-    } catch(e) {
-        console.log(e.message)
-        res.sendStatus(500) && next(e)
-    }
-}
-
-const getAddressByCustomerID = async(req, res, next) => {
-    const customerId = req.customer_id
-    try {
-        const address = await userDb.readUserAddress(customerId)
-
-        if(address == null) {
-            return res.status(404).json({
-                message: 'address could not be found'
-            })
-        }
-        return res.status(200).json({
-            address: address
-        })
     } catch(e) {
         console.log(e.message)
         res.sendStatus(500) && next(e)
@@ -256,7 +209,4 @@ const getAddressByCustomerID = async(req, res, next) => {
 exports.register = register
 exports.login = login
 exports.logout = logout
-//exports.isLoggedIn = isLoggedIn
-exports.verifyToken = verifyToken
-exports.getCustomerByID = getCustomerByID
-exports.getAddressByCustomerID = getAddressByCustomerID
+exports.getUserByID = getUserByID
