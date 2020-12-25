@@ -45,8 +45,15 @@ const readUserAddress = (id) => {
     return models.Address.findOne({ where: { user_id: id } })
 }
 
+const readUserRoles = (id) => {
+    models.User.FindByPk(id).then(user => {
+        return user.getRoles()
+    })
+}
+
 exports.readUsers = readUsers
 exports.readUserByEmail = readUserByEmail
 exports.createUser = createUser
 exports.readUserById = readUserById
 exports.readUserAddress = readUserAddress
+exports.readUserRoles = readUserRoles
