@@ -15,7 +15,7 @@ module.exports = function(sequelize, Sequelize) {
     })
 
     Role.associate = models => {
-        Role.belongsToMany(models.Administrator, {
+        Role.belongsToMany(models.User, {
             through: "user_roles",
             foreignKey: "role_id",
             otherKey: "user_id",
