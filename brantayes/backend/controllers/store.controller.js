@@ -201,7 +201,7 @@ const postReview = async (req, res, next) => {
             description: description,
             review_date: new Date(),
             product_id: productId,
-            customer_id: req.user_id
+            user_id: req.user_id
         })
 
         const review = await storeDb.createReview(newModel)
