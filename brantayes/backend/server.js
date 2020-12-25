@@ -7,7 +7,6 @@ const bodyParser = require('body-parser')
 const expressValidator = require('express-validator')
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
-const helmet = require('helmet')
 const http = require('http')
 const https = require('https')
 const fs = require('fs')
@@ -31,7 +30,6 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(cors())
-//app.use(helmet())
 
 app.use(expressValidator())
 
@@ -47,15 +45,6 @@ db.authenticate().then(() => {
 })
 
 //csrf protection
-const csrfProtection = csurf({
-    cookie: {
-        key: '_csrf-brantayes',
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production', //cookie only readable over https
-        maxAge: 3600 //1h
-    }
-})
-//app.use(csrfProtection)
 app.use(csurf({ cookie: true }))
 app.get('/csrf-token', (req, res, next) => {
     const token =  req.csrfToken()
@@ -84,9 +73,9 @@ app.use((req, res, next) => {
 })
 
 //page not found
-app.use((req, res, next) => {
-    next(createError(404))
-})
+// app.use((req, res, next) => {
+//     next(createError(404))
+// })
 
 app.use((err, req, res, next) => {
     res.status(err.status || 500).json(err);
@@ -98,11 +87,7 @@ var httpsServer = https.createServer(credentials, app)
 
 //sync models with db before app start: force = true to drop tables at start up
 const models = require('./models')
-models.sequelize.sync({ force: false }).then(function() {
-    //app.listen(port, function() {
-    //    console.log(`Server is running on port: ${port}`)
-    //})
-    
+models.sequelize.sync({ force: false }).then(function() {  
     httpServer.listen(port, function() {
         console.log(`HTTP Server is running on port: ${port}`)
     })
