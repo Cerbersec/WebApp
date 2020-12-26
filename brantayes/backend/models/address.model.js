@@ -18,7 +18,7 @@ module.exports = function(sequelize, Sequelize) {
             allowNull: false
         },
         bus_nr: {
-            type: Sequelize.INTEGER,
+            type: Sequelize.STRING(10),
             allowNull: true
         },
         city: {
