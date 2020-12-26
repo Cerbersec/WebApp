@@ -122,7 +122,7 @@ class Api {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         axios.get(url + "/store/categories").then((response) => { 
-          resolve(response.lenght === 0 ? null : response.data.categories)
+          resolve(response.lenght === 0 ? [] : response.data.categories)
         })
       }, 500);
     });
@@ -173,7 +173,7 @@ class Api {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         axios.get(url + '/store/reviews/' + productId).then((response) => {
-          resolve(response.length === 0 ? null : response.data.reviews)
+          resolve(response.length === 0 ? [] : response.data.reviews)
         }).catch((err) => {
           reject(err)
         })
@@ -221,7 +221,7 @@ class Api {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         axios.get(url + '/blog/posts').then((response) => {
-          resolve(response.length === 0 ? null : response.data.posts)
+          resolve(response.length === 0 ? [] : response.data.posts)
         }).catch((err) => {
           reject(err)
         })
