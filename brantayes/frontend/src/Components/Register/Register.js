@@ -72,7 +72,7 @@ const vtext = (value) => {
 };
 
 const vtextnumbers = (value) => {
-  if (!isAlphanumeric(value)) {
+  if (value && !isAlphanumeric(value)) {
     return (
       <div className="alert alert-danger" role="alert">
         Cannot contain any special characters.
@@ -102,7 +102,7 @@ const vgender = (value) => {
 };
 
 const vphone = (value) => {
-  if(!isMobilePhone(value)) {
+  if(value && !isMobilePhone(value)) {
     return (
       <div className="alert alert-danger" role="alert">
         This is not a valid phone number.
@@ -180,21 +180,20 @@ class Register extends Component{
 
       dispatch(register(data))
         .then(() => {
-          this.setState({successful: true, loading: false, message: "Successfully registered."})
+          this.setState({successful: true, loading: false})
         })
         .catch((e) => {
-          this.setState({successful: false, loading: false, message: "Register failed. User already exists."})
+          this.setState({successful: false, loading: false})
         })
     }
     else {
-      this.setState({loading: false, message: "Something went wrong!"})
+      this.setState({loading: false})
     }
   }
 
 
     render(){
-      //const { message } = this.props;
-      const message = this.state.message;
+      const { message } = this.props
 
       return(
         <div
@@ -206,8 +205,6 @@ class Register extends Component{
         >
           <div
             style={{
-              //height: 600,
-              //width: 600,
               padding: 30,
               display: "flex",
               alignItems: "center",
@@ -286,7 +283,7 @@ class Register extends Component{
                           onChange={e => {
                             this.setState({ phone: e.target.value });
                           }}
-                          validations={[vnumber, vphone]}
+                          validations={[vphone]}
                         />
                       </div>
                       <div className="col">
@@ -429,7 +426,6 @@ class Register extends Component{
                         <button
                           className="btn btn-primary btn-block"
                           disabled={this.state.loading}
-                          //onClick={this.handleSubmit}
                         >
                           {this.state.loading && (
                             <span className="spinner-border spinner-border-sm"></span>
