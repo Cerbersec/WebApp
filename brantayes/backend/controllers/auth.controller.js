@@ -137,7 +137,7 @@ const login = async (req, res, next) => {
             }
 
             let authorities = []
-            const roles = user.readUserRoles(user.user_id)
+            const roles = await userDb.readUserRoles(user.user_id)
             for(let i = 0; i < roles.length; i++) {
                 authorities.push("ROLE_" + roles[i].name.toUpperCase())
             }

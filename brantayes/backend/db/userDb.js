@@ -49,7 +49,7 @@ const readUserAddress = (id) => {
 }
 
 const readUserRoles = (id) => {
-    models.User.FindByPk(id).then(user => {
+    return models.User.findByPk(id).then(user => {
         return user.getRoles()
     })
 }
