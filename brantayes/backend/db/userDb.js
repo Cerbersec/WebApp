@@ -39,7 +39,7 @@ const readUserByEmail = (email_address) => {
 }
 
 const readUserById = (id) => {
-    return models.User.FindByPk(id, {
+    return models.User.findByPk(id, {
         include: models.Address
     })
 }

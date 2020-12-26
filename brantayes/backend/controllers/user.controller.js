@@ -6,7 +6,7 @@ const getUserByID = async(req, res, next) => {
     try {
         const user = await userDb.readUserById(user_id)
 
-        if(user == null) {
+        if(!user) {
             return res.status(404).json({
                 message: 'user could not be found'
             })
