@@ -18,7 +18,7 @@ module.exports = function(sequelize, Sequelize) {
             allowNull: false
         },
         bus_nr: {
-            type: Sequelize.INTEGER,
+            type: Sequelize.STRING(10),
             allowNull: true
         },
         city: {
@@ -35,9 +35,9 @@ module.exports = function(sequelize, Sequelize) {
     })
 
     Address.associate = models => {
-        Address.belongsTo(models.Customer, {
+        Address.belongsTo(models.User, {
             foreignKey: {
-                name: 'customer_id',
+                name: 'user_id',
                 allowNull: false
             }
         })

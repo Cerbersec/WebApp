@@ -25,9 +25,9 @@ module.exports = function(sequelize, Sequelize) {
     })
 
     Blogpost.associate = models => {
-        Blogpost.belongsTo(models.Administrator, {
+        Blogpost.belongsTo(models.User, {
             foreignKey: {
-                name: 'admin_id',
+                name: 'user_id',
                 allowNull: false
             }
         })

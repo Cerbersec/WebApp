@@ -53,7 +53,7 @@ class Support extends Component
                     <h4>Shipping costs</h4>
                     FREE SHIPPING ON ORDERS OVER € 100,-
                     <br></br><br></br>
-                    <h4>Deliverance?</h4>
+                    <h4>Delivery?</h4>
                     We ship our parcels with PostNL. If you order on workdays before 22:45, we guarantee that we will transfer your order to PostNL the same day. You will receive your order the next day, both in the Netherlands and Belgium. Of course, this often works, but not always. We ask for your understanding.
                     <br></br><br></br>
                     <h4>Not at home?</h4>

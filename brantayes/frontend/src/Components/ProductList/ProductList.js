@@ -5,6 +5,7 @@ import queryString from "query-string";
 import Api from "../../Api";
 import Paging from "../Paging/Paging";
 import ProductsHeader from "../ProductsHeader/ProductsHeader";
+import { RepeatOneSharp } from "@material-ui/icons";
 
 // This component is responsible for fetching products.
 // It determines from query string which products to fetch.
@@ -30,7 +31,11 @@ class ProductList extends Component {
 
     let response = await Api.searchItems(qsAsObject);
 
-    let pcount = await Api.getProductCount(qsAsObject.category);
+    let pcount = response.data.length * (qsAsObject.page ? qsAsObject.page : 1)
+
+    if(!qsAsObject.term || response.data.length > 99 * (qsAsObject.page ? qsAsObject.page : 1)) {
+      pcount = await Api.getProductCount(qsAsObject.category);
+    }
 
     this.setState({
         items: response.data,

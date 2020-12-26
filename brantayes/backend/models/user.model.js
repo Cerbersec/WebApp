@@ -1,6 +1,6 @@
 module.exports = function(sequelize, Sequelize) {
-    const Customer = sequelize.define('Customer', {
-        customer_id: {
+    const User = sequelize.define('User', {
+        user_id: {
             autoIncrement: true,
             primaryKey: true,
             type: Sequelize.INTEGER
@@ -39,28 +39,41 @@ module.exports = function(sequelize, Sequelize) {
         underscored: true
     })
 
-    Customer.associate = models => {
-        Customer.hasMany(models.Address, {
+    User.associate = models => {
+        User.hasMany(models.Address, {
             onDelete: 'cascade',
             foreignKey: {
-                name: 'customer_id'
+                name: 'user_id'
             }
         })
 
-        Customer.hasMany(models.Review, {
+        User.hasMany(models.Review, {
             onDelete: 'set null',
             foreignKey: {
-                name: 'customer_id'
+                name: 'user_id'
             }
         })
 
-        Customer.hasMany(models.Order, {
+        User.hasMany(models.Order, {
             onDelete: 'set null',
             foreignKey: {
-                name: 'customer_id'
+                name: 'user_id'
             }
+        })
+
+        User.hasMany(models.Blogpost, {
+            onDelete: 'cascade',
+            foreignKey: {
+                name: 'user_id'
+            }
+        })
+
+        User.belongsToMany(models.Role, {
+            through: "user_roles",
+            foreignKey: "user_id",
+            otherKey: "role_id"
         })
     }
 
-    return Customer
+    return User
 }

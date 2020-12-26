@@ -14,7 +14,7 @@ class Review extends Component {
         <Card style={{ marginTop: 10, marginBottom: 10, width: 600}}>
             <div className="row header">
                 <div className="col-md-2">
-                    {this.props.item.Customer.username}:
+                    {this.props.item.User.username}:
                 </div>
                 <div className="col-md-4">
                     <BeautyStars

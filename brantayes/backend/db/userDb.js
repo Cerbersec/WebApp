@@ -2,12 +2,12 @@
 const models = require('../models')
 
 const readUsers = () => {
-    return models.Customer.findAll()
+    return models.User.findAll()
 }
 
 const createUser = async (user, address) => {
 
-    const [customer, created] =  await models.Customer.findOrCreate({
+    const [userCreated, created] =  await models.User.findOrCreate({
         where: { 
             first_name: user.first_name,
             last_name: user.last_name,
@@ -19,7 +19,7 @@ const createUser = async (user, address) => {
         }
     })
 
-   const addr = await customer.createAddress({
+   const addr = await userCreated.createAddress({
         street_name: address.street_name,
         street_nr: address.street_nr,
         postal_code: address.postal_code,
@@ -28,44 +28,35 @@ const createUser = async (user, address) => {
         country: address.country
     })
 
-    return [customer, created]
+    //user role = 1
+    const role = await userCreated.setRoles([1])
 
-    /* DO NOT REMOVE!!!
-    
-    const addr = await models.Address.findOrCreate({
-        where: {
-            customer_id: customer.customer_id
-        },
-        include: [models.Customer],
-        defaults: {
-            street_name: address.street_name,
-            street_nr: address.street_nr,
-            postal_code: address.postal_code,
-            bus_nr: address.bus_nr,
-            city: address.city,
-            country: address.country
-        }
-    })
-    */
+    return [userCreated, created]
 }
 
-const readUser = (email_address) => {
-    return models.Customer.findOne({ where: { email_address: email_address } })
+const readUserByEmail = (email_address) => {
+    return models.User.findOne({ where: { email_address: email_address } })
 }
 
 const readUserById = (id) => {
-    return models.Customer.findOne({ 
-        where: { customer_id: id },
+    return models.User.findByPk(id, {
         include: models.Address
     })
 }
 
 const readUserAddress = (id) => {
-    return models.Address.findOne({ where: { customer_id: id } })
+    return models.Address.findOne({ where: { user_id: id } })
+}
+
+const readUserRoles = (id) => {
+    return models.User.findByPk(id).then(user => {
+        return user.getRoles()
+    })
 }
 
 exports.readUsers = readUsers
-exports.readUser = readUser
+exports.readUserByEmail = readUserByEmail
 exports.createUser = createUser
 exports.readUserById = readUserById
 exports.readUserAddress = readUserAddress
+exports.readUserRoles = readUserRoles

@@ -31,9 +31,9 @@ module.exports = function(sequelize, Sequelize) {
             }
         })
 
-        Review.belongsTo(models.Customer, {
+        Review.belongsTo(models.User, {
             foreignKey: {
-                name: 'customer_id',
+                name: 'user_id',
                 allowNull: false
             }
         })

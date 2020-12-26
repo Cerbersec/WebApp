@@ -34,9 +34,9 @@ module.exports = function(sequelize, Sequelize) {
             }
         })
 
-        Order.belongsTo(models.Customer, {
+        Order.belongsTo(models.User, {
             foreignKey: {
-                name: 'customer_id',
+                name: 'user_id',
                 allowNull: false
             }
         })

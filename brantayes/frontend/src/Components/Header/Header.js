@@ -115,12 +115,13 @@ class Header extends Component {
   }
 
   async fetchCategories() {
-    //const categories = await Api.getCategories()
-    //manually add All categories option
+    // const categories = await Api.getCategories()
+
     // categories.unshift({
     //   category_name: "All categories"
     // })
-    const categories = [{name: "All categories"}, {name: "Men"}, {name: "Women"}, {name: "Children"}, {name: "Preschool"}, {name: "Toddler"}, {name: "Belts"}, {name: "Socks"},{name: "Other"}]
+
+    const categories = [{name: "All categories"}, {name: "Men"}, {name: "Women"}, {name: "Boys"}, {name: "Girls"}, {name: "Other"}]
 
     const categoryOptions = categories.map(category => {
       return (

@@ -1,13 +1,15 @@
 // CRUD: create, read, update, delete
 const models = require('../models')
 
-const readProducts = async (pageLimit,pageOffset, category, type) => {
+const readProducts = async (pageLimit,pageOffset, category, type, term) => {
+    const { Op } = models.Sequelize
+
     //return products in specific cateory
     if(category !== "All categories") {
         //return all shoes in category
         if(type == "All " + category.toLowerCase() + " shoes") {
             return models.Product.findAll({
-                where: {'$category.category_name$': category, '$category.product_group$': "Shoes"},
+                where: {'$category.category_name$': category, '$category.product_group$': "Shoes", name: { [Op.substring]: term }},
                 offset: pageOffset,
                 limit: pageLimit,
                 include: [{
@@ -19,7 +21,19 @@ const readProducts = async (pageLimit,pageOffset, category, type) => {
         //return all accessories in category
         else if(type == "All " + category.toLowerCase() + " accessories") {
             return models.Product.findAll({
-                where: {'$category.category_name$': category, '$category.product_group$': "Accessories"},
+                where: {'$category.category_name$': category, '$category.product_group$': "Accessories", name: { [Op.substring]: term }},
+                offset: pageOffset,
+                limit: pageLimit,
+                include: [{
+                    model: models.Category,
+                    as: 'category'
+                }]
+            })
+        }
+        //return all products for gender
+        else if(type == "All types"){
+            return models.Product.findAll({
+                where: {'$category.category_name$': category, name: { [Op.substring]: term }},
                 offset: pageOffset,
                 limit: pageLimit,
                 include: [{
@@ -31,7 +45,7 @@ const readProducts = async (pageLimit,pageOffset, category, type) => {
         //return type of product in category
         else {
             return models.Product.findAll({
-                where: {'$category.category_name$': category, type: type},
+                where: {'$category.category_name$': category, type: type, name: { [Op.substring]: term }},
                 offset: pageOffset,
                 limit: pageLimit,
                 include: [{
@@ -44,6 +58,7 @@ const readProducts = async (pageLimit,pageOffset, category, type) => {
     //return all products
     else {
         return models.Product.findAll({
+            where: {name: { [Op.substring]: term }},
             offset: pageOffset,
             limit: pageLimit,
             include: [{
@@ -68,35 +83,35 @@ const countProductsByCategory = async (category) => {
     }
 }
 
-const createOrder = async (orderlines, userid) => {
+const createOrder = async (orderlines, user_id) => {
     const shipping_costs = 12;
 
-    const OrderPlaced = await models.Order.create({
+    const orderPlaced = await models.Order.create({
         total_price: 0, 
         shipping_costs: shipping_costs,
         order_date: new Date(Date.now()),
-        customer_id: userid,
+        user_id: user_id,
         paid: false
     })
 
-    const totalprice = await (createOrderlines(orderlines, OrderPlaced))
+    const totalprice = await (createOrderlines(orderlines, orderPlaced))
 
     if(totalprice >= 100)
     {
-        OrderPlaced.shipping_costs = 0;
+        orderPlaced.shipping_costs = 0;
         console.log("shipping costs waived!")
     }
 
-    OrderPlaced.total_price = totalprice
-    OrderPlaced.save().then((order) => {console.log(order)})
+    orderPlaced.total_price = totalprice
+    orderPlaced.save().then((order) => {console.log(order)})
 
-    return OrderPlaced
+    return orderPlaced
 }
 
-const updateOrderPaidStatus = async (orderid, status) => {
+const updateOrderPaidStatus = async (order_id, status) => {
     models.Order.update(
         { paid: status},
-        { where: {order_id: orderid} }
+        { where: {order_id: order_id} }
     )
     .then(order => {
         return order
@@ -106,7 +121,7 @@ const updateOrderPaidStatus = async (orderid, status) => {
     })
 }
 
-const createOrderlines = async(orderlines, OrderPlaced) => {
+const createOrderlines = async(orderlines, orderPlaced) => {
     var totalprice = 0;
 
     for(const element of orderlines) {
@@ -121,7 +136,7 @@ const createOrderlines = async(orderlines, OrderPlaced) => {
         totalprice = totalprice + subtotal
         element.discount = 0;
 
-        OrderPlaced.createOrderline({
+        orderPlaced.createOrderline({
             quantity: element.quantity,
             subtotal_price: subtotal,
             discount: element.discount,
@@ -141,17 +156,17 @@ const createOrderlines = async(orderlines, OrderPlaced) => {
     return totalprice;
 }
 
-const readOrders = (userid) => {
-    return models.Order.findAll({where: { customer_id: userid}, include: models.Orderline})
+const readOrders = (user_id) => {
+    return models.Order.findAll({where: { user_id: user_id}, include: models.Orderline})
 }
 
-const readOrder = (userId,orderId) => {
-    const order = models.Order.findOne({ where: { customer_id: userId, order_id: orderId }, include: [{model: models.Orderline, include : models.Product }]})
+const readOrder = (user_id, order_id) => {
+    const order = models.Order.findOne({ where: { user_id: user_id, order_id: order_id }, include: [{model: models.Orderline, include : models.Product }]})
     return order
 }
 
-const readOrderLines = (orderId) => {
-    const orderlines = models.Orderline.findAll({ where: { order_id: orderId } })
+const readOrderLines = (order_id) => {
+    const orderlines = models.Orderline.findAll({ where: { order_id: order_id } })
     return orderlines
 }
 
@@ -159,8 +174,8 @@ const readCategories = () => {
     return models.Category.findAll()
 }
 
-const readReviews = (product_Id) => {
-    return models.Review.findAll({where: { product_id: product_Id }, include: models.Customer})
+const readReviews = (product_id) => {
+    return models.Review.findAll({where: { product_id: product_id }, include: models.User})
 }
 
 const createReview = async (review) => {
@@ -169,7 +184,7 @@ const createReview = async (review) => {
         description: review.description,
         review_date: review.review_date,
         product_id: review.product_id,
-        customer_id: review.customer_id
+        user_id: review.user_id
     })
 }
 

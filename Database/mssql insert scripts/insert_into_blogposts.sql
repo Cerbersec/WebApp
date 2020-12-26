@@ -1,4 +1,4 @@
-INSERT INTO brantano.dbo.blogposts(title, post_date, content,created_at, updated_at)
+INSERT INTO brantano.dbo.blogposts(title, post_date, content,created_at, updated_at, user_id)
 VALUES ('Brantayes, The next big e-commerce shop', '2020-12-09', 'Brantayes is taking over the world of online shoes! 
 Once upon a time in a small city in Belgium, we were just snipping of our bear and dreaming about a lot of things. Until one of u said ‘Imagine we could take over the market of shoes and just develop a total e-commerce platform’. And yes, that was the moment that we started our journey. 
 
@@ -10,9 +10,9 @@ You can just sing up on our website, receive our monthly newsletters with new pr
 Hit us up if you have any questions about it! We look forward to you see you as a customer at our web shop!
 
 The Brantayes-team!
-','2020-12-09','2020-12-09')
+','2020-12-09','2020-12-09',1)
 
-INSERT INTO brantano.dbo.blogposts(title, post_date, content,created_at, updated_at)
+INSERT INTO brantano.dbo.blogposts(title, post_date, content,created_at, updated_at, user_id)
 VALUES ('6 reasons why you should wear sneakers!', '2020-12-09','Sneakers are trending, sneakers hip, sneakers are cool, sneakers are just everywhere. Are you still not convinced of wearing sneakers? Just read this short article and we ensure you, after reading this, you will immediately buy sneakers at Brantayes!
 
 1.	Comfortable 
@@ -36,4 +36,4 @@ Sneakers are for everyone, whether you are 5 years old or 80 years old, you can 
 Did we enthuse you about sneakers? 
 Do not hesitate to visit our online shop at www.brantayes.be 
 
-The Brantayes-team!','2020-12-09','2020-12-09')
+The Brantayes-team!','2020-12-09','2020-12-09',1)

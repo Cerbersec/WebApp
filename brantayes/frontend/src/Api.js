@@ -1,18 +1,21 @@
 import axios from "axios"
-const url = "" //set target URL to manually override express.js routing
+const url = "/api/v1" //prefix
+//store -> shop stuff
+//account -> useraccount stuff
+//auth -> register,login,logout
+//blog -> blog stuff
 
 //setup csrf token
-axios.get(url + '/csrf-token').then((response) => {
-  //axios.defaults.headers.post['X-CSRF-TOKEN'] = response.data.csrfToken;
-  console.log(response.data)
-})
+// axios.get(url + '/csrf-token').then((response) => {
+//   //axios.defaults.headers.post['X-CSRF-TOKEN'] = response.data.csrfToken;
+// })
 
 class Api {
 
   getItemUsingID(id) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        axios.get(url + "/store/productinfo/" + parseInt(id, 10)).then((response) => { 
+        axios.get(url + "/store/products/" + parseInt(id, 10)).then((response) => { 
           resolve(response.lenght === 0 ? null : response.data.product)
         })
       }, 500);
@@ -70,6 +73,7 @@ class Api {
             page: page,
             category: category,
             type: type,
+            term: term,
             itemsPerpage: itemsPerPage,
           }
 
@@ -117,7 +121,7 @@ class Api {
   getCategories() {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        axios.get(url + "/store/categories/").then((response) => { 
+        axios.get(url + "/store/categories").then((response) => { 
           resolve(response.lenght === 0 ? null : response.data.categories)
         })
       }, 500);
@@ -140,7 +144,7 @@ class Api {
 
   login(data) {
     return axios
-      .post(url + "/account/login", data)
+      .post(url + "/auth/login", data)
       .then((response) => {
         if(response.data.id) {
           localStorage.setItem("user", JSON.stringify(response.data));
@@ -151,7 +155,7 @@ class Api {
 
   logout() {
     return axios
-      .get(url + "/account/logout")
+      .get(url + "/auth/logout")
       .then((response) => {
         localStorage.removeItem("user");
       });
@@ -159,7 +163,7 @@ class Api {
 
   register(data) {
     return axios
-      .post(url + "/account/register", data)
+      .post(url + "/auth/register", data)
       .then((response) => {
         return response.data;
       });
@@ -191,8 +195,9 @@ class Api {
   getOrders() {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        axios.get(url + '/orders').then((response) => {
-          resolve(response.lenght === 0 ? null : response.data.orders)
+        axios.get(url + '/store/orders').then((response) => {
+          console.log(response)
+          resolve(response.lenght === 0 ? [] : response.data.orders)
         }).catch((err) => {
           reject(err)
         })
@@ -203,7 +208,7 @@ class Api {
   getOrderByID(orderID) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        axios.get(url + '/orders/' + orderID).then((response) => {
+        axios.get(url + '/store/orders/' + orderID).then((response) => {
           resolve(response.lenght === 0 ? null : response.data.order)
         }).catch((err) => {
           reject(err)
@@ -215,7 +220,7 @@ class Api {
   getBlogPosts() {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        axios.get(url + '/blog').then((response) => {
+        axios.get(url + '/blog/posts').then((response) => {
           resolve(response.length === 0 ? null : response.data.posts)
         }).catch((err) => {
           reject(err)
@@ -227,7 +232,7 @@ class Api {
   getBlogPostByID(id) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        axios.get(url + '/blog/' + parseInt(id, 10)).then((response) => {
+        axios.get(url + '/blog/posts/' + parseInt(id, 10)).then((response) => {
           resolve(response.length === 0 ? null : response.data);
         }).catch((err) => {
           reject(err)
@@ -236,7 +241,7 @@ class Api {
     })
   }
 
-  getCustomerByID() {
+  getUserByID() {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         axios.get(url + '/account/details').then((response) => {

@@ -27,7 +27,7 @@ class ConnectedItem extends Component {
         //movement
         sneaker.style.transitionDuration = "1s";
         sneaker.style.transitionDelay = ".3s";
-        sneaker.style.transform = "translateZ(100px) rotateZ(-10deg)";
+        sneaker.style.transform = "translateZ(50px) rotateZ(-10deg)";
     }
 
     handleMouseLeave = (e) => {

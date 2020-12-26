@@ -29,7 +29,7 @@ class Account extends Component
 
         this.state = {
             orders: [],
-            customer: null,
+            user: null,
             loading: false,
             fieldsetDisabled: true,
         };
@@ -38,7 +38,7 @@ class Account extends Component
 
     componentDidMount() {
         this.fetchOrders();
-        this.fetchCustomer();
+        this.fetchUser();
     }
 
     async fetchOrders() {
@@ -47,15 +47,15 @@ class Account extends Component
         this.setState({orders: response, loading: false})
     }
 
-    async fetchCustomer() {
+    async fetchUser() {
         this.setState({loading: true})
-        let response = await Api.getCustomerByID()
-        this.setState({customer: response.customer, loading: false})
+        let response = await Api.getUserByID()
+        this.setState({user: response.user, loading: false})
     }
 
     render()
     {
-        if (this.state.loading || !this.state.customer) {
+        if (this.state.loading || !this.state.user) {
             return <CircularProgress className="circular" />;
         }
 
@@ -69,13 +69,13 @@ class Account extends Component
                             <fieldset disabled={this.state.fieldsetDisabled}>
                                 <div className="row">
                                     <div className="col-md-6">
-                                        <input className="form-control" type="text" defaultValue={this.state.customer.first_name} />
-                                        <input className="form-control" type="text" defaultValue={this.state.customer.username} />
-                                        <input className="form-control" type="text" defaultValue={this.state.customer.phone} />
+                                        <input className="form-control" type="text" defaultValue={this.state.user.first_name} />
+                                        <input className="form-control" type="text" defaultValue={this.state.user.username} />
+                                        <input className="form-control" type="text" defaultValue={this.state.user.phone} />
                                     </div>
                                     <div className="col-md-6">
-                                        <input className="form-control" type="text" defaultValue={this.state.customer.last_name} />
-                                        <input className="form-control" type="email" defaultValue={this.state.customer.email_address} disabled/>
+                                        <input className="form-control" type="text" defaultValue={this.state.user.last_name} />
+                                        <input className="form-control" type="email" defaultValue={this.state.user.email_address} disabled/>
                                         <Select className="form-control" disableUnderline disabled={this.state.fieldsetDisabled}>
                                             <MenuItem value={"M"}>Male</MenuItem>
                                             <MenuItem value={"F"}>Female</MenuItem>
@@ -92,14 +92,14 @@ class Account extends Component
                             <fieldset disabled={this.state.fieldsetDisabled}>
                                 <div className="row">
                                     <div className="col-md-6">                               
-                                        <input className="form-control" type="text" defaultValue={this.state.customer.Addresses[0].street_name} />
-                                        <input className="form-control" type="text" defaultValue={this.state.customer.Addresses[0].postal_code} />
-                                        <input className="form-control" type="text" defaultValue={this.state.customer.Addresses[0].city} />
+                                        <input className="form-control" type="text" defaultValue={this.state.user.Addresses[0].street_name} />
+                                        <input className="form-control" type="text" defaultValue={this.state.user.Addresses[0].postal_code} />
+                                        <input className="form-control" type="text" defaultValue={this.state.user.Addresses[0].city} />
                                     </div>
                                     <div className="col-md-6">
-                                        <input className="form-control" type="text" defaultValue={this.state.customer.Addresses[0].street_nr} />
-                                        <input className="form-control" type="text" defaultValue={this.state.customer.Addresses[0].bus_nr} />
-                                        <input className="form-control" type="text" defaultValue={this.state.customer.Addresses[0].country} />
+                                        <input className="form-control" type="text" defaultValue={this.state.user.Addresses[0].street_nr} />
+                                        <input className="form-control" type="text" defaultValue={this.state.user.Addresses[0].bus_nr} />
+                                        <input className="form-control" type="text" defaultValue={this.state.user.Addresses[0].country} />
                                     </div> 
                                 </div>
                             </fieldset>

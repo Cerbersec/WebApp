@@ -47,7 +47,7 @@ class ConnectedMenu extends Component {
 
     const shoes_men_product_types = [{name: "Sneakers"}, {name: "Boots"}, {name: "Chelsea boots"}, {name: "Short boots"}, {name: "Flat ankle boots"}, {name: "Knee boots"}, {name: "Hiking boots"}, {name: "Football boots"}, {name: "Rain boots"}, {name: "Dress shoes"}, {name: "Loafers"}, {name: "Slip-on sneakers"}, {name: "Low shoes"}, {name: "Mocassins"}]
     const shoes_women_product_types = [{name: "Knee boots"}, {name: "Boots"}, {name: "Chelsea boots"}, {name: "Short boots"}, {name: "Flat ankle boots"}, {name: "Hiking boots"}, {name: "Football boots"}, {name: "Rain boots"}, {name: "Ballerinas"}, {name: "Loafers"}, {name: "Slip-on sneakers"}, {name: "Lace-up shoes"}]
-    const shoes_boys_product_types = [{name: "Sneakers"}, {name: "Boots"}, {name: "Hiking boots"}, {name: "Football boots"}, {name: "High shoes"}, {name: "Low shows"}, {name: "Baby slippers"}, {name: "Baby shoes"}, {name: "Baby sneakers"}]
+    const shoes_boys_product_types = [{name: "Sneakers"}, {name: "Boots"}, {name: "Hiking boots"}, {name: "Football boots"}, {name: "High shoes"}, {name: "Low shoes"}, {name: "Baby slippers"}, {name: "Baby shoes"}, {name: "Baby sneakers"}]
     const shoes_girl_product_types = [{name: "Sneakers"}, {name: "Boots"}, {name: "Chelsea boots"}, {name: "Hiking boots"}, {name: "Football boots"}, {name: "High shoes"}, {name: "Low shoes"}, {name: "Baby slippers"}, {name: "Baby shoes"}, {name: "Baby sneakers"}, {name: "Baby boots"}]
     
     const accessories_men_product_types = [{name: "Shoe care"}, {name: "Socks"}, {name: "Ankle socks"}, {name: "Soles"}]
