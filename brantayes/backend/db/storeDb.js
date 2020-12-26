@@ -1,13 +1,15 @@
 // CRUD: create, read, update, delete
 const models = require('../models')
 
-const readProducts = async (pageLimit,pageOffset, category, type) => {
+const readProducts = async (pageLimit,pageOffset, category, type, term) => {
+    const { Op } = models.Sequelize
+
     //return products in specific cateory
     if(category !== "All categories") {
         //return all shoes in category
         if(type == "All " + category.toLowerCase() + " shoes") {
             return models.Product.findAll({
-                where: {'$category.category_name$': category, '$category.product_group$': "Shoes"},
+                where: {'$category.category_name$': category, '$category.product_group$': "Shoes", name: { [Op.substring]: term }},
                 offset: pageOffset,
                 limit: pageLimit,
                 include: [{
@@ -19,7 +21,19 @@ const readProducts = async (pageLimit,pageOffset, category, type) => {
         //return all accessories in category
         else if(type == "All " + category.toLowerCase() + " accessories") {
             return models.Product.findAll({
-                where: {'$category.category_name$': category, '$category.product_group$': "Accessories"},
+                where: {'$category.category_name$': category, '$category.product_group$': "Accessories", name: { [Op.substring]: term }},
+                offset: pageOffset,
+                limit: pageLimit,
+                include: [{
+                    model: models.Category,
+                    as: 'category'
+                }]
+            })
+        }
+        //return all products for gender
+        else if(type == "All types"){
+            return models.Product.findAll({
+                where: {'$category.category_name$': category, name: { [Op.substring]: term }},
                 offset: pageOffset,
                 limit: pageLimit,
                 include: [{
@@ -31,7 +45,7 @@ const readProducts = async (pageLimit,pageOffset, category, type) => {
         //return type of product in category
         else {
             return models.Product.findAll({
-                where: {'$category.category_name$': category, type: type},
+                where: {'$category.category_name$': category, type: type, name: { [Op.substring]: term }},
                 offset: pageOffset,
                 limit: pageLimit,
                 include: [{
@@ -44,6 +58,7 @@ const readProducts = async (pageLimit,pageOffset, category, type) => {
     //return all products
     else {
         return models.Product.findAll({
+            where: {name: { [Op.substring]: term }},
             offset: pageOffset,
             limit: pageLimit,
             include: [{

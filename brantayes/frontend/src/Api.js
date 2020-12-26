@@ -73,6 +73,7 @@ class Api {
             page: page,
             category: category,
             type: type,
+            term: term,
             itemsPerpage: itemsPerPage,
           }
 
@@ -120,7 +121,7 @@ class Api {
   getCategories() {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        axios.get(url + "/store/categories/").then((response) => { 
+        axios.get(url + "/store/categories").then((response) => { 
           resolve(response.lenght === 0 ? null : response.data.categories)
         })
       }, 500);
