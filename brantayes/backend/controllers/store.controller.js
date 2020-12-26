@@ -52,7 +52,7 @@ const getProductCountByCategory = async(req, res, next) => {
 }
 
 const getProductbyID = async(req, res, next) => {
-    const productId = req.params.productId
+    const productId = req.params.productid
     try {
         const product = await storeDb.readProduct(productId)
 
