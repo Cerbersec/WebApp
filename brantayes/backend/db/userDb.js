@@ -28,6 +28,9 @@ const createUser = async (user, address) => {
         country: address.country
     })
 
+    //user role = 1
+    const role = await userCreated.setRoles([1])
+
     return [userCreated, created]
 }
 
