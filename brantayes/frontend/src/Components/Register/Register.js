@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
-import { isEmail, isAlpha, isPostalCode, isNumeric } from "validator";
+import { isEmail, isAlpha, isPostalCode, isNumeric, isAlphanumeric, isMobilePhone } from "validator";
 
 const mapStateToProps = state => {
   const { message } = state;
@@ -71,6 +71,16 @@ const vtext = (value) => {
   }
 };
 
+const vtextnumbers = (value) => {
+  if (!isAlphanumeric(value)) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        Cannot contain any special characters.
+      </div>
+    )
+  }
+}
+
 const vpostalcode = (value) => {
   if (!isPostalCode(value, 'any')) {
     return (
@@ -90,6 +100,16 @@ const vgender = (value) => {
     );
   }
 };
+
+const vphone = (value) => {
+  if(!isMobilePhone(value)) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        This is not a valid phone number.
+      </div>
+    )
+  }
+}
 
 const vnumber = (value) => {
   if (!isNumeric(value)) {
@@ -266,7 +286,7 @@ class Register extends Component{
                           onChange={e => {
                             this.setState({ phone: e.target.value });
                           }}
-                          validations={[required, vnumber]}
+                          validations={[vnumber, vphone]}
                         />
                       </div>
                       <div className="col">
@@ -361,7 +381,7 @@ class Register extends Component{
                           onChange={e => {
                             this.setState({ bus_nr : e.target.value });
                           }}
-                          validations={[required, vnumber]}
+                          validations={[vtextnumbers]}
                         />
                       </div>
                     </div>
