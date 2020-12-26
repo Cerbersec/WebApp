@@ -147,7 +147,7 @@ class Api {
       .post(url + "/auth/login", data)
       .then((response) => {
         if(response.data.id) {
-          localStorage.setItem("user", JSON.stringify(response.data));
+          sessionStorage.setItem("user", JSON.stringify(response.data));
         }
         return response.data;
       });    
@@ -157,7 +157,7 @@ class Api {
     return axios
       .get(url + "/auth/logout")
       .then((response) => {
-        localStorage.removeItem("user");
+        sessionStorage.removeItem("user");
       });
   }
 
