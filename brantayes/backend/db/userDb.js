@@ -38,20 +38,41 @@ const readUserByEmail = (email_address) => {
     return models.User.findOne({ where: { email_address: email_address } })
 }
 
-const readUserById = (id) => {
-    return models.User.findByPk(id, {
+const readUserById = (user_id) => {
+    return models.User.findByPk(user_id, {
         include: models.Address
     })
 }
 
-const readUserAddress = (id) => {
-    return models.Address.findOne({ where: { user_id: id } })
+const readUserAddress = (user_id) => {
+    return models.Address.findOne({ where: { user_id: user_id } })
 }
 
-const readUserRoles = (id) => {
-    return models.User.findByPk(id).then(user => {
+const readUserRoles = (user_id) => {
+    return models.User.findByPk(user_id).then(user => {
         return user.getRoles()
     })
+}
+
+//TODO: implement
+const updateUserById = async(user_id) => {
+
+}
+
+const deleteUserById = async(user_id) => {
+    return await models.User.destroy(user_id);
+}
+
+const createUserAddressById = async(user_id) => {
+
+}
+
+const updateUserAddressById = async(user_id, address_id) => {
+
+}
+
+const deleteUserAddressById = async(address_id) => {
+    return await models.Address.destroy(address_id)
 }
 
 exports.readUsers = readUsers
@@ -60,3 +81,8 @@ exports.createUser = createUser
 exports.readUserById = readUserById
 exports.readUserAddress = readUserAddress
 exports.readUserRoles = readUserRoles
+exports.updateUserById = updateUserById
+exports.deleteUserById = deleteUserById
+exports.createUserAddressById = createUserAddressById
+exports.updateUserAddressById = updateUserAddressById
+exports.deleteUserAddressById = deleteUserAddressById
