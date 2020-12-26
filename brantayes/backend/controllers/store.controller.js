@@ -95,7 +95,7 @@ const getOrders = async(req, res, next) => {
     try {
         const orders = await storeDb.readOrders(req.user_id)
         
-        if (orders == null) {
+        if (!orders) {
             return res.status(404).json({
                 message: 'no orders found'
             })

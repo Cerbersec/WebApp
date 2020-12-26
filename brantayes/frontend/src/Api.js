@@ -195,8 +195,9 @@ class Api {
   getOrders() {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        axios.get(url + '/orders').then((response) => {
-          resolve(response.lenght === 0 ? null : response.data.orders)
+        axios.get(url + '/store/orders').then((response) => {
+          console.log(response)
+          resolve(response.lenght === 0 ? [] : response.data.orders)
         }).catch((err) => {
           reject(err)
         })
@@ -207,7 +208,7 @@ class Api {
   getOrderByID(orderID) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        axios.get(url + '/orders/' + orderID).then((response) => {
+        axios.get(url + '/store/orders/' + orderID).then((response) => {
           resolve(response.lenght === 0 ? null : response.data.order)
         }).catch((err) => {
           reject(err)
