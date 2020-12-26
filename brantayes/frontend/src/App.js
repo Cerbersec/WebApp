@@ -75,7 +75,7 @@ class App extends Component {
           {this.props.history.location.pathname !== '/' && (
             <Menu />
           )}
-          <div className="content">
+          <div className="content" style={{ paddingLeft: 20}}>
             <CartDialog />
             <Switch>
               <Route path="/" exact component={Home} />
