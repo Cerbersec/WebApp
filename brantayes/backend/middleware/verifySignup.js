@@ -1,4 +1,3 @@
-const { verify } = require('jsonwebtoken');
 const userDb = require('../db/userDb')
 const models = require('../models')
 const ROLES = models.ROLES;
