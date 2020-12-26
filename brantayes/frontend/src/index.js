@@ -1,15 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
-import { BrowserRouter } from "react-router-dom";
+import { Router } from "react-router-dom";
+import { history } from "./helpers/history";
 import { Provider } from "react-redux";
 import store from "./Redux/Store";
 
 let app = (
   <Provider store={store}>
-    <BrowserRouter>
+    <Router history={history}>
       <App />
-    </BrowserRouter>
+    </Router>
   </Provider>
 );
 
