@@ -6,9 +6,9 @@ const url = "/api/v1" //prefix
 //blog -> blog stuff
 
 //setup csrf token
-// axios.get(url + '/csrf-token').then((response) => {
-//   //axios.defaults.headers.post['X-CSRF-TOKEN'] = response.data.csrfToken;
-// })
+axios.get(url + '/csrf-token').then((response) => {
+  //axios.defaults.headers.post['X-CSRF-TOKEN'] = response.data.csrfToken;
+})
 
 class Api {
 
