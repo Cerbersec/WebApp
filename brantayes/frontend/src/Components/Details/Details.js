@@ -163,19 +163,24 @@ class ConnectedDetails extends Component {
               <Typography id="discrete-slider" gutterBottom style={{marginTop: 5}}>
                 Size
               </Typography>
-              <Slider
-                defaultValue={parseInt(this.state.item.size.split('-')[0])}
-                getAriaValueText={valuetext}
-                aria-labelledby="discrete-slider"
-                valueLabelDisplay="auto"
-                step={1}
-                marks
-                min={parseInt(this.state.item.size.split('-')[0])}
-                max={parseInt(this.state.item.size.split('-')[1])}
-                style={{width: 160}}
-                onChange={(event, newValue) => {
-                  this.state.item.selectedSize = newValue;
-                  }}/>
+              {this.state.item.size !== '1size' ? (
+                <Slider
+                  defaultValue={parseInt(this.state.item.size.split('-')[0])}
+                  getAriaValueText={valuetext}
+                  aria-labelledby="discrete-slider"
+                  valueLabelDisplay="auto"
+                  step={1}
+                  marks
+                  min={parseInt(this.state.item.size.split('-')[0])}
+                  max={parseInt(this.state.item.size.split('-')[1])}
+                  style={{width: 160}}
+                  onChange={(event, newValue) => {
+                    this.state.item.selectedSize = newValue;
+                  }}
+                />
+              ) : (
+                "No size available"
+              )}
 
               <TextField
                 type="number"

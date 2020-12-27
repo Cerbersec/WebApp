@@ -7,14 +7,12 @@ export const register = (data) => (dispatch) => {
             dispatch({
                 type: CONSTANTS.REGISTER_SUCCESS,
             });
-
-            //TODO: check SET_MESSAGE dispatch -> possible Router<history> issue in App.js
-            /*
+            
             dispatch({
                 type: CONSTANTS.SET_MESSAGE,
-                payload: response.data.message
+                payload: response.message
             });
-            */
+            
 
             return Promise.resolve();
         },
@@ -27,7 +25,7 @@ export const register = (data) => (dispatch) => {
 
             dispatch({
                 type: CONSTANTS.SET_MESSAGE,
-                payload: message,
+                payload: message
             });
 
             return Promise.reject();

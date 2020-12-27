@@ -19,8 +19,6 @@ const register = async(req, res, next) => {
         req.checkBody('username', 'Username is required').notEmpty()
         req.checkBody('password', 'Password is required').notEmpty()
         req.checkBody('verify_password', 'Verify password is required').notEmpty()
-        req.checkBody('bus_nr', 'Bus number is required is required').notEmpty()
-        req.checkBody('phone', 'Phone is required').notEmpty()
         req.checkBody('street_name', 'Street name is required').notEmpty()
         req.checkBody('postal_code', 'Postal code is required').notEmpty()
         req.checkBody('street_nr', 'Street number is required').notEmpty()
@@ -29,10 +27,10 @@ const register = async(req, res, next) => {
 
         let missingFieldErrors = req.validationErrors()
         if(missingFieldErrors) {
-            let err = new TypedError('register error', 400, 'missing_field', {
-                errors: missingFieldErrors,
+            console.log(missingFieldErrors)
+            res.status(400).send({
+                message: 'Missing field. ' + missingFieldErrors.map(e => {return e.msg})
             })
-            return next(err)
         }
 
         req.checkBody('email_address', 'Email is not valid').isEmail()
@@ -40,10 +38,9 @@ const register = async(req, res, next) => {
 
         let invalidFieldErrors = req.validationErrors()
         if(invalidFieldErrors) {
-            let err = new TypedError('register error', 400, 'invalid_field', {
-                errors: invalidFieldErrors,
+            res.status(400).send({
+                message: 'Invalid field. ' + invalidFieldErrors.map(e => {return e.msg})
             })
-            return next(err)
         }        
 
         //hash password
@@ -73,14 +70,13 @@ const register = async(req, res, next) => {
 
         if(created) {
             res.status(200).send({
-                message: "register successful"
+                message: 'Register successful.'
             })
         }
         else {
-            let err = new TypedError('register error', 409, 'invalid_field', {
-                message: "user already exists"
+            res.status(400).send({
+                message: 'An account with this email address already exists.'
             })
-            return next(err)
         }
 
     } catch(e) {
@@ -98,27 +94,29 @@ const login = async (req, res, next) => {
 
         let missingFieldErrors = req.validationErrors()
         if(missingFieldErrors) {
-            let err = new TypedError('login error', 400, 'missing_field', {
-                errors: missingFieldErrors,
+            res.status(400).send({
+                message: 'Missing field. ' + missingFieldErrors.map(e => {return e.msg})
             })
-            return next(err)
         }
 
         req.checkBody('email_address', 'Email is not valid').isEmail()
 
         let invalidFieldErrors = req.validationErrors()
         if(invalidFieldErrors) {
-            let err = new TypedError('login error', 400, 'invalid_field', {
-                errors: invalidFieldErrors,
+            res.status(400).send({
+                message: 'Email address is not valid.'
             })
-            return next(err)
         }
    
         const user = await userDb.readUserByEmail(email_address) //result = Model, null
 
-        if( !user || !(await bcrypt.compare(password, user.password)) ) {
-            res.status(401).send({
-            message: 'Email or Password is incorrect'
+        if(!user) {
+            res.status(400).send({
+                message: 'Account does not exist.'
+            })
+        } else if(!(await bcrypt.compare(password, user.password))) {
+            res.status(400).send({
+                message: 'Incorrect password.'
             })
         } else {
             const id = user.user_id;

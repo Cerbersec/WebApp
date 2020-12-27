@@ -1,6 +1,6 @@
 import * as CONSTANTS from "../Constants";
 
-const user = JSON.parse(localStorage.getItem("user"));
+const user = JSON.parse(sessionStorage.getItem("user"));
 
 // If multiple components need access to some data, in that case we store such data in redux.
 const initialState = user

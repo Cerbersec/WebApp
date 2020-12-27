@@ -122,7 +122,7 @@ class Api {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         axios.get(url + "/store/categories").then((response) => { 
-          resolve(response.lenght === 0 ? null : response.data.categories)
+          resolve(response.lenght === 0 ? [] : response.data.categories)
         })
       }, 500);
     });
@@ -147,7 +147,7 @@ class Api {
       .post(url + "/auth/login", data)
       .then((response) => {
         if(response.data.id) {
-          localStorage.setItem("user", JSON.stringify(response.data));
+          sessionStorage.setItem("user", JSON.stringify(response.data));
         }
         return response.data;
       });    
@@ -157,7 +157,7 @@ class Api {
     return axios
       .get(url + "/auth/logout")
       .then((response) => {
-        localStorage.removeItem("user");
+        sessionStorage.removeItem("user");
       });
   }
 
@@ -173,7 +173,7 @@ class Api {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         axios.get(url + '/store/reviews/' + productId).then((response) => {
-          resolve(response.length === 0 ? null : response.data.reviews)
+          resolve(response.length === 0 ? [] : response.data.reviews)
         }).catch((err) => {
           reject(err)
         })
@@ -221,7 +221,7 @@ class Api {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         axios.get(url + '/blog/posts').then((response) => {
-          resolve(response.length === 0 ? null : response.data.posts)
+          resolve(response.length === 0 ? [] : response.data.posts)
         }).catch((err) => {
           reject(err)
         })

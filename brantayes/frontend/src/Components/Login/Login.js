@@ -93,7 +93,7 @@ class ConnectedLogin extends Component {
           this.setState({redirectToReferrer: true})
         })
         .catch((e) => {
-          this.setState({loading: false, wrongCred: true, wrongCredMsg: e.message})
+          this.setState({loading: false, wrongCred: true})
         })
 
       //TODO: check if necessary
@@ -178,9 +178,6 @@ class ConnectedLogin extends Component {
             <button
               className="btn btn-primary btn-block"
               style={{ marginTop: 20, width: 200, marginBottom: 10 }}
-              //variant="outlined"
-              //color="primary"
-              //onClick={this.handleSubmit}
               disabled={this.state.loading}
             >
               {this.state.loading && (
