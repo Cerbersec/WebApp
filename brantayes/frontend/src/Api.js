@@ -266,4 +266,9 @@ class Api {
   }
 }
 
+// UpdateAccountInfo(user_id) {
+//   //Send updated accoutn info to db
+//   axios.post();
+// }
+
 export default new Api();

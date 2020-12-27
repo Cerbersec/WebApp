@@ -32,9 +32,70 @@ class Account extends Component
             user: null,
             loading: false,
             fieldsetDisabled: true,
+            firstName:"",
+            lastName:"",
+            userName: "",
+            gender: "",
+            // password: "",
+            // confirmpassword: "",
+            email: "",
+            street: "",
+            streetnr: "",
+            postal: "",
+            city: "",
+            country: "",
+            redirectToReferrer: false,
+            bus_nr: "",
+            phone: "",
+            successful: false,
+            loading: false,
+            message: ""
         };
     }
 
+    UpdateAccountInfo(e) {
+        e.preventDefault();
+
+        this.setState({
+        successful: false,
+        loading: true
+        })
+
+        this.form.validateAll();
+
+        if(this.checkBtn.context._errors.length === 0) {
+        const { dispatch } = this.props;
+        const data = {
+            first_name: this.state.firstName,
+            last_name: this.state.lastName,
+            email_address: this.state.email,
+            gender: this.state.gender,
+            username: this.state.userName,
+            // password:this.state.password,
+            // verify_password: this.state.confirmpassword,
+            street_name: this.state.street,
+            street_nr: this.state.streetnr,
+            postal_code: this.state.postal,
+            phone: this.state.phone,
+            bus_nr: this.state.bus_nr,
+            city: this.state.city,
+            country: this.state.country,
+            }
+
+        //     dispatch(register(data))
+        //     .then(() => {
+        //       this.setState({successful: true, loading: false})
+        //     })
+        //     .catch((e) => {
+        //       this.setState({successful: false, loading: false})
+        //     })
+        //     }
+
+        // else {
+        //     this.setState({loading: false})
+        // }
+        }
+    }
 
     componentDidMount() {
         this.fetchOrders();

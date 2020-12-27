@@ -45,7 +45,7 @@ db.authenticate().then(() => {
 })
 
 //csrf protection
-app.use(csurf({ cookie: true }))
+//app.use(csurf({ cookie: true }))
 app.get('/csrf-token', (req, res, next) => {
     const token =  req.csrfToken()
     res.cookie("XSRF-TOKEN", token)
