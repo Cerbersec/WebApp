@@ -29,7 +29,7 @@ class ConnectedOrder extends Component {
       orderId: '',
       loading: false,
       successful: false,
-      shippingCosts: 12
+      shippingCosts: ''
     }
   }
 
@@ -91,6 +91,22 @@ class ConnectedOrder extends Component {
       const payment = await this.handleStripe()
     }
   }
+
+  async fetchShipping() {
+    this.setState({loading: true})
+    const shipping = await Api.getShippingCosts();
+
+    if(shipping) {
+      this.setState({shippingCosts: shipping})
+    }
+
+    this.setState({loading: false})
+  }
+
+  componentDidMount() {
+    this.fetchShipping();
+  }
+
 
   render() {
     let btwpercentage = 21;
