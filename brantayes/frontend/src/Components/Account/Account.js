@@ -10,90 +10,98 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import { Table, TableBody, TableCell, TableHead, TableRow } from "@material-ui/core";
 
+import CheckButton from "react-validation/build/button";
+import Form from "react-validation/build/form";
+
+import { isAlpha, isPostalCode, isNumeric, isAlphanumeric, isMobilePhone } from "validator";
+
 import Api from "../../Api";
 
+import { setMessage } from "../../Redux/Actions";
+
 const mapStateToProps = state => {
-    const { user } = state;
-    const { message } = state;
+    const { user } = state
+    const { message } = state
     return {
-      loggedInUser: state.loggedInUser,
-      user,
-      message,
-    };
-  };
+        loggedInUser: state.loggedInUser,
+        user,
+        message,
+    }
+}
+
+//TODO: setup validation
+const required = (value) => {
+    if (!value) {
+        return (
+            <div className="alert alert-danger" role="alert">
+                This field is required!
+            </div>
+        )
+    }
+}
 
 class Account extends Component 
 {
     constructor(props) {
         super(props);
 
+        this.handleSubmit = this.handleSubmit.bind(this)
+
         this.state = {
             orders: [],
             user: null,
             loading: false,
+            successful: false,
             fieldsetDisabled: true,
-            firstName:"",
-            lastName:"",
-            userName: "",
+            firstname:"",
+            lastname:"",
+            username: "",
             gender: "",
-            // password: "",
-            // confirmpassword: "",
-            email: "",
             street: "",
             streetnr: "",
             postal: "",
             city: "",
             country: "",
-            redirectToReferrer: false,
             bus_nr: "",
             phone: "",
-            successful: false,
-            loading: false,
-            message: ""
         };
     }
 
-    UpdateAccountInfo(e) {
+    handleSubmit(e) {
         e.preventDefault();
 
-        this.setState({
-        successful: false,
-        loading: true
-        })
+        this.setState({fieldsetDisabled: !this.state.fieldsetDisabled, successful: false, loading: true})
 
         this.form.validateAll();
 
         if(this.checkBtn.context._errors.length === 0) {
-        const { dispatch } = this.props;
-        const data = {
-            first_name: this.state.firstName,
-            last_name: this.state.lastName,
-            email_address: this.state.email,
-            gender: this.state.gender,
-            username: this.state.userName,
-            // password:this.state.password,
-            // verify_password: this.state.confirmpassword,
-            street_name: this.state.street,
-            street_nr: this.state.streetnr,
-            postal_code: this.state.postal,
-            phone: this.state.phone,
-            bus_nr: this.state.bus_nr,
-            city: this.state.city,
-            country: this.state.country,
+            const { dispatch } = this.props;
+            const data = {
+                first_name: this.state.firstname,
+                last_name: this.state.lastname,
+                gender: this.state.gender,
+                username: this.state.username,
+                street_name: this.state.street,
+                street_nr: this.state.streetnr,
+                postal_code: this.state.postal,
+                phone: this.state.phone,
+                bus_nr: this.state.bus_nr,
+                city: this.state.city,
+                country: this.state.country,
             }
 
-        //     dispatch(register(data))
-        //     .then(() => {
-        //       this.setState({successful: true, loading: false})
-        //     })
-        //     .catch((e) => {
-        //       this.setState({successful: false, loading: false})
-        //     })
-        //     }
+            //TODO: api call here
+            console.log("api call") //test
+            dispatch(setMessage("successful")) //test
 
-        // else {
-        //     this.setState({loading: false})
-        // }
+            //then()
+            this.setState({successful: true, loading: false})
+
+            //catch(e)
+            //this.setState({successful: false, loading: false})
+        }
+        else {
+            this.setState({loading: false})
         }
     }
 
@@ -114,8 +122,9 @@ class Account extends Component
         this.setState({user: response.user, loading: false})
     }
 
-    render()
-    {
+    render() {
+        const { message } = this.props
+
         if (this.state.loading || !this.state.user) {
             return <CircularProgress className="circular" />;
         }
@@ -124,69 +133,75 @@ class Account extends Component
             <div id="accountpage">
                 <h1>My Brantayes account</h1>
                 <h2>Account information</h2>           
-                <div className="row border">                   
-                    <div className="col-md-6">
-                        <form>
-                            <fieldset disabled={this.state.fieldsetDisabled}>
+                <div>       
+                    <Form onSubmit={this.handleSubmit} ref={(c) => {this.form = c}} >
+                        <fieldset disabled={this.state.fieldsetDisabled} className="row border">          
+                            <div className="col-md-6">
+                        
                                 <div className="row">
                                     <div className="col-md-6">
-                                        <input className="form-control" type="text" defaultValue={this.state.user.first_name} />
-                                        <input className="form-control" type="text" defaultValue={this.state.user.username} />
-                                        <input className="form-control" type="text" defaultValue={this.state.user.phone} />
+                                        <input className="form-control" type="text" defaultValue={this.state.user.first_name} validations={[required]} onChange={ e => {this.setState({first_name: e.target.value})}} />
+                                        <input className="form-control" type="text" defaultValue={this.state.user.username} validations={[required]} onChange={e => {this.setState({username: e.target.value})}} />
+                                        <input className="form-control" type="text" defaultValue={this.state.user.phone} onChange={e => {this.setState({phone: e.target.value})}} />
                                     </div>
                                     <div className="col-md-6">
-                                        <input className="form-control" type="text" defaultValue={this.state.user.last_name} />
-                                        <input className="form-control" type="email" defaultValue={this.state.user.email_address} disabled/>
-                                        <Select className="form-control" disableUnderline disabled={this.state.fieldsetDisabled}>
+                                        <input className="form-control" type="text" defaultValue={this.state.user.last_name} validations={[required]} onChange={e => {this.setState({last_name: e.target.value})}} />
+                                        <input className="form-control" type="email" defaultValue={this.state.user.email_address} disabled />
+                                        <Select className="form-control" disableUnderline displayEmpty disabled={this.state.fieldsetDisabled} value={this.state.user.gender} validations={[required]} onChange={e => {this.setState({gender: e.target.value})}} >
+                                            <MenuItem value="">Select Gender</MenuItem>
                                             <MenuItem value={"M"}>Male</MenuItem>
                                             <MenuItem value={"F"}>Female</MenuItem>
                                             <MenuItem value={"X"}>Other</MenuItem>
                                         </Select>
                                     </div>
                                 </div>
-                            </fieldset>
-                        </form>
-                    </div>
+                            </div>
 
-                    <div className="col-md-6">
-                        <form>
-                            <fieldset disabled={this.state.fieldsetDisabled}>
+                             <div className="col-md-6">
                                 <div className="row">
                                     <div className="col-md-6">                               
-                                        <input className="form-control" type="text" defaultValue={this.state.user.Addresses[0].street_name} />
-                                        <input className="form-control" type="text" defaultValue={this.state.user.Addresses[0].postal_code} />
-                                        <input className="form-control" type="text" defaultValue={this.state.user.Addresses[0].city} />
+                                        <input className="form-control" type="text" defaultValue={this.state.user.Addresses[0].street_name} validations={[required]} onChange={ e => {this.setState({street_name: e.target.value})}} />
+                                        <input className="form-control" type="text" defaultValue={this.state.user.Addresses[0].postal_code} validations={[required]} onChange={ e => {this.setState({postal_code: e.target.value})}} />
+                                        <input className="form-control" type="text" defaultValue={this.state.user.Addresses[0].city} validations={[required]} onChange={ e => {this.setState({city: e.target.value})}} />
                                     </div>
                                     <div className="col-md-6">
-                                        <input className="form-control" type="text" defaultValue={this.state.user.Addresses[0].street_nr} />
-                                        <input className="form-control" type="text" defaultValue={this.state.user.Addresses[0].bus_nr} />
-                                        <input className="form-control" type="text" defaultValue={this.state.user.Addresses[0].country} />
+                                        <input className="form-control" type="text" defaultValue={this.state.user.Addresses[0].street_nr} validations={[required]} onChange={ e => {this.setState({street_nr: e.target.value})}} />
+                                        <input className="form-control" type="text" defaultValue={this.state.user.Addresses[0].bus_nr} onChange={ e => {this.setState({bus_nr: e.target.value})}} />
+                                        <input className="form-control" type="text" defaultValue={this.state.user.Addresses[0].country} validations={[required]} onChange={ e => {this.setState({country: e.target.value})}} />
                                     </div> 
                                 </div>
-                            </fieldset>
-                        </form>
-                    </div>
-                </div>
-                <div className="row">
-                    {this.state.fieldsetDisabled ? (
-                    <Button
-                        className="form-btn"
-                        variant="outlined"
-                        color="primary"
-                        onClick={() => this.setState({ fieldsetDisabled: !this.state.fieldsetDisabled})} //TODO: handle form submit
-                    >
-                        Edit
-                    </Button>
-                    ) : (
-                    <Button
-                        className="form-btn"
-                        variant="outlined"
-                        color="primary"
-                        onClick={() => this.setState({ fieldsetDisabled: !this.state.fieldsetDisabled})} //TODO: handle form submit
-                    >
-                        Save
-                    </Button>
-                    )}
+                            </div>
+                        </fieldset>
+                        <CheckButton style={{display:"none"}} ref={(c) => {this.checkBtn = c}} />
+                        <div className="row">
+                            {this.state.fieldsetDisabled ? (
+                            <Button
+                                className="form-btn"
+                                variant="outlined"
+                                color="primary"
+                                onClick={(e) => {e.preventDefault(); this.setState({ fieldsetDisabled: !this.state.fieldsetDisabled})}}
+                            >
+                                Edit
+                            </Button>
+                            ) : (
+                            <Button
+                                className="form-btn"
+                                variant="outlined"
+                                color="primary"
+                                type="submit"
+                            >
+                                Save
+                            </Button>
+                            )}
+                            {message && (
+                                <div className="message">
+                                    <div className={this.state.successful ? "alert alert-success" : "alert alert-danger"} role="alert">
+                                        {message}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </Form>
                 </div>
 
                 <h2>Order history</h2>

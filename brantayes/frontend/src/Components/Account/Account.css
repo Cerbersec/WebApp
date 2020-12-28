@@ -15,7 +15,11 @@
     margin-bottom: 1vw;
 }
 
-.border {
+#accountpage .border {
     border: .1vw solid rgb(189, 189, 189);
     border-radius: .5vw;
+}
+
+#accountpage .message {
+    margin-left: .5vw;
 }
