@@ -28,9 +28,7 @@ const port = process.env.PORT || 80
 app.use(compression())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
-app.use(cookieParser())
 app.use(cors())
-
 app.use(expressValidator())
 
 // setup database connection
@@ -44,13 +42,16 @@ db.authenticate().then(() => {
     console.log('Unable to connect to the database', error)
 })
 
+const prefix = "/api/v1"
+
 //csrf protection
-//app.use(csurf({ cookie: true }))
-app.get('/csrf-token', (req, res, next) => {
-    const token =  req.csrfToken()
-    res.cookie("XSRF-TOKEN", token)
-    res.json({ csrfToken: token })
-    return next()
+app.use(cookieParser())
+app.use(csurf({ cookie: true }))
+
+app.get(prefix + '/csrf-token', (req, res) => {
+    const token = req.csrfToken()
+    res.cookie('XSRF-TOKEN', token)
+    res.json({csrfToken: token})
 })
 
 // routers
@@ -66,7 +67,6 @@ app.use(express.static(path.join(__dirname, '..', 'frontend', 'build')))
 app.use(express.static(path.join(__dirname, '..', 'frontend', 'public')))
 
 //endpoints
-const prefix = "/api/v1"
 app.use(prefix + '/store', storeRouter)
 app.use(prefix + '/account', userRouter)
 app.use(prefix + '/blog', blogRouter)
@@ -78,11 +78,6 @@ app.use(prefix + '/info', infoRouter)
 app.use((req, res, next) => {
     res.sendFile(path.join(__dirname, '..', 'frontend', 'build', 'index.html'))
 })
-
-//page not found
-// app.use((req, res, next) => {
-//     next(createError(404))
-// })
 
 app.use((err, req, res, next) => {
     res.status(err.status || 500).json(err);
