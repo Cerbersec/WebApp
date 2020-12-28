@@ -27,11 +27,15 @@ import { clearMessage } from "./Redux/Actions";
 import { connect } from "react-redux";
 import Home from "./Components/Home/Home";
 
-/* THEME */
+// Theme
 import { MuiThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import theme from './theme'
-/* END */
+
+//Google Analytics
+import ReactGA from "react-ga";
+const trackingID = "G-19MJST6SEF";
+ReactGA.initialize(trackingID);
 
 const mapStateToProps = state => {
   const { user } = state;
@@ -50,6 +54,10 @@ class App extends Component {
 
     history.listen((location) => {
       props.dispatch(clearMessage());
+      
+      //Google Analytics page view tracking
+      ReactGA.set({ page: location.pathname})
+      ReactGA.pageview(location.pathname + location.search)
     });
   }
 
@@ -59,6 +67,9 @@ class App extends Component {
     if(user) {
       this.setState({
         currentUser: user,
+      })
+      ReactGA.set({
+        userId: user.user_id,
       })
     }
   }
