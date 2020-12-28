@@ -60,6 +60,7 @@ const userRouter = require('./routes/user.router')
 const blogRouter = require('./routes/blog.router')
 const authRouter = require('./routes/auth.router')
 const adminRouter = require('./routes/admin.router')
+const infoRouter = require('./routes/info.router')
 
 // set static dir
 app.use(express.static(path.join(__dirname, '..', 'frontend', 'build')))
@@ -71,6 +72,7 @@ app.use(prefix + '/account', userRouter)
 app.use(prefix + '/blog', blogRouter)
 app.use(prefix + '/auth', authRouter)
 app.use(prefix + '/admin', adminRouter)
+app.use(prefix + '/info', infoRouter)
 
 //react routing
 app.use((req, res, next) => {

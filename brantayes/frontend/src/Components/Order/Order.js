@@ -29,6 +29,7 @@ class ConnectedOrder extends Component {
       orderId: '',
       loading: false,
       successful: false,
+      shippingCosts: ''
     }
   }
 
@@ -91,16 +92,33 @@ class ConnectedOrder extends Component {
     }
   }
 
+  async fetchShipping() {
+    this.setState({loading: true})
+    const shipping = await Api.getShippingCosts();
+
+    if(shipping) {
+      this.setState({shippingCosts: shipping})
+    }
+
+    this.setState({loading: false})
+  }
+
+  componentDidMount() {
+    this.fetchShipping();
+  }
+
+
   render() {
-    let shippingCosts = 12;
+    let btwpercentage = 21;
+    let btw = 0;
     
     let totalPrice = this.props.checkedOutItems.reduce((accumulator, item) => {
       const result = accumulator + item.retail_price * item.quantity;
-      if (result >= 100){shippingCosts = 0;}
+      if (result >= 100){this.state.shippingCosts = 0;}
       return result;
     }, 0);
 
-    
+    if(totalPrice != 0) { btw = (totalPrice * btwpercentage/(100+btwpercentage)).toFixed(2) }
 
     return (
       <div>
@@ -145,9 +163,14 @@ class ConnectedOrder extends Component {
                 fontSize: 22
               }}
             >
-              Shipping costs: &euro; {shippingCosts}
-              <br></br>
-              Total price: &euro; {(totalPrice + shippingCosts)}
+              <p>
+                Btw: &euro; {btw}
+                <br></br>
+                Subtotal: &euro; {totalPrice}
+                <br></br>
+                Shipping costs: &euro; {this.state.shippingCosts}
+              </p>
+              <p>Total price: &euro; {(totalPrice + this.state.shippingCosts)}</p>
             </div>
             <Button
               color="primary"

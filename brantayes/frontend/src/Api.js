@@ -264,6 +264,24 @@ class Api {
       }, 500);
     })
   }
+
+  getShippingCosts() {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        axios.get(url + '/info/shipping').then((response) => {
+          resolve(response.lenght === 0 ? null : response.data.shipping_costs)
+        }).catch((err) => {
+          reject(err)
+        })
+      }, 500);
+    })
+  }
+
 }
+
+// UpdateAccountInfo(user_id) {
+//   //Send updated accoutn info to db
+//   axios.post();
+// }
 
 export default new Api();
