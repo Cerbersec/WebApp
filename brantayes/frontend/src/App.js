@@ -106,7 +106,7 @@ class App extends Component {
               <Route path="/ordersuccess/:session_id" component={OrderSuccess}/>
               <Route path="/ordercancel" component={OrderCancel}/>
               <Route path="/orderdetails/:id" component={OrderDetails}/>
-              <Route path="/password-reset" component={PasswordReset}/>
+              <Route path="/password-reset" exact component={PasswordReset}/>
               <Route
                 component={() => (
                   <div style={{ padding: 20 }}>Page not found</div>
