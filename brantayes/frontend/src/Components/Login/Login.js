@@ -119,7 +119,6 @@ class ConnectedLogin extends Component {
           height: "100%",
           display: "flex",
           justifyContent: "center",
-
           alignItems: "center"
         }}
       >
@@ -205,6 +204,11 @@ class ConnectedLogin extends Component {
               to={"/register"}
             >
               <span>Don't have an account yet?</span>
+            </NavLink>
+          </div>
+          <div className="form-group">
+            <NavLink to={"/password-reset"}>
+              <span>Reset password</span>
             </NavLink>
           </div>
           </div>
