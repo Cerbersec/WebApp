@@ -13,6 +13,8 @@ import { Table, TableBody, TableCell, TableHead, TableRow } from "@material-ui/c
 import CheckButton from "react-validation/build/button";
 import Form from "react-validation/build/form";
 
+//Validation
+import Input from "react-validation/build/input";
 import { isAlpha, isPostalCode, isNumeric, isAlphanumeric, isMobilePhone } from "validator";
 
 import Api from "../../Api";
@@ -35,6 +37,16 @@ const required = (value) => {
         return (
             <div className="alert alert-danger" role="alert">
                 This field is required!
+            </div>
+        )
+    }
+}
+
+const vtext = (value) => {
+    if (!isAlpha(value)) {
+        return (
+            <div className="alert alert-danger" role="alert">
+                This field cannot contain digits!
             </div>
         )
     }
@@ -140,14 +152,51 @@ class Account extends Component
                         
                                 <div className="row">
                                     <div className="col-md-6">
-                                        <input className="form-control" type="text" defaultValue={this.state.user.first_name} validations={[required]} onChange={ e => {this.setState({first_name: e.target.value})}} />
-                                        <input className="form-control" type="text" defaultValue={this.state.user.username} validations={[required]} onChange={e => {this.setState({username: e.target.value})}} />
-                                        <input className="form-control" type="text" defaultValue={this.state.user.phone} onChange={e => {this.setState({phone: e.target.value})}} />
+                                        <input
+                                            name="name"
+                                            className="form-control"
+                                            type="text"
+                                            defaultValue={this.state.user.first_name}
+                                            validations={[required, vtext]}
+                                            onChange={ e => {this.setState({first_name: e.target.value})}}
+                                        />
+                                        <input
+                                            className="form-control"
+                                            type="text"
+                                            defaultValue={this.state.user.username}
+                                            validations={[required]}
+                                            onChange={e => {this.setState({username: e.target.value})}}
+                                        />
+                                        <input
+                                            className="form-control"
+                                            type="text"
+                                            defaultValue={this.state.user.phone}
+                                            onChange={e => {this.setState({phone: e.target.value})}}
+                                        />
                                     </div>
                                     <div className="col-md-6">
-                                        <input className="form-control" type="text" defaultValue={this.state.user.last_name} validations={[required]} onChange={e => {this.setState({last_name: e.target.value})}} />
-                                        <input className="form-control" type="email" defaultValue={this.state.user.email_address} disabled />
-                                        <Select className="form-control" disableUnderline displayEmpty disabled={this.state.fieldsetDisabled} value={this.state.user.gender} validations={[required]} onChange={e => {this.setState({gender: e.target.value})}} >
+                                        <input
+                                            className="form-control"
+                                            type="text"
+                                            defaultValue={this.state.user.last_name}
+                                            validations={[required]}
+                                            onChange={e => {this.setState({last_name: e.target.value})}}
+                                        />
+                                        <input
+                                            className="form-control"
+                                            type="email"
+                                            defaultValue={this.state.user.email_address}
+                                            disabled
+                                        />
+                                        <Select
+                                            className="form-control"
+                                            disableUnderline
+                                            displayEmpty
+                                            disabled={this.state.fieldsetDisabled}
+                                            value={this.state.user.gender}
+                                            validations={[required]}
+                                            onChange={e => {this.setState({gender: e.target.value})}}
+                                        >
                                             <MenuItem value="">Select Gender</MenuItem>
                                             <MenuItem value={"M"}>Male</MenuItem>
                                             <MenuItem value={"F"}>Female</MenuItem>
@@ -189,6 +238,7 @@ class Account extends Component
                                 variant="outlined"
                                 color="primary"
                                 type="submit"
+                                //onClick={(e) => {e.handleSubmit()}}
                             >
                                 Save
                             </Button>
