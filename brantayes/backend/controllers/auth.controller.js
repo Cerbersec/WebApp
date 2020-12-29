@@ -174,17 +174,13 @@ const sendPasswordResetEmail = async(req, res) => {
         const { email_address } = req.body
         
         const user = await userDb.readUserByEmail(email_address)
-        console.log("Found user")
+
         if(user) {
             const token = Buffer.from(makeToken(user)).toString('base64')
-            console.log("Generated token")
             const url = getPasswordResetURL(user, token)
-            console.log("Got URL")
             const emailTemplate = resetPasswordTemplate(user, url)
-            console.log("Got template")
 
             const sendEmail = () => {
-                console.log(emailTemplate)
                 transporter.sendMail(emailTemplate, (err, info) => {
                     if(err) {
                         res.status(500).send({
@@ -198,7 +194,6 @@ const sendPasswordResetEmail = async(req, res) => {
                     })
                 })
             }
-            console.log("Sending mail")
             sendEmail()
         }
         else {
@@ -220,7 +215,7 @@ const receiveNewPassword = async(req, res) => {
     const token = Buffer.from(req.params.token, 'base64').toString('ascii')
     const { password } = req.body
 
-    const user = userDb.readUserById(user_id)
+    const user = await userDb.readUserById(user_id)
 
     if(user) {
         const secret = user.password + "-" + user.createdAt
@@ -230,10 +225,12 @@ const receiveNewPassword = async(req, res) => {
             bcrypt.genSalt(10, function(err, salt) {
                 //TODO: error handling
                 if(err) return
-                bcrypt.hash(password, salt, function(err, hash) {
+                bcrypt.hash(password, salt, async function(err, hash) {
                     //TODO: error handling
                     if(err) return
-                    const result = userDb.updateUserById(user_id, { password: hash })
+                    console.log("updating")
+                    user.password = hash
+                    const result = await user.save({ fields: ['password'] })
                     if(result) {
                         res.status(202).send({
                             message: "Password successfully changed"
@@ -248,7 +245,7 @@ const receiveNewPassword = async(req, res) => {
             })
         }
         else {
-            res.send(404).send({
+            res.status(404).send({
                 message: "Invalid user"
             })
         }

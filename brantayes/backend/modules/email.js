@@ -13,13 +13,12 @@ const transporter = nodemailer.createTransport({
 })
 
 const getPasswordResetURL = (user, token) => {
-  return `${process.env.HOST}:${process.env.PORT}/account/recovery/update-password/${user.user_id}/${token}`
+  return `${process.env.RESET_URL}/account/recovery/update-password/${user.user_id}/${token}`
 }
 
 const resetPasswordTemplate = (user, url) => {
   const from = process.env.EMAIL_LOGIN
-  //const to = user.email_address
-  const to = 'r0809853@student.thomasmore.be'
+  const to = user.email_address
   const subject = "Brantayes: Password Reset"
   const html = `
   <p>Hey ${user.username || user.email},</p>

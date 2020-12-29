@@ -112,23 +112,26 @@ class PasswordUpdate extends Component {
 
                 <Form className="form" onSubmit={this.handleSubmit} ref={(c) => {this.form = c}} >
                     <h2 className="title" > New password </h2>
+                    {!this.state.successful && (
+                    <div>
+                        <div className="form-group">
+                            <Input className="form-control" type="password" value={this.state.password} placeholder="New password" validations={[required, vpassword]} onChange={e => this.setState({password: e.target.value})} />
+                        </div>
 
-                    <div className="form-group">
-                        <Input className="form-control" type="password" value={this.state.password} placeholder="New password" validations={[required, vpassword]} onChange={e => this.setState({password: e.target.value})} />
-                    </div>
+                        <div className="form-group">
+                            <Input className="form-control" type="password" value={this.state.verifypassword} placeholder="Confirm new password" validations={[required, vconfirmpassword]} onChange={e => {this.setState({verifypassword: e.target.value});p=e.target.value}} />
+                        </div>
 
-                    <div className="form-group">
-                        <Input className="form-control" type="password" value={this.state.verifypassword} placeholder="Confirm new password" validations={[required, vconfirmpassword]} onChange={e => {this.setState({password: e.target.value});p=e.target.value}} />
+                        <div className="form-group">
+                            <button className="form-btn btn btn-primary btn-block" disabled={this.state.loading} >
+                                {this.state.loading && (
+                                    <span className="spinner-border spinner-border-sm"></span>
+                                )}
+                                <span>Confirm password</span>
+                            </button>
+                        </div>
                     </div>
-
-                    <div className="form-group">
-                        <button className="form-btn btn btn-primary btn-block" disabled={this.state.loading} >
-                            {this.state.loading && (
-                                <span className="spinner-border spinner-border-sm"></span>
-                            )}
-                            <span>Confirm password</span>
-                        </button>
-                    </div>
+                    )}
 
                     {message && (
                         <div className="form-group">
