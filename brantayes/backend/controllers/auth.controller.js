@@ -4,8 +4,10 @@ const models = require('../models')
 const jwt = require('jsonwebtoken')
 const config = require('../config/jwt-config')
 const bcrypt = require('bcryptjs')
+const { transporter, getPasswordResetURL, resetPasswordTemplate } = require('../modules/email')
 const TypedError = require('../modules/ErrorHandler')
 const { promisify } = require('util');
+const { send } = require('process')
 
 const register = async(req, res, next) => {
     try {
@@ -159,6 +161,108 @@ const logout = async (req, res) => {
     res.sendStatus(200)
 }
 
+// password reset functionality
+const makeToken = ({password: passwordHash, user_id: user_id, createdAt}) => {
+    const secret = passwordHash + "-" + createdAt
+    const token = jwt.sign({ user_id }, secret, { expiresIn: 3600})
+
+    return token
+}
+
+const sendPasswordResetEmail = async(req, res) => {
+    try {
+        const { email_address } = req.body
+        
+        const user = await userDb.readUserByEmail(email_address)
+        console.log("Found user")
+        if(user) {
+            const token = Buffer.from(makeToken(user)).toString('base64')
+            console.log("Generated token")
+            const url = getPasswordResetURL(user, token)
+            console.log("Got URL")
+            const emailTemplate = resetPasswordTemplate(user, url)
+            console.log("Got template")
+
+            const sendEmail = () => {
+                console.log(emailTemplate)
+                transporter.sendMail(emailTemplate, (err, info) => {
+                    if(err) {
+                        res.status(500).send({
+                            message: "Email could not be sent"
+                        })
+                    }
+                    console.log(`Email sent`, info.response)
+                    console.log(`Email info`, info.messageId)
+                    res.status(200).send({
+                        message: "Email sent"
+                    })
+                })
+            }
+            console.log("Sending mail")
+            sendEmail()
+        }
+        else {
+            res.status(500).send({
+                message: "Email could not be sent"
+            })
+        }
+    } catch(error) {
+        console.log(error)
+        res.status(500).send({
+            message: error.message
+        })
+    }
+}
+
+const receiveNewPassword = async(req, res) => {
+    try {
+    const user_id = req.params.user_id
+    const token = Buffer.from(req.params.token, 'base64').toString('ascii')
+    const { password } = req.body
+
+    const user = userDb.readUserById(user_id)
+
+    if(user) {
+        const secret = user.password + "-" + user.createdAt
+        const payload = jwt.decode(token, secret)
+
+        if(payload.user_id == user.user_id) {
+            bcrypt.genSalt(10, function(err, salt) {
+                //TODO: error handling
+                if(err) return
+                bcrypt.hash(password, salt, function(err, hash) {
+                    //TODO: error handling
+                    if(err) return
+                    const result = userDb.updateUserById(user_id, { password: hash })
+                    if(result) {
+                        res.status(202).send({
+                            message: "Password successfully changed"
+                        })
+                    }
+                    else {
+                        res.status(500).send({
+                            message: "Something went wrong"
+                        })
+                    }
+                })
+            })
+        }
+        else {
+            res.send(404).send({
+                message: "Invalid user"
+            })
+        }
+    }
+    } catch(error) {
+        console.log(error)
+        res.status(500).send({
+            message: error.message
+        })
+    }
+}
+
 exports.register = register
 exports.login = login
 exports.logout = logout
+exports.sendPasswordResetEmail = sendPasswordResetEmail
+exports.receiveNewPassword = receiveNewPassword

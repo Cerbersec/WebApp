@@ -12,14 +12,12 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
+import Api from "../../Api";
 
 function mapStateToProps(state) {
-  const { isLoggedIn } = state;
   const { message } = state;
   return {
-    isLoggedIn,
     message,
-    loggedInUser: state.loggedInUser
   };
 }
 
@@ -58,28 +56,27 @@ class PasswordReset extends Component {
     };
   }
 
-  handleSubmit(e) {
+  async handleSubmit(e) {
     e.preventDefault();
     this.setState({loading: true, successful: false})
 
     this.form.validateAll();
 
     const { dispatch } = this.props;
-    const data = {
-      email_address: this.state.emailAddress,
-    }
 
     if(this.checkBtn.context._errors.length === 0) {
-    //   dispatch(login(data))
-    //     .then(() => {
-    //       this.setState({redirectToReferrer: true})
-    //     })
-    //     .catch((e) => {
-    //       this.setState({loading: false, wrongCred: true})
-    //     })
-        dispatch(setMessage("Reset email sent!"))
-        this.setState({loading: false, successful: false})
 
+      const response = await Api.resetPassword(this.state.emailAddress)
+        .then(r => {
+          console.log(r)
+          dispatch(setMessage(r.message))
+          this.setState({loading: false, successful: true})
+        })
+        .catch(e => {
+          console.log(e.response.data.message)
+          dispatch(setMessage(e.response.data.message))
+          this.setState({loading: false, successful: false})
+        })
     } else {
       this.setState({loading: false})
     }
@@ -95,28 +92,32 @@ class PasswordReset extends Component {
 
                 <Form className="form" onSubmit={this.handleSubmit} ref={(c) => {this.form = c}} >
                     <h2 className="title" > Reset password </h2>
+                    {!this.state.successful && (
+                      <div>
+                        <div className="form-group">
+                            <Input className="form-control" type="email" value={this.state.emailAddress} placeholder="Email address" validations={[required, email]} onChange={e => this.setState({emailAddress: e.target.value})} />
+                        </div>
+                      
 
-                    <div className="form-group">
-                        <Input className="form-control" type="email" value={this.state.emailAddress} placeholder="Email address" validations={[required, email]} onChange={e => this.setState({emailAddress: e.target.value})} />
-                    </div>
-
-                    <div className="form-group">
-                        <button className="form-btn btn btn-primary btn-block" disabled={this.state.loading} >
-                            {this.state.loading && (
-                                <span className="spinner-border spinner-border-sm"></span>
-                            )}
-                            <span>Reset password</span>
-                        </button>
-                    </div>
+                        <div className="form-group">
+                            <button className="form-btn btn btn-primary btn-block" disabled={this.state.loading} >
+                                {this.state.loading && (
+                                    <span className="spinner-border spinner-border-sm"></span>
+                                )}
+                                <span>Reset password</span>
+                            </button>
+                        </div>
+                      </div>
+                    )}
 
                     {message && (
                         <div className="form-group">
                             {this.state.successful? (
-                                <div className="alert alert-danger" role="alert">
+                                <div className="alert alert-success" role="alert">
                                     {message}
                                 </div>
                             ) : (
-                                <div className="alert alert-success" role="alert">
+                                <div className="alert alert-danger" role="alert">
                                     {message}
                                 </div>
                             )}

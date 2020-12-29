@@ -55,8 +55,8 @@ const readUserRoles = (user_id) => {
 }
 
 //TODO: implement
-const updateUserById = async(user_id) => {
-
+const updateUserById = async(user_id, data) => {
+    return await models.User.findOneAndUpdate({user_id: user_id}, data)
 }
 
 const deleteUserById = async(user_id) => {

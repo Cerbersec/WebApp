@@ -277,6 +277,29 @@ class Api {
     })
   }
 
+  resetPassword(email_address) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        axios.post(url + '/auth/password-reset', { email_address: email_address }).then((response) => {
+          resolve(response.data)
+        }).catch((err) => {
+          reject(err)
+        })
+      }, 500);
+    })
+  }
+
+  setNewPassword(data) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        axios.post(url + '/auth/receive-new-password/' + data.user_id + '/' + data.token, { password: data.password }).then((response) => {
+          resolve(response.data)
+        }).catch((err) => {
+          reject(err)
+        })
+      }, 500);
+    })
+  }
 }
 
 // UpdateAccountInfo(user_id) {

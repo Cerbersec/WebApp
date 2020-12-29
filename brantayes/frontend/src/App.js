@@ -27,6 +27,7 @@ import { clearMessage } from "./Redux/Actions";
 import { connect } from "react-redux";
 import Home from "./Components/Home/Home";
 import PasswordReset from "./Components/PasswordReset/PasswordReset";
+import PasswordUpdate from "./Components/PasswordUpdate/PasswordUpdate";
 
 // Theme
 import { MuiThemeProvider } from '@material-ui/core/styles'
@@ -101,12 +102,13 @@ class App extends Component {
               <Route path="/support" component={support}/>
               <Route path="/blog" component={blog}/>
               <Route path="/blogpost/:id" component={blogpost}/>
-              <Route path="/account" component={Account}/>
+              <Route path="/account" exact component={Account}/>
               <Route path="/payment" component={TermsOfPayment}/>
               <Route path="/ordersuccess/:session_id" component={OrderSuccess}/>
               <Route path="/ordercancel" component={OrderCancel}/>
               <Route path="/orderdetails/:id" component={OrderDetails}/>
-              <Route path="/password-reset" exact component={PasswordReset}/>
+              <Route path="/account/recovery" exact component={PasswordReset}/>
+              <Route path="/account/recovery/update-password/:user_id/:token" exact component={PasswordUpdate}/>
               <Route
                 component={() => (
                   <div style={{ padding: 20 }}>Page not found</div>

@@ -207,7 +207,7 @@ class ConnectedLogin extends Component {
             </NavLink>
           </div>
           <div className="form-group">
-            <NavLink to={"/password-reset"}>
+            <NavLink to={"/account/recovery"}>
               <span>Reset password</span>
             </NavLink>
           </div>

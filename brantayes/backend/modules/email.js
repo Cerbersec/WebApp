@@ -1,21 +1,25 @@
-import nodemailer from "nodemailer"
+const nodemailer = require('nodemailer')
 
-export const transporter = nodemailer.createTransport({
+const transporter = nodemailer.createTransport({
   host: 'smtp-auth.mailprotect.be',
   port: 465,
   secure: true,
+  logger: true,
+  debug: true,
   auth: {
     user: process.env.EMAIL_LOGIN,
     pass: process.env.EMAIL_PASSWORD
   }
 })
 
-export const getPasswordResetURL = (user, token) =>
-  `${process.env.HOST}:${process.env.PORT}/password-reset/${user.user_id}/${token}`
+const getPasswordResetURL = (user, token) => {
+  return `${process.env.HOST}:${process.env.PORT}/account/recovery/update-password/${user.user_id}/${token}`
+}
 
-export const resetPasswordTemplate = (user, url) => {
+const resetPasswordTemplate = (user, url) => {
   const from = process.env.EMAIL_LOGIN
-  const to = user.email_address
+  //const to = user.email_address
+  const to = 'r0809853@student.thomasmore.be'
   const subject = "Brantayes: Password Reset"
   const html = `
   <p>Hey ${user.username || user.email},</p>
@@ -28,3 +32,7 @@ export const resetPasswordTemplate = (user, url) => {
 
   return { from, to, subject, html }
 }
+
+exports.transporter = transporter
+exports.getPasswordResetURL = getPasswordResetURL
+exports.resetPasswordTemplate = resetPasswordTemplate
