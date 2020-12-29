@@ -28,6 +28,7 @@ import { connect } from "react-redux";
 import Home from "./Components/Home/Home";
 import PasswordReset from "./Components/PasswordReset/PasswordReset";
 import PasswordUpdate from "./Components/PasswordUpdate/PasswordUpdate";
+import Dashboard from "./Components/Dashboard/Dashboard";
 
 // Theme
 import { MuiThemeProvider } from '@material-ui/core/styles'
@@ -35,9 +36,9 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import theme from './theme'
 
 //Google Analytics
-import ReactGA from "react-ga";
+import GA4React from "ga-4-react";
 const trackingID = "G-19MJST6SEF";
-ReactGA.initialize(trackingID);
+const ga4react = new GA4React(trackingID)
 
 const mapStateToProps = state => {
   const { user } = state;
@@ -58,8 +59,11 @@ class App extends Component {
       props.dispatch(clearMessage());
       
       //Google Analytics page view tracking
-      ReactGA.set({ page: location.pathname})
-      ReactGA.pageview(location.pathname + location.search)
+      ga4react.initialize().then((ga4) => {
+        ga4.pageview(location.pathname + location.search)
+      }, (err) => {
+        console.error(err)
+      })
     });
   }
 
@@ -69,9 +73,6 @@ class App extends Component {
     if(user) {
       this.setState({
         currentUser: user,
-      })
-      ReactGA.set({
-        userId: user.user_id,
       })
     }
   }
@@ -109,6 +110,7 @@ class App extends Component {
               <Route path="/orderdetails/:id" component={OrderDetails}/>
               <Route path="/account/recovery" exact component={PasswordReset}/>
               <Route path="/account/recovery/update-password/:user_id/:token" exact component={PasswordUpdate}/>
+              <Route path="/dashboard" exact component={Dashboard}/>
               <Route
                 component={() => (
                   <div style={{ padding: 20 }}>Page not found</div>
