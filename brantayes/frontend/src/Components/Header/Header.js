@@ -6,7 +6,7 @@ import { logout } from "../../Redux/actions/auth";
 import "./Header.css";
 import cartImage from "../../Images/brantayes.png";
 import { IconButton, Badge, Button, Menu, MenuItem, Select, AppBar, Toolbar, InputBase } from "@material-ui/core";
-import { Search as SearchIcon, ShoppingCart as ShoppingCartIcon, Menu as MenuIcon, PersonOutline as Person, PersonOutline, MoreVert as MoreIcon, Close as LogoutIcon }  from "@material-ui/icons";
+import { Search as SearchIcon, ShoppingCart as ShoppingCartIcon, Menu as MenuIcon, PersonOutline as Person, PersonOutline, MoreVert as MoreIcon, Close as LogoutIcon, Dashboard as DashboardIcon }  from "@material-ui/icons";
 import Api from "../../Api";
 import { fade, withStyles } from "@material-ui/core/styles";
 
@@ -193,6 +193,13 @@ class Header extends Component {
 
               <div className={classes.grow}/>
               <div className={classes.sectionDesktop}>
+                {this.props.user ? this.props.user.roles.includes("ROLE_ADMINISTRATOR") && (
+                  <IconButton aria-label="admin dashboard" color="secondary" onClick={() => {this.props.history.push("/dashboard")}}>
+                    <DashboardIcon />
+                  </IconButton>
+                ) : (null)
+                }
+
                 {this.props.isLoggedIn && (
                   <IconButton aria-label="account settings" color="secondary" onClick={() => {this.props.history.push("/account")}}>
                     <PersonOutline />
