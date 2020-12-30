@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { withRouter, Redirect } from "react-router-dom";
+import { withRouter, Redirect, NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import "./Dashboard.css";
+import SideMenu from "../SideMenu/SideMenu";
 
 const mapStateToProps = state => {
     const { user } = state
@@ -21,6 +22,10 @@ class Dashboard extends Component {
         }
     }
 
+    componentDidMount() {
+        
+    }
+
     render() {
         const { user, message } = this.props
 
@@ -31,6 +36,10 @@ class Dashboard extends Component {
         return (
             <div id="dashboard">
                 <h1>Administrator Dashboard</h1>
+                <SideMenu />   
+                <div className="content">
+                    
+                </div>         
             </div>
         )
     }
