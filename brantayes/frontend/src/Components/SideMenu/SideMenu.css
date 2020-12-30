@@ -5,7 +5,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    position: absolute;
+    position: absolute; /*fixed*/
     right: 0;
     border-left: 1px solid lightgrey;
     background-color: #37474f;

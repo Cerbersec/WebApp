@@ -110,7 +110,7 @@ class App extends Component {
               <Route path="/orderdetails/:id" component={OrderDetails}/>
               <Route path="/account/recovery" exact component={PasswordReset}/>
               <Route path="/account/recovery/update-password/:user_id/:token" exact component={PasswordUpdate}/>
-              <Route path="/dashboard" exact component={Dashboard}/>
+              <Route path="/dashboard" component={Dashboard}/>
               <Route
                 component={() => (
                   <div style={{ padding: 20 }}>Page not found</div>

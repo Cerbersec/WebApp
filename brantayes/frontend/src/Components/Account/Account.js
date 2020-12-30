@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import "./Account.css";
 
@@ -139,6 +139,10 @@ class Account extends Component
 
         if (this.state.loading || !this.state.user) {
             return <CircularProgress className="circular" />;
+        }
+
+        if(!this.props.user) {
+            return <Redirect to="/login" />
         }
 
         return (
