@@ -15,7 +15,7 @@ import Form from "react-validation/build/form";
 
 //Validation
 import Input from "react-validation/build/input";
-import { isAlpha, isPostalCode, isNumeric, isAlphanumeric, isMobilePhone } from "validator";
+import { isAlpha, isPostalCode, isNumeric, isAlphanumeric, isMobilePhone, isEmail } from "validator";
 
 import Api from "../../Api";
 
@@ -42,7 +42,7 @@ const required = (value) => {
     }
 }
 
-const vtext = (value) => {
+const vText = (value) => {
     if (!isAlpha(value)) {
         return (
             <div className="alert alert-danger" role="alert">
@@ -51,6 +51,66 @@ const vtext = (value) => {
         )
     }
 }
+
+const vMail = (value) => {
+    if (!isEmail(value)) {
+        return (
+          <div className="alert alert-danger" role="alert">
+            This is not a valid email.
+          </div>
+        );
+    }
+}
+
+const vTextNumbers = (value) => {
+    if (value && !isAlphanumeric(value)) {
+      return (
+        <div className="alert alert-danger" role="alert">
+          Cannot contain any special characters.
+        </div>
+      )
+    }
+  }
+  
+  const vPostalCode = (value) => {
+    if (!isPostalCode(value, 'any')) {
+      return (
+        <div className="alert alert-danger" role="alert">
+          This is not a valid postal code.
+        </div>
+      );
+    }
+  }
+  
+  const vGender = (value) => {
+    if (!(value === "")) {
+      return (
+        <div className="alert alert-danger" role="alert">
+          Select your gender.
+        </div>
+      );
+    }
+  }
+  
+  const vPhoneNumber = (value) => {
+    if(value && !isMobilePhone(value)) {
+      return (
+        <div className="alert alert-danger" role="alert">
+          This is not a valid phone number.
+        </div>
+      )
+    }
+  }
+  
+  const vNumber = (value) => {
+    if (!isNumeric(value)) {
+      return (
+        <div className="alert alert-danger" role="alert">
+          This is not a valid number.
+        </div>
+      );
+    }
+  }
 
 class Account extends Component 
 {
@@ -103,7 +163,7 @@ class Account extends Component
             }
 
             //TODO: api call here
-            console.log("api call") //test
+            console.log(this.state) //test
             dispatch(setMessage("successful")) //test
 
             //then()
@@ -152,49 +212,62 @@ class Account extends Component
                         
                                 <div className="row">
                                     <div className="col-md-6">
+                                        <label>First name:</label>
                                         <input
-                                            name="name"
+                                            id="firstName"
                                             className="form-control"
                                             type="text"
                                             defaultValue={this.state.user.first_name}
-                                            validations={[required, vtext]}
+                                            validations={[required, vText]}
                                             onChange={ e => {this.setState({first_name: e.target.value})}}
                                         />
+                                        <label>Username:</label>
                                         <input
+                                            id="userName"
                                             className="form-control"
                                             type="text"
                                             defaultValue={this.state.user.username}
-                                            validations={[required]}
+                                            validations={[required, vText]}
                                             onChange={e => {this.setState({username: e.target.value})}}
                                         />
+                                        <label>Phone number:</label>
                                         <input
+                                            id="phoneNumber"
                                             className="form-control"
                                             type="text"
                                             defaultValue={this.state.user.phone}
+                                            validation={[vPhoneNumber]}
                                             onChange={e => {this.setState({phone: e.target.value})}}
                                         />
                                     </div>
                                     <div className="col-md-6">
+                                        <label>Last name:</label>
                                         <input
+                                            id="lastName"
                                             className="form-control"
                                             type="text"
                                             defaultValue={this.state.user.last_name}
-                                            validations={[required]}
+                                            validations={[required, vText]}
                                             onChange={e => {this.setState({last_name: e.target.value})}}
                                         />
+                                        <label>Email:</label>
                                         <input
+                                            id="email"
                                             className="form-control"
                                             type="email"
+                                            validation={[vMail]}
                                             defaultValue={this.state.user.email_address}
                                             disabled
                                         />
+                                        <label>Gender:</label>
                                         <Select
+                                            id="gender"
                                             className="form-control"
                                             disableUnderline
                                             displayEmpty
                                             disabled={this.state.fieldsetDisabled}
                                             value={this.state.user.gender}
-                                            validations={[required]}
+                                            validations={[required, vGender]}
                                             onChange={e => {this.setState({gender: e.target.value})}}
                                         >
                                             <MenuItem value="">Select Gender</MenuItem>
@@ -208,15 +281,62 @@ class Account extends Component
 
                              <div className="col-md-6">
                                 <div className="row">
-                                    <div className="col-md-6">                               
-                                        <input className="form-control" type="text" defaultValue={this.state.user.Addresses[0].street_name} validations={[required]} onChange={ e => {this.setState({street_name: e.target.value})}} />
-                                        <input className="form-control" type="text" defaultValue={this.state.user.Addresses[0].postal_code} validations={[required]} onChange={ e => {this.setState({postal_code: e.target.value})}} />
-                                        <input className="form-control" type="text" defaultValue={this.state.user.Addresses[0].city} validations={[required]} onChange={ e => {this.setState({city: e.target.value})}} />
+                                    <div className="col-md-6">  
+                                        <label>Street name:</label>                             
+                                        <input
+                                            id="streetName"
+                                            className="form-control"
+                                            type="text" defaultValue={this.state.user.Addresses[0].street_name}
+                                            validations={[required, vText]}
+                                            onChange={ e => {this.setState({street_name: e.target.value})}}
+                                        />
+                                        <label>Postal code:</label>
+                                        <input
+                                            id="postalCode"
+                                            className="form-control"
+                                            type="text"
+                                            defaultValue={this.state.user.Addresses[0].postal_code}
+                                            validations={[required, vPostalCode]}
+                                            onChange={ e => {this.setState({postal_code: e.target.value})}}
+                                        />
+                                        <label>City:</label>
+                                        <input
+                                            id="city"
+                                            className="form-control"
+                                            type="text"
+                                            defaultValue={this.state.user.Addresses[0].city}
+                                            validations={[required, vText]}
+                                            onChange={ e => {this.setState({city: e.target.value})}}
+                                        />
                                     </div>
                                     <div className="col-md-6">
-                                        <input className="form-control" type="text" defaultValue={this.state.user.Addresses[0].street_nr} validations={[required]} onChange={ e => {this.setState({street_nr: e.target.value})}} />
-                                        <input className="form-control" type="text" defaultValue={this.state.user.Addresses[0].bus_nr} onChange={ e => {this.setState({bus_nr: e.target.value})}} />
-                                        <input className="form-control" type="text" defaultValue={this.state.user.Addresses[0].country} validations={[required]} onChange={ e => {this.setState({country: e.target.value})}} />
+                                        <label>Street number:</label>
+                                        <input
+                                            id="streetNumber"
+                                            className="form-control"
+                                            type="text"
+                                            defaultValue={this.state.user.Addresses[0].street_nr}
+                                            validations={[required, vNumber]}
+                                            onChange={ e => {this.setState({street_nr: e.target.value})}}
+                                        />
+                                        <label>Bus number:</label>
+                                        <input
+                                            id="busNumber"
+                                            className="form-control"
+                                            type="text"
+                                            validation={[vTextNumbers]}
+                                            defaultValue={this.state.user.Addresses[0].bus_nr}
+                                            onChange={ e => {this.setState({bus_nr: e.target.value})}}
+                                        />
+                                        <label>Country:</label>
+                                        <input
+                                            id="country"
+                                            className="form-control"
+                                            type="text"
+                                            defaultValue={this.state.user.Addresses[0].country}
+                                            validations={[required, vText]}
+                                            onChange={ e => {this.setState({country: e.target.value})}}
+                                        />
                                     </div> 
                                 </div>
                             </div>

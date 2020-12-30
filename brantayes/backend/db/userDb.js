@@ -56,7 +56,9 @@ const readUserRoles = (user_id) => {
 
 //TODO: implement
 const updateUserById = async(user_id, fields) => {
-
+    return models.User.readUserById(user_id).then(user => {
+        return user
+    })
 }
 
 const deleteUserById = async(user_id) => {
