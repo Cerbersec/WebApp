@@ -189,7 +189,7 @@ class Register extends Component{
     else {
       this.setState({loading: false})
     }
-  }
+}
 
 
     render(){

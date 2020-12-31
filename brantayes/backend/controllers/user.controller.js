@@ -24,7 +24,7 @@ const getUserByID = async(req, res, next) => {
 const updateUser = async(req, res, next) => {
     const user_id = req.user_id
     try {
-        //const result = await userDb.updateUserById(user_id)
+        const result = await userDb.updateUserById(user_id)
 
         return res.status(500).json({
             message: 'not implemented'
