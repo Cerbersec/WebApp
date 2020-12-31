@@ -77,8 +77,8 @@ class SideMenu extends Component {
                         )
                     } else {
                         return (
-                            <Fragment className="menuitem" key={menuitem.id}>
-                                <ListItem button dense onClick={(e) => {this.setState(ps => { return { expandedMenuItems: {...ps.expandedMenuItems, [menuitem.id]: !ps.expandedMenuItems[menuitem.id]}}})}} >
+                            <Fragment key={menuitem.id}>
+                                <ListItem button dense className="menuitem" onClick={(e) => {this.setState(ps => { return { expandedMenuItems: {...ps.expandedMenuItems, [menuitem.id]: !ps.expandedMenuItems[menuitem.id]}}})}} >
                                     <ListItemText disableTypography primary={<div style={{ color: "white" }}>{menuitem.name}</div>} />
                                     {this.state.expandedMenuItems[menuitem.id] ? (
                                         <ExpandLess color="secondary" />
@@ -99,7 +99,7 @@ class SideMenu extends Component {
 
     render() {
         return (
-            <div id="sidemenu" className={!this.state.expanded && "forcewidth"}>
+            <div id="sidemenu" className={!this.state.expanded ? "forcewidth" : undefined}>
                 <ListItem dense button style={{minHeight: 60, borderBottom: "1px solid #546e7a"}} onClick={this.handleExpand}>
                     <ListItemIcon>{this.state.expanded ? (<ChevronRight color="secondary" />) : (<ChevronLeft color="secondary" />)}</ListItemIcon>
                 </ListItem>
