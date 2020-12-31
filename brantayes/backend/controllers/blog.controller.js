@@ -66,6 +66,41 @@ const putPost = async (req, res, next) => {
     }
 }
 
+const updatePost = async(req, res, next) => {
+    try {
+        const { title, content} = req.body
+        const post_id = req.params.postId
+
+        const post = await blogDb.readPost(post_id)
+
+        if(post) {
+            post.title = title
+            post.content = content
+
+            const result = await post.save({fields: ['title', 'content']})
+            if(result) {
+                res.status(200).send({
+                    message: 'post updated'
+                })
+            }
+            else {
+                res.status(500).send({
+                    message: 'something went wrong'
+                })
+            }
+        }
+        else {
+            res.status(500).send({
+                message: 'something went wrong'
+            })
+        }
+
+    } catch(e) {
+        console.log(e.message)
+        res.sendStatus(500) && next(e)
+    }
+}
+
 const removePost = async (req, res, next) => {
     const post_id = req.params.postId
     try {
@@ -85,3 +120,4 @@ exports.getPosts = getPosts
 exports.getPost = getPost
 exports.putPost = putPost
 exports.removePost = removePost
+exports.updatePost = updatePost

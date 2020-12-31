@@ -5,7 +5,7 @@ const readPosts = () => {
     return models.Blogpost.findAll()
 }
 
-const readPost = (post_id) => {
+const readPost = async (post_id) => {
     return models.Blogpost.findOne({ where: { post_id: post_id } })
 }
 

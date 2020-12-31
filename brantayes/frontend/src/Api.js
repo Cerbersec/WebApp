@@ -313,6 +313,18 @@ class Api {
     })
   }
 
+  editBlogpost(post_id, data) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        axios.post(url + '/blog/posts/edit/' + post_id, data).then((response) => {
+          resolve(response.data)
+        }).catch((err) => {
+          reject(err)
+        })
+      }, 500)
+    }
+  )}
+
 
 
 }

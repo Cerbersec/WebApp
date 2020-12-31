@@ -1,9 +1,11 @@
 #editblogpost {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    align-items: center;
+    width: 80%;
 }
 
 #editblogpost .form-control {
     margin-bottom: 1vh;
+    width: 50vw;
 }
