@@ -44,13 +44,21 @@ const putPost = async (req, res, next) => {
         const newPost = new models.Blogpost({
             title: title,
             content: content,
-            post_date: new Date()
+            post_date: new Date(),
+            user_id: req.user_id
         })
 
         const post = await blogDb.createPost(newPost)
-        res.send({
-            message: 'post created'
-        })
+        if(post) {
+            res.status(200).send({
+                message: 'post created'
+            })
+        }
+        else {
+            res.status(500).send({
+                message: 'something went wrong'
+            })
+        }
 
     } catch(e) {
         console.log(e.message)

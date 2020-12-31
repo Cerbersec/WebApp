@@ -1,0 +1,9 @@
+#editblogpost {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+#editblogpost .form-control {
+    margin-bottom: 1vh;
+}

@@ -300,6 +300,21 @@ class Api {
       }, 500);
     })
   }
+
+  newBlogpost(data) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        axios.post(url + '/blog/posts/create', data).then((response) => {
+          resolve(response.data)
+        }).catch((err) => {
+          reject(err)
+        })
+      }, 500)
+    })
+  }
+
+
+
 }
 
 // UpdateAccountInfo(user_id) {

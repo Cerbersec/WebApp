@@ -13,7 +13,8 @@ const createPost = async (post) => {
     return models.Blogpost.create({
         title: post.title,
         content: post.content,
-        post_date: post.post_date
+        post_date: post.post_date,
+        user_id: post.user_id
     })
 }
 

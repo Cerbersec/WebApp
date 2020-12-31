@@ -1,0 +1,9 @@
+#addproduct {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+#addproduct .form-control {
+    margin-bottom: 1vh;
+}

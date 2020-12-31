@@ -1,0 +1,11 @@
+#newblogpost {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+}
+
+#newblogpost .form-control {
+    margin-bottom: 1vh;
+    width: 50vw;
+}

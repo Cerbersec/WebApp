@@ -1,0 +1,9 @@
+#editproduct {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+#editproduct .form-control {
+    margin-bottom: 1vh;
+}
