@@ -1,7 +1,7 @@
 import "./Edit.css";
 import React, { Component } from 'react';
 import Api from "../../../../Api";
-import { Button, Select, CircularProgress, MenuItem } from "@material-ui/core";
+import { Button, Select, MenuItem } from "@material-ui/core";
 // validation
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";

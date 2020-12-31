@@ -1,0 +1,11 @@
+#removeblogpost {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+}
+
+#removeblogpost .form-control {
+    margin-bottom: 1vh;
+    width: 50vw;
+}

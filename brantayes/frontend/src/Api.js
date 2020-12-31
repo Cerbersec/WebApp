@@ -322,8 +322,20 @@ class Api {
           reject(err)
         })
       }, 500)
-    }
-  )}
+    })
+  }
+
+  removeBlogpost(post_id) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        axios.get(url + '/blog/posts/delete/' + post_id).then((response) => {
+          resolve(response.data)
+        }).catch((err) => {
+          reject(err)
+        })
+      }, 500)
+    })
+  }
 
 
 

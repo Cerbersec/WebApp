@@ -105,9 +105,16 @@ const removePost = async (req, res, next) => {
     const post_id = req.params.postId
     try {
         const post = await blogDb.deletePost(post_id)
-        res.send({
-            message: 'post removed'
-        })
+        if(post) {
+            res.status(200).send({
+                message: 'post removed'
+            })
+        }
+        else {
+            res.status(500).send({
+                message: 'something went wrong'
+            })
+        }
 
     } catch(e) {
         console.log(e.message)
