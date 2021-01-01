@@ -337,7 +337,17 @@ class Api {
     })
   }
 
-
+  uploadLogo(data) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        axios.post(url + '/info/updatelogo', data).then((response) => {
+          resolve(response.data)
+        }).catch((err) => {
+          reject(err)
+        })
+      }, 500)
+    })
+  }
 
 }
 

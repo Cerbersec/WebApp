@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { showCartDlg, toggleMenu } from "../../Redux/Actions";
 import { logout } from "../../Redux/actions/auth";
 import "./Header.css";
-import cartImage from "../../Images/brantayes.png";
 import { IconButton, Badge, Button, Menu, MenuItem, Select, AppBar, Toolbar, InputBase } from "@material-ui/core";
 import { Search as SearchIcon, ShoppingCart as ShoppingCartIcon, Menu as MenuIcon, PersonOutline as Person, PersonOutline, MoreVert as MoreIcon, Close as LogoutIcon, Dashboard as DashboardIcon }  from "@material-ui/icons";
 import Api from "../../Api";
@@ -100,6 +99,7 @@ class Header extends Component {
     this.handleLogout = this.handleLogout.bind(this)
     this.handleMobileMenuClose = this.handleMobileMenuClose.bind(this)
     this.handleMobileMenuOpen = this.handleMobileMenuOpen.bind(this)
+    this.setLogo = this.setLogo.bind(this)
 
     this.state = {
       searchTerm: "",
@@ -107,11 +107,28 @@ class Header extends Component {
       categories: [],
       categoryFilterValue: "",
       mobileMoreAnchorEl: null,
+      cartImage: ""
     }
   }
 
   componentDidMount() {
+    this.setLogo()
     this.fetchCategories();
+  }
+
+  setLogo() {
+    let img = new Image()
+    img.onload = () => {
+      this.setState({cartImage: "banner.png"})
+    }
+
+    img.onerror = () => {
+      this.setState({cartImage: "brantayes.png"})
+    }
+
+    fetch('/banner.png', {method: 'HEAD'}).then((r) => {
+      img.src = r.url
+    })
   }
 
   async fetchCategories() {
@@ -167,7 +184,7 @@ class Header extends Component {
                 <MenuIcon size="medium" />
               </IconButton>
 
-              <img src={cartImage} alt="Logo" width="8%" onClick={() => {this.props.history.push("/store")}}/>
+              <img src={this.state.cartImage} alt="Logo" width="8%" onClick={() => {this.props.history.push("/store")}}/>
 
               <div className={classes.search}>
                 <div className={classes.searchIcon}>
