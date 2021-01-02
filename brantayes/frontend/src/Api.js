@@ -349,11 +349,24 @@ class Api {
     })
   }
 
-}
+  UpdateAccountInfo(data) {
+    //Send updated accoutn info to db
+  //   return axios
+  //     .post(url + "/account", data)
+  //     .then((response) => {
+  //       return response.data;
+  //     });
 
-// UpdateAccountInfo(user_id) {
-//   //Send updated accoutn info to db
-//   axios.post();
-// }
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      axios.post(url + '/account', data).then((response) => {
+        resolve(response.data)
+      }).catch((err) => {
+        reject(err)
+      })
+    }, 500)
+  })
+  }
+}
 
 export default new Api();

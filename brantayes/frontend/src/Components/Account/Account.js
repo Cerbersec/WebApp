@@ -125,8 +125,9 @@ class Account extends Component
             loading: false,
             successful: false,
             fieldsetDisabled: true,
-            firstname:"",
-            lastname:"",
+            firstname: "",
+            lastname: "",
+            email: "",
             username: "",
             gender: "",
             street: "",
@@ -152,6 +153,7 @@ class Account extends Component
                 first_name: this.state.firstname,
                 last_name: this.state.lastname,
                 gender: this.state.gender,
+                email: this.state.email_address,
                 username: this.state.username,
                 street_name: this.state.street,
                 street_nr: this.state.streetnr,
@@ -163,14 +165,17 @@ class Account extends Component
             }
 
             //TODO: api call here
-            console.log(this.state) //test
-            dispatch(setMessage("successful")) //test
-
-            //then()
-            this.setState({successful: true, loading: false})
-
-            //catch(e)
-            //this.setState({successful: false, loading: false})
+            console.log(this.state)
+            dispatch(setMessage("successful"))
+            //dispatch(UpdateAccountInfo(data))
+            //the fucker says "UpdateAccountInfo" doesn't exist
+            //i (tried to) implement(ed) it in Api.js (last method in file)
+                .then(() => {
+                    this.setState({successful: true, loading: false})
+                })
+                .catch((e) => {
+                    this.setState({successful: false, loading: false})
+                })
         }
         else {
             this.setState({loading: false})
