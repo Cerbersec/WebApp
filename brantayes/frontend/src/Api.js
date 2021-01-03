@@ -352,7 +352,7 @@ class Api {
   UpdateAccountInfo(data) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        axios.post(url + '/account', data).then((response) => {
+        axios.post(url + '/account/update', data).then((response) => {
           resolve(response.data)
         }).catch((err) => {
           reject(err)
