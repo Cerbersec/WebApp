@@ -188,6 +188,31 @@ const createReview = async (review) => {
     })
 }
 
+const createProduct = async (product) => {
+    return models.Blogpost.create({
+        name: product.name,
+        brand: product.brand,
+        size: product.size,
+        color: product.color,
+        release_date: product.release_date,
+        retail_price: product.retail_price,
+        price: product.price,
+        stock_quantity: product.stock_quantity,
+        description: product.description,
+        image_url: product.image_url,
+        type: product.type
+    })
+    //TODO: Add Category
+}
+
+const deleteProduct = async (product_id) => {
+    return models.Product.destroy({
+        where: {
+            product_id: product_id
+        }
+    })
+}
+
 exports.readProducts = readProducts
 exports.readProduct = readProduct
 exports.createOrder = createOrder
@@ -199,3 +224,5 @@ exports.readReviews = readReviews
 exports.createReview = createReview
 exports.updateOrderPaidStatus = updateOrderPaidStatus
 exports.countProductsByCategory = countProductsByCategory
+exports.createProduct = createProduct
+exports.deleteProduct = deleteProduct
