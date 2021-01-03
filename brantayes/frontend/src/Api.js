@@ -350,22 +350,15 @@ class Api {
   }
 
   UpdateAccountInfo(data) {
-    //Send updated accoutn info to db
-  //   return axios
-  //     .post(url + "/account", data)
-  //     .then((response) => {
-  //       return response.data;
-  //     });
-
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      axios.post(url + '/account', data).then((response) => {
-        resolve(response.data)
-      }).catch((err) => {
-        reject(err)
-      })
-    }, 500)
-  })
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        axios.post(url + '/account', data).then((response) => {
+          resolve(response.data)
+        }).catch((err) => {
+          reject(err)
+        })
+      }, 500)
+    })
   }
 }
 

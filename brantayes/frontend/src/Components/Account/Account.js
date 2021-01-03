@@ -166,16 +166,24 @@ class Account extends Component
 
             //TODO: api call here
             console.log(this.state)
-            dispatch(setMessage("successful"))
+            const response = Api.UpdateAccountInfo(data)
+                .then((r) => {
+                this.setState({successful: true, message: r.message, loading: false})
+                })
+                .catch((err) => {
+                this.setState({successful: false, message: err.response.data.message})
+                })
+            
+            //dispatch(setMessage("successful"))
             //dispatch(UpdateAccountInfo(data))
             //the fucker says "UpdateAccountInfo" doesn't exist
             //i (tried to) implement(ed) it in Api.js (last method in file)
-                .then(() => {
-                    this.setState({successful: true, loading: false})
-                })
-                .catch((e) => {
-                    this.setState({successful: false, loading: false})
-                })
+                // .then(() => {
+                //     this.setState({successful: true, loading: false})
+                // })
+                // .catch((e) => {
+                //     this.setState({successful: false, loading: false})
+                // })
         }
         else {
             this.setState({loading: false})
