@@ -36,9 +36,13 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import theme from './theme'
 
 //Google Analytics
-import GA4React from "ga-4-react";
-const trackingID = "G-19MJST6SEF";
-const ga4react = new GA4React(trackingID)
+//import GA4React from "ga-4-react";
+//const trackingID = "G-19MJST6SEF";
+//const ga4react = new GA4React(trackingID)
+
+import ReactGA from 'react-ga';
+ReactGA.initialize('UA-186328041-1');
+ReactGA.pageview(window.location.pathname + window.location.search);
 
 const mapStateToProps = state => {
   const { user } = state;
