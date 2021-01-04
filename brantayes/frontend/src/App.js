@@ -36,10 +36,6 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import theme from './theme'
 
 //Google Analytics
-//import GA4React from "ga-4-react";
-//const trackingID = "G-19MJST6SEF";
-//const ga4react = new GA4React(trackingID)
-
 import ReactGA from 'react-ga';
 ReactGA.initialize('UA-186328041-1');
 ReactGA.pageview(window.location.pathname + window.location.search);
@@ -61,13 +57,6 @@ class App extends Component {
 
     history.listen((location) => {
       props.dispatch(clearMessage());
-      
-      //Google Analytics page view tracking
-      ga4react.initialize().then((ga4) => {
-        ga4.pageview(location.pathname + location.search)
-      }, (err) => {
-        console.error(err)
-      })
     });
   }
 
