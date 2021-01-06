@@ -21,7 +21,7 @@ const PostShippingCosts = async (req, res, next) => {
         const shipping_costs = req.params.shipping_costs;
         infoDb.UpdateShippingCosts(shipping_costs);
         res.send({
-            message: 'Shipping costs updated'
+            message: 'Shipping costs succesfully updated'
         })
 
     } catch(e) {
