@@ -360,6 +360,54 @@ class Api {
       }, 500)
     })
   }
+
+  addProduct(data){
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        axios.post(url + '/admin/products/add', data).then((response) => {
+          resolve(response.data)
+        }).catch((err) => {
+          reject(err)
+        })
+      }, 500)
+    })
+  }
+
+  editProduct(product_id,data){
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        axios.post(url + '/admin/products/update/' + product_id,data).then((response) => {
+          resolve(response.data)
+        }).catch((err) => {
+          reject(err)
+        })
+      }, 500)
+    })
+  }
+  
+  removeProduct(product_id){
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        axios.get(url + '/admin/products/delete/' + product_id).then((response) => {
+          resolve(response.data)
+        }).catch((err) => {
+          reject(err)
+        })
+      }, 500)
+    })
+  }
+
+  updateShipping(data){
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        axios.post(url + '/info/updateshipping',data).then((response) => {
+          resolve(response.data)
+        }).catch((err) => {
+          reject(err)
+        })
+      }, 500)
+    })
+  }
 }
 
 export default new Api();
