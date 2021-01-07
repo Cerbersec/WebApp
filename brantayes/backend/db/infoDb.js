@@ -4,9 +4,6 @@ let path = './config/shipping.json'
 const ReadShippingCosts = () => {
     const data = fs.readFileSync(path, 'utf-8');
     const shipping = JSON.parse(data).shipping_costs;
-
-    console.log(data);
-    console.log(shipping);
     return shipping;
 }
 
@@ -20,7 +17,7 @@ const UpdateShippingCosts = (shipping_costs) => {
         if (err) {
             throw err;
         }
-        console.log("Shipping costs were updated");
+        console.log("Shipping costs were updated to € " + shipping_costs);
     });
 }
 

@@ -18,7 +18,7 @@ const GetShippingCosts = async (req, res, next) => {
 
 const PostShippingCosts = async (req, res, next) => {
     try {
-        const shipping_costs = req.params.shipping_costs;
+        const shipping_costs = req.body.shipping_costs;
         infoDb.UpdateShippingCosts(shipping_costs);
         res.send({
             message: 'Shipping costs succesfully updated'
