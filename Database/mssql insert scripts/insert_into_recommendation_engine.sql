@@ -1,5 +1,5 @@
 CREATE TABLE brantano.dbo.recommendations(
-   Product_id        INTEGER  NOT NULL PRIMARY KEY 
+   Product_id        INTEGER  NOT NULL 
   ,Recommendation_id INTEGER  NOT NULL
 );
 INSERT INTO brantano.dbo.recommendations(Product_id,Recommendation_id) VALUES
