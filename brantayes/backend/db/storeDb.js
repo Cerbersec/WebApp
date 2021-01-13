@@ -212,6 +212,13 @@ const deleteProduct = async (product_id) => {
         }
     })
 }
+const deleteReviews = async (product_id) => {
+    return models.Review.destroy({
+        where: {
+            product_id: product_id
+        }
+    })
+}
 
 exports.readProducts = readProducts
 exports.readProduct = readProduct
@@ -226,3 +233,4 @@ exports.updateOrderPaidStatus = updateOrderPaidStatus
 exports.countProductsByCategory = countProductsByCategory
 exports.createProduct = createProduct
 exports.deleteProduct = deleteProduct
+exports.deleteReviews = deleteReviews

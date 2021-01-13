@@ -93,7 +93,9 @@ const updateProduct = async (req, res, next) => {
 const removeProduct = async (req, res, next) => {
     const product_id = req.params.product_id
     try { 
-        const product = await storeDb.deletePost(product_id)
+        const reviews = await storeDb.deleteReviews(product_id)
+        const product = await storeDb.deleteProduct(product_id)
+        
         if(product) {
             res.status(200).send({
                 message: 'Product removed'
