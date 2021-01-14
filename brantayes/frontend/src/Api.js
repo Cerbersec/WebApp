@@ -196,7 +196,6 @@ class Api {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         axios.get(url + '/store/orders').then((response) => {
-          console.log(response)
           resolve(response.lenght === 0 ? [] : response.data.orders)
         }).catch((err) => {
           reject(err)
@@ -349,7 +348,7 @@ class Api {
     })
   }
 
-  UpdateAccountInfo(data) {
+  updateAccountInfo(data) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         axios.post(url + '/account/update', data).then((response) => {

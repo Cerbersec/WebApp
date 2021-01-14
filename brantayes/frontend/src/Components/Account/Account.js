@@ -12,10 +12,8 @@ import { Table, TableBody, TableCell, TableHead, TableRow } from "@material-ui/c
 
 import CheckButton from "react-validation/build/button";
 import Form from "react-validation/build/form";
-
-//Validation
 import Input from "react-validation/build/input";
-import { isAlpha, isPostalCode, isNumeric, isAlphanumeric, isMobilePhone, isEmail } from "validator";
+import { isAlpha, isPostalCode, isNumeric, isAlphanumeric, isMobilePhone } from "validator";
 
 import Api from "../../Api";
 
@@ -52,16 +50,6 @@ const vText = (value) => {
     }
 }
 
-const vMail = (value) => {
-    if (!isEmail(value)) {
-        return (
-          <div className="alert alert-danger" role="alert">
-            This is not a valid email.
-          </div>
-        );
-    }
-}
-
 const vTextNumbers = (value) => {
     if (value && !isAlphanumeric(value)) {
       return (
@@ -83,7 +71,7 @@ const vTextNumbers = (value) => {
   }
   
   const vGender = (value) => {
-    if (!(value === "")) {
+    if (value === "") {
       return (
         <div className="alert alert-danger" role="alert">
           Select your gender.
@@ -125,14 +113,14 @@ class Account extends Component
             loading: false,
             successful: false,
             fieldsetDisabled: true,
-            firstname: "",
-            lastname: "",
-            email: "",
+            first_name: "",
+            last_name: "",
+            email_address: "",
             username: "",
             gender: "",
-            street: "",
-            streetnr: "",
-            postal: "",
+            street_name: "",
+            street_nr: "",
+            postal_code: "",
             city: "",
             country: "",
             bus_nr: "",
@@ -140,7 +128,7 @@ class Account extends Component
         };
     }
 
-    handleSubmit(e) {
+    async handleSubmit(e) {
         e.preventDefault();
 
         this.setState({fieldsetDisabled: !this.state.fieldsetDisabled, successful: false, loading: true})
@@ -150,40 +138,27 @@ class Account extends Component
         if(this.checkBtn.context._errors.length === 0) {
             const { dispatch } = this.props;
             const data = {
-                first_name: this.state.firstname,
-                last_name: this.state.lastname,
+                first_name: this.state.first_name,
+                last_name: this.state.last_name,
                 gender: this.state.gender,
-                email: this.state.email_address,
+                email_address: this.state.email_address,
                 username: this.state.username,
-                street_name: this.state.street,
-                street_nr: this.state.streetnr,
-                postal_code: this.state.postal,
+                street_name: this.state.street_name,
+                street_nr: this.state.street_nr,
+                postal_code: this.state.postal_code,
                 phone: this.state.phone,
                 bus_nr: this.state.bus_nr,
                 city: this.state.city,
                 country: this.state.country,
             }
 
-            //TODO: api call here
-            console.log(this.state)
-            const response = Api.UpdateAccountInfo(data)
-                .then((r) => {
+            const response = await Api.updateAccountInfo(data).then((r) => {
                 this.setState({successful: true, message: r.message, loading: false})
-                })
-                .catch((err) => {
-                this.setState({successful: false, message: err.response.data.message})
-                })
+            }).catch((err) => {
+                this.setState({successful: false, message: err.response.data.message, loading: false})
+            })
             
             //dispatch(setMessage("successful"))
-            //dispatch(UpdateAccountInfo(data))
-            //the fucker says "UpdateAccountInfo" doesn't exist
-            //i (tried to) implement(ed) it in Api.js (last method in file)
-                // .then(() => {
-                //     this.setState({successful: true, loading: false})
-                // })
-                // .catch((e) => {
-                //     this.setState({successful: false, loading: false})
-                // })
         }
         else {
             this.setState({loading: false})
@@ -193,6 +168,25 @@ class Account extends Component
     componentDidMount() {
         this.fetchOrders();
         this.fetchUser();
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if(this.state.user !== prevState.user) {
+            this.setState({
+                first_name: this.state.user.first_name,
+                last_name: this.state.user.last_name,
+                email_address: this.state.user.email_address,
+                username: this.state.user.username,
+                gender: this.state.user.gender,
+                phone: this.state.user.phone,
+                street_name: this.state.user.Addresses[0].street_name,
+                street_nr: this.state.user.Addresses[0].street_nr.toString(),
+                bus_nr: this.state.user.Addresses[0].bus_nr, 
+                postal_code: this.state.user.Addresses[0].postal_code,
+                city: this.state.user.Addresses[0].city,
+                country: this.state.user.Addresses[0].country,
+            })
+        }
     }
 
     async fetchOrders() {
@@ -229,61 +223,19 @@ class Account extends Component
                         
                                 <div className="row">
                                     <div className="col-md-6">
-                                        <label>First name:</label>
-                                        <input
-                                            id="firstName"
-                                            className="form-control"
-                                            type="text"
-                                            defaultValue={this.state.user.first_name}
-                                            validations={[required, vText]}
-                                            onChange={ e => {this.setState({first_name: e.target.value})}}
-                                        />
-                                        <label>Username:</label>
-                                        <input
-                                            id="userName"
-                                            className="form-control"
-                                            type="text"
-                                            defaultValue={this.state.user.username}
-                                            validations={[required, vText]}
-                                            onChange={e => {this.setState({username: e.target.value})}}
-                                        />
-                                        <label>Phone number:</label>
-                                        <input
-                                            id="phoneNumber"
-                                            className="form-control"
-                                            type="text"
-                                            defaultValue={this.state.user.phone}
-                                            validation={[vPhoneNumber]}
-                                            onChange={e => {this.setState({phone: e.target.value})}}
-                                        />
+                                        <Input className="form-control" type="text" value={this.state.first_name} validations={[required, vText]} onChange={ e => {this.setState({first_name: e.target.value})}} />
+                                        <Input className="form-control" type="text" value={this.state.username} validations={[required, vText]} onChange={e => {this.setState({username: e.target.value})}} />
+                                        <Input className="form-control" type="text" value={this.state.phone} validation={[vPhoneNumber]} onChange={e => {this.setState({phone: e.target.value})}} />
                                     </div>
                                     <div className="col-md-6">
-                                        <label>Last name:</label>
-                                        <input
-                                            id="lastName"
-                                            className="form-control"
-                                            type="text"
-                                            defaultValue={this.state.user.last_name}
-                                            validations={[required, vText]}
-                                            onChange={e => {this.setState({last_name: e.target.value})}}
-                                        />
-                                        <label>Email:</label>
-                                        <input
-                                            id="email"
-                                            className="form-control"
-                                            type="email"
-                                            validation={[vMail]}
-                                            defaultValue={this.state.user.email_address}
-                                            disabled
-                                        />
-                                        <label>Gender:</label>
+                                        <Input className="form-control" type="text" value={this.state.last_name} validations={[required, vText]} onChange={e => {this.setState({last_name: e.target.value})}} />
+                                        <Input className="form-control" type="email" value={this.state.email_address} disabled />
                                         <Select
-                                            id="gender"
                                             className="form-control"
                                             disableUnderline
                                             displayEmpty
                                             disabled={this.state.fieldsetDisabled}
-                                            value={this.state.user.gender}
+                                            value={this.state.gender}
                                             validations={[required, vGender]}
                                             onChange={e => {this.setState({gender: e.target.value})}}
                                         >
@@ -298,62 +250,15 @@ class Account extends Component
 
                              <div className="col-md-6">
                                 <div className="row">
-                                    <div className="col-md-6">  
-                                        <label>Street name:</label>                             
-                                        <input
-                                            id="streetName"
-                                            className="form-control"
-                                            type="text" defaultValue={this.state.user.Addresses[0].street_name}
-                                            validations={[required, vText]}
-                                            onChange={ e => {this.setState({street_name: e.target.value})}}
-                                        />
-                                        <label>Postal code:</label>
-                                        <input
-                                            id="postalCode"
-                                            className="form-control"
-                                            type="text"
-                                            defaultValue={this.state.user.Addresses[0].postal_code}
-                                            validations={[required, vPostalCode]}
-                                            onChange={ e => {this.setState({postal_code: e.target.value})}}
-                                        />
-                                        <label>City:</label>
-                                        <input
-                                            id="city"
-                                            className="form-control"
-                                            type="text"
-                                            defaultValue={this.state.user.Addresses[0].city}
-                                            validations={[required, vText]}
-                                            onChange={ e => {this.setState({city: e.target.value})}}
-                                        />
+                                    <div className="col-md-6">                              
+                                        <Input className="form-control" type="text" value={this.state.street_name} validations={[required, vText]} onChange={ e => {this.setState({street_name: e.target.value})}} />
+                                        <Input className="form-control" type="text" value={this.state.postal_code} validations={[required, vPostalCode]} onChange={ e => {this.setState({postal_code: e.target.value})}} />
+                                        <Input className="form-control" type="text" value={this.state.city} validations={[required, vText]} onChange={ e => {this.setState({city: e.target.value})}} />
                                     </div>
                                     <div className="col-md-6">
-                                        <label>Street number:</label>
-                                        <input
-                                            id="streetNumber"
-                                            className="form-control"
-                                            type="text"
-                                            defaultValue={this.state.user.Addresses[0].street_nr}
-                                            validations={[required, vNumber]}
-                                            onChange={ e => {this.setState({street_nr: e.target.value})}}
-                                        />
-                                        <label>Bus number:</label>
-                                        <input
-                                            id="busNumber"
-                                            className="form-control"
-                                            type="text"
-                                            validation={[vTextNumbers]}
-                                            defaultValue={this.state.user.Addresses[0].bus_nr}
-                                            onChange={ e => {this.setState({bus_nr: e.target.value})}}
-                                        />
-                                        <label>Country:</label>
-                                        <input
-                                            id="country"
-                                            className="form-control"
-                                            type="text"
-                                            defaultValue={this.state.user.Addresses[0].country}
-                                            validations={[required, vText]}
-                                            onChange={ e => {this.setState({country: e.target.value})}}
-                                        />
+                                        <Input className="form-control" type="text" value={this.state.street_nr} validations={[required, vNumber]} onChange={ e => {this.setState({street_nr: e.target.value})}} />
+                                        <Input className="form-control" type="text" value={this.state.bus_nr} validation={[vTextNumbers]} onChange={ e => {this.setState({bus_nr: e.target.value})}} />
+                                        <Input className="form-control" type="text" value={this.state.country} validations={[required, vText]} onChange={ e => {this.setState({country: e.target.value})}} />
                                     </div> 
                                 </div>
                             </div>
@@ -375,7 +280,6 @@ class Account extends Component
                                 variant="outlined"
                                 color="primary"
                                 type="submit"
-                                //onClick={(e) => {e.handleSubmit()}}
                             >
                                 Save
                             </Button>
