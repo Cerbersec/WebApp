@@ -80,7 +80,6 @@ class Add extends Component {
             }
 
             this.setState({disabled: true})
-            console.log(data)
             
             const response = await Api.addProduct(data).then((r) => {
                 this.setState({successful: true, message: r.message})
@@ -94,7 +93,6 @@ class Add extends Component {
         const response = await Api.getCategories()
         .then((cat) => {
             this.setState({categories: cat})
-            console.log(this.state.categories)
         }).catch((err) => {
             console.error(err)
         })
