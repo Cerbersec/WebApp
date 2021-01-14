@@ -22,39 +22,27 @@ const getUserByID = async(req, res, next) => {
 }
 
 const updateUser = async(req, res, next) => {
-    // const user_id = req.user_id
-    // try {
-    //     const result = await userDb.updateUserById(user_id)
-
-    //     return res.status(500).json({
-    //         message: 'not implemented'
-    //     })
-    // } catch(e) {
-    //     console.log(e.message)
-    //     res.sendStatus(500) && next(e)
-    // }
-
     try {
-        const { firstname, lastname, gender, phone, email, username, street, streetnr, postal, bus_nr, city, country} = req.body
-        const user_id = req.params.user_id
+        const { first_name, last_name, gender, phone, email_address, username, street_name, street_nr, postal_code, bus_nr, city, country} = req.body
+        const user_id = req.user_id
 
-        const user = await userDb.updateUserById(user_id)
+        const user = await userDb.readUserById(user_id)
 
         if(user) {
-            user.first_name = firstname
-            user.last_name = lastname
+            user.first_name = first_name
+            user.last_name = last_name
             user.gender = gender
             user.phone = phone
-            user.email_address = email
+            user.email_address = email_address
             user.username = username
-            user.street_name = street
-            user.street_nr = streetnr
-            user.postal_code = postal
+            user.street_name = street_name
+            user.street_nr = street_nr
+            user.postal_code = postal_code
             user.bus_nr = bus_nr
             user.city = city
             user.country = country
 
-            const result = await user.save({fields: ['firstname', 'lastname', 'gender', 'phone', 'email', 'username', 'street', 'streetnr', 'postal', 'bus_nr', 'city', 'country']})
+            const result = await user.save()
             if(result) {
                 res.status(200).send({
                     message: 'user updated'
