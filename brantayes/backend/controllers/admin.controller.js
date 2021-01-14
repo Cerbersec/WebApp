@@ -16,8 +16,8 @@ const test = async (req, res, next) => {
 
 const putProduct = async (req, res, next) => {
     try {
-        const { name, brand, size, color, release_date, retail_price, price, stock_quantity, description, image_url, type} = req.body
-
+        const { name, brand, size, color, release_date, retail_price, price, stock_quantity, description, image_url, type, category} = req.body
+        
         var newProduct = new models.Product({
             name: name,
             brand: brand,
@@ -29,9 +29,9 @@ const putProduct = async (req, res, next) => {
             stock_quantity: stock_quantity,
             description: description,
             image_url: image_url,
-            type: type
+            type: type,
+            category_id: category
         })
-        //TODO: Add Category
 
         const createdProduct = await storeDb.createProduct(newProduct)
 
@@ -64,7 +64,7 @@ const updateProduct = async (req, res, next) => {
             product.brand = brand,
             product.size = size,
             product.color = color,
-            product.release_date = release_date,
+            product.release_date = Date.parse(release_date),
             product.retail_price = retail_price,
             product.price = price,
             product.stock_quantity = stock_quantity,

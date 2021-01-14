@@ -87,6 +87,7 @@ class Shipping extends Component {
                         <div className="row">
                             <label>New shipping cost: </label>
                             <Input
+                                className="form-control"
                                 id="shipping_cost"
                                 type="text"
                                 value={this.state.new_shipping_costs}

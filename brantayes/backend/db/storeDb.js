@@ -189,7 +189,7 @@ const createReview = async (review) => {
 }
 
 const createProduct = async (product) => {
-    return models.Blogpost.create({
+    return models.Product.create({
         name: product.name,
         brand: product.brand,
         size: product.size,
@@ -198,11 +198,12 @@ const createProduct = async (product) => {
         retail_price: product.retail_price,
         price: product.price,
         stock_quantity: product.stock_quantity,
+        popular: false,
         description: product.description,
         image_url: product.image_url,
-        type: product.type
+        type: product.type,
+        category_id: product.category_id
     })
-    //TODO: Add Category
 }
 
 const deleteProduct = async (product_id) => {

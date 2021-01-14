@@ -1,9 +1,18 @@
 #addproduct {
     display: flex;
     flex-direction: column;
+    align-items: center;
     width: 100%;
 }
 
 #addproduct .form-control {
     margin-bottom: 1vh;
+}
+
+#addproduct .row .col-md-6 {
+    max-width: 19vw;
+}
+
+#select{
+    display: flex;
 }
