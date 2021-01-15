@@ -54,7 +54,7 @@ const putProduct = async (req, res, next) => {
 
 const updateProduct = async (req, res, next) => {
     try {
-        const { name, brand, size, color, release_date, retail_price, price, stock_quantity, description, image_url, type} = req.body
+        const { name, brand, size, color, release_date, retail_price, price, stock_quantity, description, image_url, type,category} = req.body
         const product_id = req.params.product_id
 
         const product = await storeDb.readProduct(product_id)
@@ -70,10 +70,11 @@ const updateProduct = async (req, res, next) => {
             product.stock_quantity = stock_quantity,
             product.description = description,
             product.image_url = image_url,
-            product.type = type
+            product.type = type,
+            product.category_id = category
         }
 
-        const result = await product.save({fields: ['name', 'brand', 'size', 'color', 'release_date', 'retail_price', 'price', 'stock_quantity', 'description', 'image_url', 'type']})
+        const result = await product.save({fields: ['name', 'brand', 'size', 'color', 'release_date', 'retail_price', 'price', 'stock_quantity', 'description', 'image_url', 'type','category_id']})
         if(result) {
             res.status(200).send({
                 message: 'Product updated successfully'
