@@ -99,7 +99,7 @@ class App extends Component {
               <Route path="/account" exact component={Account}/>
               <Route path="/payment" component={TermsOfPayment}/>
               <Route path="/ordersuccess/:session_id" component={OrderSuccess}/>
-              <Route path="/ordercancel" component={OrderCancel}/>
+              <Route path="/ordercancel/:id" component={OrderCancel}/>
               <Route path="/orderdetails/:id" component={OrderDetails}/>
               <Route path="/account/recovery" exact component={PasswordReset}/>
               <Route path="/account/recovery/update-password/:user_id/:token" exact component={PasswordUpdate}/>

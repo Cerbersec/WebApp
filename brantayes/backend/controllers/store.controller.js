@@ -352,6 +352,27 @@ async function lookForProducts(productIds) {
     return products;
 }
 
+const removeOrder = async (req, res, next) => {
+    const order_id = req.params.orderid
+    try { 
+        const order = await storeDb.deleteOrder(order_id)
+        
+        if(order) {
+            res.status(200).send({
+                message: 'Order has been canceled!'
+            })
+        }
+        else {
+            res.status(500).send({
+                message: 'something went wrong'
+            })
+        }
+    } catch(e) {
+        console.log(e.message)
+        res.sendStatus(500) && next(e)
+    }
+}
+
 exports.getProducts = getProducts
 exports.getProductbyID = getProductbyID
 exports.postCheckout = postCheckout
@@ -363,3 +384,4 @@ exports.postReview = postReview
 exports.postPayment = postPayment
 exports.getProductCountByCategory = getProductCountByCategory
 exports.postSuccess = postSuccess
+exports.removeOrder = removeOrder

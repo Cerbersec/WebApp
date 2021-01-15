@@ -319,7 +319,7 @@ class Account extends Component
                                         <Button 
                                             variant="outlined"
                                             color="primary"
-                                            style={{width:"160px"}} 
+                                            style={{width:"140px"}} 
                                             onClick={() => {this.props.history.push("/orderdetails/" + order.order_id);}}
                                         >
                                             View details
@@ -334,6 +334,7 @@ class Account extends Component
                                         </Button>
                                     )}
                                 </TableCell>
+                            
                             </TableRow>
                         })}
                         </TableBody>

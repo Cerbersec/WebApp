@@ -407,6 +407,19 @@ class Api {
       }, 500)
     })
   }
+
+
+removeOrder(order_id){
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      axios.get(url + '/store/orders/delete/' + order_id).then((response) => {
+        resolve(response.data)
+      }).catch((err) => {
+        reject(err)
+      })
+    }, 500)
+  })
+}
 }
 
 export default new Api();

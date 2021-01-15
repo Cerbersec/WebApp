@@ -1,11 +1,26 @@
 import React, { Component } from "react";
-//import "./OrderSCancel.css";
+import Api from "../../Api";
 
 
 class OrderCancel extends Component 
 {   
     constructor(props) {
         super(props);
+    }
+
+    async removeOrder(order_id) {
+        const response = await Api.removeOrder(order_id);
+
+        if(response) {
+            this.setState({
+                response: response
+            })
+        }
+        console.log(response)
+    }
+
+    componentDidMount(){
+        this.removeOrder(this.props.match.params.id);
     }
     
     render()

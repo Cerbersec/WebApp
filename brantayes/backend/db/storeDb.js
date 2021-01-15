@@ -170,6 +170,14 @@ const readOrderLines = (order_id) => {
     return orderlines
 }
 
+const deleteOrder = async (order_id) => {
+    return models.Order.destroy({
+        where: {
+            order_id: order_id
+        }
+    })
+}
+
 const readCategories = () => {
     return models.Category.findAll()
 }
@@ -227,6 +235,7 @@ exports.createOrder = createOrder
 exports.readOrders = readOrders
 exports.readOrder = readOrder
 exports.readOrderLines = readOrderLines
+exports.deleteOrder = deleteOrder
 exports.readCategories = readCategories
 exports.readReviews = readReviews
 exports.createReview = createReview
