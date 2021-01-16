@@ -21,12 +21,14 @@ const resetPasswordTemplate = (user, url) => {
   const to = user.email_address
   const subject = "Brantayes: Password Reset"
   const html = `
-  <p>Hey ${user.username || user.email},</p>
-  <p>We heard that you lost your Brantayes password. Sorry about that!</p>
-  <p>But don’t worry! You can use the following link to reset your password:</p>
+  <p>Dear ${user.username || user.email},</p>
+  <p>We're sorry to hear that you lost your Brantayes password.</p>
+  <p>Please use the following link to reset your password:</p>
   <a href=${url}>${url}</a>
-  <p>If you don’t use this link within 1 hour, it will expire.</p>
-  <p>–The Brantayes team</p>
+  <p>The link will expire in 1 hour.</p>
+  <p>Kind regards,</p>
+  <p></p>
+  <p>The Brantayes team</p>
   `
 
   return { from, to, subject, html }
@@ -35,14 +37,14 @@ const resetPasswordTemplate = (user, url) => {
 const orderConfirmationTemp = (email) => {
   const from = process.env.EMAIL_LOGIN
   const to = email
-  const subject = "Your order has been shipped!"
+  const subject = "Your order has been shipped"
   const html = `
-  <p>Hey ${email}!</p>
-  <p>We heard that you lost your Brantayes password. Sorry about that!</p>
-  <p>But don’t worry! You can use the following link to reset your password:</p>
-  
-  <p>If you don’t use this link within 1 hour, it will expire.</p>
-  <p>–The Brantayes team</p>
+  <p>Dear ${email},</p>
+  <p>Your order has been shipped and will arrive as soon as possible.</p>
+  <p>Thank you for using the Brantayes webshop and we hope to see you again soon.</p>
+  <p>Kind regards,</p>
+  <p></p>
+  <p>The Brantayes team</p>
   `
 
   return { from, to, subject, html }
