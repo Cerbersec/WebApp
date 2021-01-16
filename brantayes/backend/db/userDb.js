@@ -54,13 +54,6 @@ const readUserRoles = (user_id) => {
     })
 }
 
-//TODO: implement
-const updateUserById = async(user_id, fields) => {
-    return models.User.readUserById(user_id).then(user => {
-        return user
-    })
-}
-
 const deleteUserById = async(user_id) => {
     return await models.User.destroy(user_id);
 }
@@ -83,7 +76,6 @@ exports.createUser = createUser
 exports.readUserById = readUserById
 exports.readUserAddress = readUserAddress
 exports.readUserRoles = readUserRoles
-exports.updateUserById = updateUserById
 exports.deleteUserById = deleteUserById
 exports.createUserAddressById = createUserAddressById
 exports.updateUserAddressById = updateUserAddressById

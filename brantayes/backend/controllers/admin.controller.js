@@ -16,8 +16,8 @@ const test = async (req, res, next) => {
 
 const putProduct = async (req, res, next) => {
     try {
-        const { name, brand, size, color, release_date, retail_price, price, stock_quantity, description, image_url, type} = req.body
-
+        const { name, brand, size, color, release_date, retail_price, price, stock_quantity, description, image_url, type, category} = req.body
+        
         var newProduct = new models.Product({
             name: name,
             brand: brand,
@@ -29,9 +29,9 @@ const putProduct = async (req, res, next) => {
             stock_quantity: stock_quantity,
             description: description,
             image_url: image_url,
-            type: type
+            type: type,
+            category_id: category
         })
-        //TODO: Add Category
 
         const createdProduct = await storeDb.createProduct(newProduct)
 
@@ -54,7 +54,7 @@ const putProduct = async (req, res, next) => {
 
 const updateProduct = async (req, res, next) => {
     try {
-        const { name, brand, size, color, release_date, retail_price, price, stock_quantity, description, image_url, type} = req.body
+        const { name, brand, size, color, release_date, retail_price, price, stock_quantity, description, image_url, type,category} = req.body
         const product_id = req.params.product_id
 
         const product = await storeDb.readProduct(product_id)
@@ -64,16 +64,17 @@ const updateProduct = async (req, res, next) => {
             product.brand = brand,
             product.size = size,
             product.color = color,
-            product.release_date = release_date,
+            product.release_date = Date.parse(release_date),
             product.retail_price = retail_price,
             product.price = price,
             product.stock_quantity = stock_quantity,
             product.description = description,
             product.image_url = image_url,
-            product.type = type
+            product.type = type,
+            product.category_id = category
         }
 
-        const result = await product.save({fields: ['name', 'brand', 'size', 'color', 'release_date', 'retail_price', 'price', 'stock_quantity', 'description', 'image_url', 'type']})
+        const result = await product.save({fields: ['name', 'brand', 'size', 'color', 'release_date', 'retail_price', 'price', 'stock_quantity', 'description', 'image_url', 'type','category_id']})
         if(result) {
             res.status(200).send({
                 message: 'Product updated successfully'
@@ -93,7 +94,9 @@ const updateProduct = async (req, res, next) => {
 const removeProduct = async (req, res, next) => {
     const product_id = req.params.product_id
     try { 
-        const product = await storeDb.deletePost(product_id)
+        const reviews = await storeDb.deleteReviews(product_id)
+        const product = await storeDb.deleteProduct(product_id)
+        
         if(product) {
             res.status(200).send({
                 message: 'Product removed'

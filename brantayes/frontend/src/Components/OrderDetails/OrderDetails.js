@@ -6,6 +6,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Api from "../../Api";
+import Button from "@material-ui/core/Button";
 
 class OrderDetails extends Component{
 
@@ -74,6 +75,16 @@ class OrderDetails extends Component{
             Shipping Costs: &euro; {this.state.order.shipping_costs}
             <br></br>
             Total price: &euro; {this.state.order.total_price}
+            <br ></br>
+            <Button
+                                variant="outlined"
+                                color="primary"
+                                style={{width:"140px"}} 
+                                onClick={() => {this.props.history.push("/ordercancel/" + this.state.order.order_id);}}
+                                >
+                                    Cancel Order
+                                </Button>
+        
           </div>
         </div>
         );

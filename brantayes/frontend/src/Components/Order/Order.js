@@ -170,7 +170,7 @@ class ConnectedOrder extends Component {
                 <br></br>
                 Shipping costs: &euro; {this.state.shippingCosts}
               </p>
-              <p>Total price: &euro; {(totalPrice + this.state.shippingCosts)}</p>
+              <p>Total price: &euro; {(Number(totalPrice) + Number(this.state.shippingCosts))}</p>
             </div>
             <Button
               color="primary"

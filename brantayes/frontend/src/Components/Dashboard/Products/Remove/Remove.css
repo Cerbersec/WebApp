@@ -1,0 +1,16 @@
+#removeproduct {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#removeproduct .row {
+    justify-content: center;
+}
+
+#productid{
+    display: inline-flex;
+    margin-bottom: 1vh;
+    text-align: center;
+    width: 10vw;
+}

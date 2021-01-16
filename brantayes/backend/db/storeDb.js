@@ -170,6 +170,14 @@ const readOrderLines = (order_id) => {
     return orderlines
 }
 
+const deleteOrder = async (order_id) => {
+    return models.Order.destroy({
+        where: {
+            order_id: order_id
+        }
+    })
+}
+
 const readCategories = () => {
     return models.Category.findAll()
 }
@@ -189,7 +197,7 @@ const createReview = async (review) => {
 }
 
 const createProduct = async (product) => {
-    return models.Blogpost.create({
+    return models.Product.create({
         name: product.name,
         brand: product.brand,
         size: product.size,
@@ -198,15 +206,23 @@ const createProduct = async (product) => {
         retail_price: product.retail_price,
         price: product.price,
         stock_quantity: product.stock_quantity,
+        popular: false,
         description: product.description,
         image_url: product.image_url,
-        type: product.type
+        type: product.type,
+        category_id: product.category_id
     })
-    //TODO: Add Category
 }
 
 const deleteProduct = async (product_id) => {
     return models.Product.destroy({
+        where: {
+            product_id: product_id
+        }
+    })
+}
+const deleteReviews = async (product_id) => {
+    return models.Review.destroy({
         where: {
             product_id: product_id
         }
@@ -219,6 +235,7 @@ exports.createOrder = createOrder
 exports.readOrders = readOrders
 exports.readOrder = readOrder
 exports.readOrderLines = readOrderLines
+exports.deleteOrder = deleteOrder
 exports.readCategories = readCategories
 exports.readReviews = readReviews
 exports.createReview = createReview
@@ -226,3 +243,4 @@ exports.updateOrderPaidStatus = updateOrderPaidStatus
 exports.countProductsByCategory = countProductsByCategory
 exports.createProduct = createProduct
 exports.deleteProduct = deleteProduct
+exports.deleteReviews = deleteReviews
