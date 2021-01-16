@@ -376,10 +376,10 @@ const removeOrder = async (req, res, next) => {
 const orderConfirmations = async(req, res) => {
     try {
         const { email_address } = req.body
-        const emailTemplate = orderconfirmationTemp(user)
-        const user = await userDb.readUserByEmail(email_address)
+        const emailTemplate = orderconfirmationTemp(email_address)
+        
 
-        if(user) {
+        
             
             const sendEmail = () => {
                 transporter.sendMail(emailTemplate, (err, info) => {
@@ -396,12 +396,7 @@ const orderConfirmations = async(req, res) => {
                 })
             }
             sendEmail()
-        }
-        else {
-            res.status(500).send({
-                message: "Email could not be sent"
-            })
-        }
+        
     } catch(error) {
         console.log(error)
         res.status(500).send({
