@@ -4,6 +4,7 @@ const models = require('../models')
 const config = require('../config/stripe')
 const stripe = require("stripe")(config.STRIPE_SECRET_TEST);
 const TypedError = require('../modules/ErrorHandler')
+const { transporter, orderconfirmationTemp } = require('../modules/email')
 
 const getProducts = async(req, res, next) => {
     const pageNo = req.body.page
@@ -375,7 +376,7 @@ const removeOrder = async (req, res, next) => {
 const orderConfirmations = async(req, res) => {
     try {
         const { email_address } = req.body
-        const emailTemplate = orderConfirmation(user)
+        const emailTemplate = orderconfirmationTemp(user)
         const user = await userDb.readUserByEmail(email_address)
 
         if(user) {

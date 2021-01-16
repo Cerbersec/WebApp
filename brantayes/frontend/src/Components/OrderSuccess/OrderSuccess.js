@@ -34,7 +34,7 @@ class OrderSuccess extends Component
     
        
     
-            const response = Api.orderConfirmation(this.state.email)
+            const r = await Api.orderConfirmation(this.state.email)
             .then(r => {
               console.log(r)
              

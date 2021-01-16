@@ -32,7 +32,7 @@ const resetPasswordTemplate = (user, url) => {
   return { from, to, subject, html }
 }
 
-const orderConfirmation = (user) => {
+const orderConfirmationTemp = (user) => {
   const from = process.env.EMAIL_LOGIN
   const to = user.email_address
   const subject = "Your order has been shipped!"
@@ -51,4 +51,4 @@ const orderConfirmation = (user) => {
 exports.transporter = transporter
 exports.getPasswordResetURL = getPasswordResetURL
 exports.resetPasswordTemplate = resetPasswordTemplate
-exports.orderconfirmation = orderConfirmation
+exports.orderconfirmationTemp = orderConfirmationTemp
