@@ -372,6 +372,42 @@ const removeOrder = async (req, res, next) => {
         res.sendStatus(500) && next(e)
     }
 }
+const orderConfirmations = async(req, res) => {
+    try {
+        const { email_address } = req.body
+        const emailTemplate = orderConfirmation(user)
+        const user = await userDb.readUserByEmail(email_address)
+
+        if(user) {
+            
+            const sendEmail = () => {
+                transporter.sendMail(emailTemplate, (err, info) => {
+                    if(err) {
+                        res.status(500).send({
+                            message: "Email could not be sent"
+                        })
+                    }
+                    console.log(`Email sent`, info.response)
+                    console.log(`Email info`, info.messageId)
+                    res.status(200).send({
+                        message: "Email sent"
+                    })
+                })
+            }
+            sendEmail()
+        }
+        else {
+            res.status(500).send({
+                message: "Email could not be sent"
+            })
+        }
+    } catch(error) {
+        console.log(error)
+        res.status(500).send({
+            message: error.message
+        })
+    }
+}
 
 exports.getProducts = getProducts
 exports.getProductbyID = getProductbyID
@@ -385,3 +421,4 @@ exports.postPayment = postPayment
 exports.getProductCountByCategory = getProductCountByCategory
 exports.postSuccess = postSuccess
 exports.removeOrder = removeOrder
+exports.orderConfirmations = orderConfirmations;

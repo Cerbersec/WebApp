@@ -209,6 +209,8 @@ const sendPasswordResetEmail = async(req, res) => {
     }
 }
 
+
+
 const receiveNewPassword = async(req, res) => {
     try {
     const user_id = req.params.user_id

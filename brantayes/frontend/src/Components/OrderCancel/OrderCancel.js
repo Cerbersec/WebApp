@@ -22,6 +22,7 @@ class OrderCancel extends Component
 
     componentDidMount(){
         this.removeOrder(this.props.match.params.id);
+        
     }
     
     render()

@@ -7,8 +7,11 @@ class OrderSuccess extends Component
 {   
     constructor(props) {
         super(props);
+        this.handleSubmit = this.handleSubmit.bind(this)
         this.state = {
-            response: null
+            
+            response: null,
+            email: ""
         }
     }
 
@@ -17,14 +20,38 @@ class OrderSuccess extends Component
 
         if(response) {
             this.setState({
-                response: response
+                response: response,
+                email : response.email
             })
         }
+        
         console.log(response)
     }
 
+    async handleSubmit(e) {
+        e.preventDefault();
+       
+    
+       
+    
+            const response = Api.orderConfirmation(this.state.email)
+            .then(r => {
+              console.log(r)
+             
+            })
+            .catch(e => {
+              console.log(e.response.data.message)
+              console.log("ERROR")
+              
+            })
+        
+      }
+    
+
     componentDidMount(){
         this.fetchCustomer(this.props.match.params.session_id);
+        
+        
     }
     render()
     {
@@ -34,7 +61,7 @@ class OrderSuccess extends Component
         return (
             <div id="OrderSuccess">
                 <div id="Column">
-                    <p style={{marginBottom: 0}}>Order successful   <DoneOutline style={{color: "green",fontSize: 50, marginBottom: 15}}/></p>
+                    <p onClick={this.handleSubmit} style={{marginBottom: 0}}>Order successful   <DoneOutline style={{color: "green",fontSize: 50, marginBottom: 15}}/></p>
                     <p style={{marginBottom: 50}}>Thank you!</p>
                     
                     <p style={{fontSize: 20}}>More information has been sent to <span style={{color:"#009eff"}}>{this.state.response.email}</span> with invoice number '<span style={{color:"#009eff"}}>{this.state.response.invoice}</span>'</p>

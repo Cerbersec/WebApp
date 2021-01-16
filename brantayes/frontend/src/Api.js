@@ -288,6 +288,18 @@ class Api {
     })
   }
 
+  orderConfirmation(email_address) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        axios.post(url + '/store/orders/orderconfirmation', { email_address: email_address }).then((response) => {
+          resolve(response.data)
+        }).catch((err) => {
+          reject(err)
+        })
+      }, 500);
+    })
+  }
+
   setNewPassword(data) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
