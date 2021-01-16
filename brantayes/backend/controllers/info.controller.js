@@ -62,6 +62,35 @@ const updateLogo = async (req, res, next) => {
     }
 }
 
+const getCompanyInfo = async (req, res, next) => {
+    try {
+        const info = await infoDb.ReadCompanyInfo();
+        res.status(200).json({
+            info: info
+        })
+
+    } catch(e) {
+        console.log(e.message)
+        res.sendStatus(500) && next(e)
+    }
+}
+
+const postCompanyInfo = async (req, res, next) => {
+    try {
+        const info = req.body;
+        infoDb.UpdateCompanyInfo(info);
+        res.send({
+            message: 'Company info sucessfuly updated'
+        })
+
+    } catch(e) {
+        console.log(e.message)
+        res.sendStatus(500) && next(e)
+    }
+}
+
 exports.GetShippingCosts = GetShippingCosts
 exports.PostShippingCosts = PostShippingCosts
 exports.updateLogo = updateLogo
+exports.getCompanyInfo = getCompanyInfo
+exports.postCompanyInfo = postCompanyInfo

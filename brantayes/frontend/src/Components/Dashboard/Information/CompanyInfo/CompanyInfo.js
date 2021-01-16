@@ -56,8 +56,14 @@ class CompanyInfo extends Component {
 
     async getCompanyInfo() {
         this.setState({loading: true})
-        const shipping = await Api.getCompanyInfo();
-        if(shipping) {this.setState({shipping_costs: shipping})}
+        const info = await Api.getCompanyInfo();
+        if(info) {this.setState({
+            email: info.email,
+            phone: info.phone,
+            address1: info.adress_line_1,
+            address2: info.adress_line_2,
+            address3: info.adress_line_3
+        })}
         this.setState({loading: false})
     }
 
@@ -71,9 +77,9 @@ class CompanyInfo extends Component {
             const data = {
                 email: this.state.email,
                 phone: this.state.phone,
-                address1: this.state.address1,
-                address2: this.state.address2,
-                address3: this.state.address3
+                adress_line_1: this.state.address1,
+                adress_line_2: this.state.address2,
+                adress_line_3: this.state.address3
             }
             
             const response = await Api.updateCompanyInfo(data).then((r) => {
@@ -104,8 +110,8 @@ class CompanyInfo extends Component {
                                 className="form-control"
                                 id="email"
                                 type="text"
-                                value={this.companyinfo.email}
-                                onChange={e => {this.setState({new_shipping_costs: e.target.value})}}
+                                value={this.state.email}
+                                onChange={e => {this.setState({email: e.target.value})}}
                                 validations={[required, vmail]}
                             />
                         </div>
@@ -115,8 +121,8 @@ class CompanyInfo extends Component {
                                 className="form-control"
                                 id="phone"
                                 type="text"
-                                value={this.companyinfo.phone}
-                                onChange={e => {this.setState({new_shipping_costs: e.target.value})}}
+                                value={this.state.phone}
+                                onChange={e => {this.setState({phone: e.target.value})}}
                                 validations={[required, vnumber]}
                             />
                         </div>
@@ -126,8 +132,8 @@ class CompanyInfo extends Component {
                                 className="form-control"
                                 id="steetandnumber"
                                 type="text"
-                                value={this.companyinfo.phone}
-                                onChange={e => {this.setState({new_shipping_costs: e.target.value})}}
+                                value={this.state.address1}
+                                onChange={e => {this.setState({address1: e.target.value})}}
                                 validations={[required]}
                             />
                         </div>
@@ -137,8 +143,8 @@ class CompanyInfo extends Component {
                                 className="form-control"
                                 id="cityandpostal"
                                 type="text"
-                                value={this.companyinfo.phone}
-                                onChange={e => {this.setState({new_shipping_costs: e.target.value})}}
+                                value={this.state.address2}
+                                onChange={e => {this.setState({address2: e.target.value})}}
                                 validations={[required]}
                             />
                         </div>
@@ -148,8 +154,8 @@ class CompanyInfo extends Component {
                                 className="form-control"
                                 id="country"
                                 type="text"
-                                value={this.companyinfo.phone}
-                                onChange={e => {this.setState({new_shipping_costs: e.target.value})}}
+                                value={this.state.address3}
+                                onChange={e => {this.setState({address3: e.target.value})}}
                                 validations={[required]}
                             />
                         </div>
@@ -160,7 +166,7 @@ class CompanyInfo extends Component {
                             color="primary"
                             type="submit"
                             >
-                                SAVE
+                                Save
                             </Button>
                         </div>
                     </fieldset>

@@ -45,7 +45,7 @@ class SideMenu extends Component {
             {
                 name: "Information",
                 id: 2,
-                children: [{name: "Logo", id: 9}, {name: "Shipping cost", id: 10}].map((c) => {
+                children: [{name: "Logo", id: 9}, {name: "Shipping cost", id: 10},{name: "company info", id: 11}].map((c) => {
                     return {
                         name: c.name,
                         id: c.id,

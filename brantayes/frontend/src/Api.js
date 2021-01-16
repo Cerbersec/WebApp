@@ -432,6 +432,31 @@ removeOrder(order_id){
     }, 500)
   })
 }
+
+getCompanyInfo() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      axios.get(url + '/info/companyinfo').then((response) => {
+        resolve(response.lenght === 0 ? null : response.data.info)
+      }).catch((err) => {
+        reject(err)
+      })
+    }, 500);
+  })
+}
+
+updateCompanyInfo(data){
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      axios.post(url + '/info/updatecompinfo',data).then((response) => {
+        resolve(response.data)
+      }).catch((err) => {
+        reject(err)
+      })
+    }, 500)
+  })
+}
+
 }
 
 export default new Api();
