@@ -4,6 +4,7 @@ const models = require('../models')
 const config = require('../config/stripe')
 const stripe = require("stripe")(config.STRIPE_SECRET_TEST);
 const TypedError = require('../modules/ErrorHandler')
+const { transporter, orderconfirmationTemp } = require('../modules/email')
 
 const getProducts = async(req, res, next) => {
     const pageNo = req.body.page
@@ -372,6 +373,37 @@ const removeOrder = async (req, res, next) => {
         res.sendStatus(500) && next(e)
     }
 }
+const orderConfirmations = async(req, res) => {
+    try {
+        const { email_address } = req.body
+        const emailTemplate = orderconfirmationTemp(email_address)
+        
+
+        
+            
+            const sendEmail = () => {
+                transporter.sendMail(emailTemplate, (err, info) => {
+                    if(err) {
+                        res.status(500).send({
+                            message: "Email could not be sent"
+                        })
+                    }
+                    console.log(`Email sent`, info.response)
+                    console.log(`Email info`, info.messageId)
+                    res.status(200).send({
+                        message: "Email sent"
+                    })
+                })
+            }
+            sendEmail()
+        
+    } catch(error) {
+        console.log(error)
+        res.status(500).send({
+            message: error.message
+        })
+    }
+}
 
 exports.getProducts = getProducts
 exports.getProductbyID = getProductbyID
@@ -385,3 +417,4 @@ exports.postPayment = postPayment
 exports.getProductCountByCategory = getProductCountByCategory
 exports.postSuccess = postSuccess
 exports.removeOrder = removeOrder
+exports.orderConfirmations = orderConfirmations;

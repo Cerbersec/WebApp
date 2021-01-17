@@ -7,8 +7,11 @@ class OrderSuccess extends Component
 {   
     constructor(props) {
         super(props);
+        this.handleSubmit = this.handleSubmit.bind(this)
         this.state = {
-            response: null
+            
+            response: null,
+            email: ""
         }
     }
 
@@ -17,14 +20,35 @@ class OrderSuccess extends Component
 
         if(response) {
             this.setState({
-                response: response
+                response: response,
+                email : response.email
             })
         }
+        
         console.log(response)
+        this.handleSubmit();
     }
+
+    async handleSubmit(e) {
+
+            const r = await Api.orderConfirmation(this.state.email)
+            .then(r => {
+              console.log(r)
+             
+            })
+            .catch(e => {
+              console.log(e.response.data.message)
+              console.log("ERROR")
+              
+            })
+        
+      }
+    
 
     componentDidMount(){
         this.fetchCustomer(this.props.match.params.session_id);
+        
+        
     }
     render()
     {

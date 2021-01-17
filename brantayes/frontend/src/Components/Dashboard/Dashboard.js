@@ -12,6 +12,7 @@ import EditProduct from "./Products/Edit/Edit";
 import RemoveProduct from "./Products/Remove/Remove";
 import Logo from "./Information/Logo/Logo";
 import ShippingCost from "./Information/Shipping/Shipping";
+import CompanyInfo from "./Information/CompanyInfo/CompanyInfo";
 
 const mapStateToProps = state => {
     const { user } = state
@@ -96,6 +97,9 @@ class Dashboard extends Component {
                         )
                         || this.state.activeAction === "shipping cost" && (
                             <ShippingCost />
+                        )
+                        || this.state.activeAction === "company info" && (
+                            <CompanyInfo />
                         )
                     )}
                 </div>

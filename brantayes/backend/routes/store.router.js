@@ -23,5 +23,6 @@ router.post('/createsuccess', authJwt.verifyToken, storeController.postSuccess)
 router.get('/orders', authJwt.verifyToken, storeController.getOrders)
 router.get('/orders/:orderid', authJwt.verifyToken, storeController.getOrderByID)
 router.get('/orders/delete/:orderid', authJwt.verifyToken, storeController.removeOrder)
+router.post('/orders/orderconfirmation', authJwt.verifyToken, storeController.orderConfirmations)
 
 module.exports = router

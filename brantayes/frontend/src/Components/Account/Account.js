@@ -169,7 +169,7 @@ class Account extends Component
         this.fetchOrders();
         this.fetchUser();
     }
-
+l
     componentDidUpdate(prevProps, prevState, snapshot) {
         if(this.state.user !== prevState.user) {
             this.setState({
