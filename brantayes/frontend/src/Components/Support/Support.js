@@ -3,26 +3,20 @@ import "./Support.css";
 import EmailIcon from '@material-ui/icons/Email';
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import Api from "../../Api";
+import Input from "@material-ui/core/Input";
 
 class Support extends Component 
 {
-    
-        constructor(props) {
-          super(props);
+    constructor(props) {
+        super(props);
 
-          this.submitForm = this.submitForm.bind(this);
-          this.state = { 
-            status: "" 
-                    };
-        }
-    
+        this.submitForm = this.submitForm.bind(this);
         
-        sendSupport = () => {
+        this.state = { 
+            status: ""
+        }
+    }
 
-            
-           
-          }
     render()
     {
         return (
@@ -48,64 +42,57 @@ class Support extends Component
                     <br></br><br></br>
                 </div>
                 <div className="Column">
-
-                <form
-                    onSubmit={this.submitForm}
-                    action="https://formspree.io/f/xpzokvek"
-                    method="POST"
-                    >
-                        
-                    <h1>&nbsp;</h1>
-                    <br></br>
-                    <h4>Want to mail us?</h4>
-                    <EmailIcon style={{ fontSize: 50}}></EmailIcon> &nbsp; support@brantayes.be
-                    <br></br><br></br>
-                    <div>
-                    <h4>Message us directly:</h4>
-
-                    
-                        <p>Your e-mailaddress:</p>
+                    {/* <form id="support-form" onSubmit={this.submitForm} action="https://formspree.io/f/xpzokvek" method="POST" >                            */}
+                    <form id="support-form" onSubmit={this.submitForm} action="https://formspree.io/f/mdopbnbj" method="POST">
+                        <h1>&nbsp;</h1>
+                        <br></br>
+                        <h4>Want to mail us?</h4>
+                        <EmailIcon style={{ fontSize: 50}}></EmailIcon> &nbsp; support@brantayes.be
+                        <br></br><br></br>
+                        <div>
+                            <h4>Message us directly:</h4>
+ 
+                            <p>Your e-mailaddress:</p>
+                            <Input
+                                label="Type your e-mail here"
+                                name="email"
+                                type="email"
+                                style={{ width: 600, marginTop: 10, backgroundColor: "white" }}
+                                variant="outlined"
+                                placeholder="your e-mail"
+                            />
+                        <br></br><br></br>
+                        <p>Your message:</p>
                         <TextField 
-                        label="Type your e-mail here"
-                        name="email"
-                        multiline
-                        style={{ width: 600, marginTop: 10, backgroundColor: "white" }}
-                        variant="outlined"
-                        value={this.state.email}
-                        placeholder="your e-mail"
-                        onChange={e => {
-                            this.setState({ email : e.target.value });
-                        }}/>
-                    <br></br><br></br>
-                    <p>Your message:</p>
-                    <TextField 
-                        label="Type your message here"
-                        name="message"
-                        multiline
-                        style={{ width: 600, marginTop: 10, backgroundColor: "white" }}
-                        variant="outlined"
-                        rows={4}
-                        value={this.state.message}
-                        placeholder="your message"
-                        onChange={e => {
-                            this.setState({ message : e.target.value });
-                        }}/>
-                    <br></br>
-                    <Button
-                        style={{ marginTop: 20, width: 200 }}
-                        variant="outlined"
-                        color="primary"
-                        onClick={this.sendSupport}>
-                        submit
-                    </Button>
+                            label="Type your message here"
+                            name="message"
+                            type="text"
+                            multiline
+                            style={{ width: 600, marginTop: 10, backgroundColor: "white" }}
+                            variant="outlined"
+                            rows={4}
+                            placeholder="your message"
+                        />
+                        <br></br>
 
-                    {this.state.status === "SUCCESS" ? <p>Thanks!</p> : <button>Submit</button>}
-                    {this.state.status === "ERROR" && <p>Ooops! There was an error.</p>}
-                    
+                        {this.state.status !== "SUCCESS" ? (
+                        <Button
+                            style={{ marginTop: 20, width: 200 }}
+                            variant="outlined"
+                            color="primary"
+                            type="submit"
+                        >
+                            submit
+                        </Button>
+                        ) : (
+                            <p>Message sent!</p>
+                        )}
+
+                        {this.state.status === "ERROR" && <p>Ooops! There was an error.</p>}
+                        
+                        </div>
+                    </form>                
                 </div>
-                </form>
-                
-            </div>
             </div>
         )
     }
@@ -129,9 +116,8 @@ class Support extends Component
           }
         };
         xhr.send(data);
-      }
-
-
+        ev.target.reset();
+    }
 }
 
 export default Support;
