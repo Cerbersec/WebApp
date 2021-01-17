@@ -26,14 +26,11 @@ class OrderSuccess extends Component
         }
         
         console.log(response)
+        this.handleSubmit();
     }
 
     async handleSubmit(e) {
-        e.preventDefault();
-       
-    
-       
-    
+
             const r = await Api.orderConfirmation(this.state.email)
             .then(r => {
               console.log(r)
@@ -61,7 +58,7 @@ class OrderSuccess extends Component
         return (
             <div id="OrderSuccess">
                 <div id="Column">
-                    <p onClick={this.handleSubmit} style={{marginBottom: 0}}>Order successful   <DoneOutline style={{color: "green",fontSize: 50, marginBottom: 15}}/></p>
+                    <p style={{marginBottom: 0}}>Order successful   <DoneOutline style={{color: "green",fontSize: 50, marginBottom: 15}}/></p>
                     <p style={{marginBottom: 50}}>Thank you!</p>
                     
                     <p style={{fontSize: 20}}>More information has been sent to <span style={{color:"#009eff"}}>{this.state.response.email}</span> with invoice number '<span style={{color:"#009eff"}}>{this.state.response.invoice}</span>'</p>
