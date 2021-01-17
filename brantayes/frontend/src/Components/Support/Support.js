@@ -10,8 +10,10 @@ class Support extends Component
     
         constructor(props) {
           super(props);
-          this.state = { email: '',
-                        message: '' 
+
+          this.submitForm = this.submitForm.bind(this);
+          this.state = { 
+            status: "" 
                     };
         }
     
@@ -46,6 +48,13 @@ class Support extends Component
                     <br></br><br></br>
                 </div>
                 <div className="Column">
+
+                <form
+                    onSubmit={this.submitForm}
+                    action="https://formspree.io/f/xpzokvek"
+                    method="POST"
+                    >
+                        
                     <h1>&nbsp;</h1>
                     <br></br>
                     <h4>Want to mail us?</h4>
@@ -58,6 +67,7 @@ class Support extends Component
                         <p>Your e-mailaddress:</p>
                         <TextField 
                         label="Type your e-mail here"
+                        name="email"
                         multiline
                         style={{ width: 600, marginTop: 10, backgroundColor: "white" }}
                         variant="outlined"
@@ -70,6 +80,7 @@ class Support extends Component
                     <p>Your message:</p>
                     <TextField 
                         label="Type your message here"
+                        name="message"
                         multiline
                         style={{ width: 600, marginTop: 10, backgroundColor: "white" }}
                         variant="outlined"
@@ -87,12 +98,40 @@ class Support extends Component
                         onClick={this.sendSupport}>
                         submit
                     </Button>
+
+                    {this.state.status === "SUCCESS" ? <p>Thanks!</p> : <button>Submit</button>}
+                    {this.state.status === "ERROR" && <p>Ooops! There was an error.</p>}
                     
                 </div>
+                </form>
+                
             </div>
             </div>
         )
     }
+
+    submitForm(ev) {
+        ev.preventDefault();
+        const form = ev.target;
+        const data = new FormData(form);
+        const xhr = new XMLHttpRequest();
+        xhr.open(form.method, form.action);
+        xhr.setRequestHeader("Accept", "application/json");
+        xhr.onreadystatechange = () => {
+          if (xhr.readyState !== XMLHttpRequest.DONE) return;
+          if (xhr.status === 200) {
+            form.reset();
+            this.setState({ status: "SUCCESS" });
+            console.log("support succes");
+          } else {
+            this.setState({ status: "ERROR" });
+            console.log("support error");
+          }
+        };
+        xhr.send(data);
+      }
+
+
 }
 
 export default Support;
