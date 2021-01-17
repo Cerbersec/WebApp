@@ -41,7 +41,7 @@ const required = (value) => {
 }
 
 const vText = (value) => {
-    if (!isAlpha(value)) {
+    if (!isAlpha(value.replace(/\s/g, ''))) {
         return (
             <div className="alert alert-danger" role="alert">
                 This field cannot contain digits!

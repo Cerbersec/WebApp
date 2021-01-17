@@ -62,7 +62,7 @@ const vconfirmpassword = (value) => {
 };
 
 const vtext = (value) => {
-  if (!isAlpha(value)) {
+  if (!isAlpha(value.replace(/\s/g, ''))) {
     return (
       <div className="alert alert-danger" role="alert">
         Cannot contain any digits.
