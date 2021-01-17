@@ -64,7 +64,6 @@ class ConnectedDetails extends Component {
         itemLoading: false,
       });
       this.state.item.selectedSize = parseInt(this.state.item.size.split('-')[0]);
-      console.log("startsize: " + this.state.item.selectedSize);
     }
   }
 
