@@ -35,11 +35,11 @@ const resetPasswordTemplate = (user, url) => {
 const orderConfirmationTemp = (email) => {
   const from = process.env.EMAIL_LOGIN
   const to = email
-  const subject = "Your order has been shipped"
+  const subject = "Your order has been confirmed"
   const html = `
   <p>
-    Dear ${email},<br><br>
-    Your order has been shipped and will arrive as soon as possible. Thank you for using the Brantayes webshop and we hope to see you again soon.<br><br>
+    Dear ${user.username || user.email},<br><br>
+    Your order has been confirmed and will be sent as soon as possible. Thank you for using the Brantayes webshop and we hope to see you again soon.<br><br>
     Kind regards,<br><br><br>
     The Brantayes Team
   </p>
